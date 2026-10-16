@@ -107,3 +107,31 @@ def test_listar_sites_ordena_por_ordem(tmp_path, temas_dir):
         (tmp_path / "sites" / slug / "site.toml").write_text(base.format(s=slug, o=ordem))
     sites = listar_sites(tmp_path / "sites", temas_dir)
     assert [s["site"]["slug"] for s in sites] == ["b", "c", "a", "z"]
+
+
+def test_whatsapp_config_e_contato_normalizados(tmp_path, site_dir, temas_dir, editar):
+    c = tmp_path / "config.toml"
+    c.write_text('url_base="https://x.app/"\nwhatsapp="(11) 98765-4321"\n[marca]\nnome="D"\ncor="#7C3AED"\n')
+    assert carregar_config(c)["whatsapp"] == "5511987654321"
+    editar('whatsapp = ""', 'whatsapp = "11 98765-4321"')
+    assert carregar_site(site_dir, temas_dir)["contato"]["whatsapp"] == "5511987654321"
+    editar('whatsapp = "11 98765-4321"', 'whatsapp = "12"')
+    with pytest.raises(ErroDeDados, match=r"site\.toml: contato\.whatsapp"):
+        carregar_site(site_dir, temas_dir)
+
+
+def test_arquivo_ilegivel_vira_erro_de_dados(site_dir, temas_dir):
+    (site_dir / "site.toml").write_bytes(b'[site]\nnome = "\xff\xfe"\n')
+    with pytest.raises(ErroDeDados, match=r"site\.toml"):
+        carregar_site(site_dir, temas_dir)
+    (site_dir / "site.toml").unlink()
+    (site_dir / "site.toml").mkdir()
+    with pytest.raises(ErroDeDados, match=r"site\.toml"):
+        carregar_site(site_dir, temas_dir)
+
+
+@pytest.mark.parametrize("valor", ["nan", "inf"])
+def test_preco_nan_inf_falha(site_dir, temas_dir, editar, valor):
+    editar("preco = 32.0", f"preco = {valor}")
+    with pytest.raises(ErroDeDados, match=r"site\.toml: cardapio\.categorias\[0\]\.itens\[0\]\.preco"):
+        carregar_site(site_dir, temas_dir)

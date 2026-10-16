@@ -1,10 +1,11 @@
 """Leitura e validação de config.toml e site.toml."""
 import datetime
-import re
+import math
 import tomllib
 from pathlib import Path
 
-PROVISORIO = "5500000000000"
+from gerador.formatos import NUMERO_PROVISORIO as PROVISORIO, normalizar_whatsapp
+
 MODULOS = {"eventos", "pedido"}
 SELOS = {"vegano", "vegetariano", "sem-gluten", "picante", "novo", "chef"}
 CTAS = {"cardapio", "reservar", "pedir"}
@@ -43,9 +44,15 @@ class _V:
         if v is None:
             return None
         tipos = (int,) if inteiro else (int, float)
-        if isinstance(v, bool) or not isinstance(v, tipos) or v < 0:
+        if isinstance(v, bool) or not isinstance(v, tipos) or v < 0 or (isinstance(v, float) and not math.isfinite(v)):
             raise self.erro(caminho, f"esperado número{' inteiro' if inteiro else ''} não negativo, recebido {v!r}")
         return v
+
+    def whatsapp(self, valor, caminho):
+        try:
+            return normalizar_whatsapp(valor)
+        except ValueError as e:
+            raise self.erro(caminho, str(e)) from None
 
     def lista(self, d, chave, caminho, obrigatorio=False):
         v = self._pegar(d, chave, caminho, [], obrigatorio)
@@ -99,6 +106,10 @@ def _ler(caminho: Path, rotulo: str) -> dict:
         raise ErroDeDados(f"{rotulo}: arquivo não encontrado") from None
     except tomllib.TOMLDecodeError as e:
         raise ErroDeDados(f"{rotulo}: TOML inválido: {e}") from None
+    except UnicodeDecodeError:
+        raise ErroDeDados(f"{rotulo}: arquivo não está em UTF-8 válido") from None
+    except OSError as e:
+        raise ErroDeDados(f"{rotulo}: não foi possível ler o arquivo ({e.strerror or e})") from None
 
 
 def carregar_config(caminho: Path) -> dict:
@@ -106,10 +117,7 @@ def carregar_config(caminho: Path) -> dict:
     bruto = _ler(caminho, "config.toml")
     marca = v.tabela(bruto, "marca", "marca")
     zap = v.texto(bruto, "whatsapp", "whatsapp", obrigatorio=True)
-    # Task 2 troca por normalizar_whatsapp
-    digitos = re.sub(r"\D", "", zap)
-    if len(digitos) not in (12, 13):
-        raise v.erro("whatsapp", f"esperado 12 ou 13 dígitos, recebido {zap!r}")
+    digitos = v.whatsapp(zap, "whatsapp")
     url = v.texto(bruto, "url_base", "url_base", obrigatorio=True)
     return {
         "marca": {
@@ -157,6 +165,8 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
     c = v.tabela(bruto, "contato", "contato")
     contato = {k: v.texto(c, k, f"contato.{k}") for k in
                ("whatsapp", "telefone", "instagram", "endereco", "mapa_url")}
+    if contato["whatsapp"]:
+        contato["whatsapp"] = v.whatsapp(contato["whatsapp"], "contato.whatsapp")
 
     horarios = []
     for i, h in enumerate(v.lista(bruto, "horarios", "horarios")):
