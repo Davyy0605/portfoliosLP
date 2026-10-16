@@ -1,4 +1,4 @@
-galeria = ["balcao.jpg", "drink-pour.jpg", "neon.jpg", "whisky.jpg", "show-banda.jpg", "palco.jpg", "martini.jpg", "drink-gelo.jpg"]
+galeria = ["show-banda.jpg", "palco.jpg", "whisky.jpg", "martini.jpg", "balcao.jpg", "neon.jpg", "drink-pour.jpg", "drink-gelo.jpg"]
 
 [site]
 slug = "bar"
@@ -39,7 +39,7 @@ cta = "reservar"
 [sobre]
 titulo = "Um balcão comprido, pouca luz e muito ofício."
 texto = "O Âmbar 33 nasceu da vontade de ter um bar onde o drink é pensado como prato: cada receita parte de um ingrediente brasileiro, passa por infusões feitas na casa e chega ao copo sem exagero. Aqui o bartender conversa com você, a luz é baixa e a trilha é tocada por quem sobe no palco ao lado do balcão."
-imagens = ["balcao.jpg", "neon.jpg"]
+imagens = ["whisky2.jpg", "neon.jpg"]
 
 [[destaques]]
 titulo = "Drinks autorais"
@@ -49,11 +49,11 @@ imagem = "drink-pour.jpg"
 [[destaques]]
 titulo = "Happy hour âmbar"
 texto = "De terça a sexta, das 18h às 20h: todos os clássicos da casa pela metade do preço no primeiro copo e petiscos a partir de R$ 24."
-imagem = "drink-gelo.jpg"
+imagem = "drink-laranja.jpg"
 
 [[destaques]]
-titulo = "Palco ao lado do balcão"
-texto = "Jazz, samba-rock e MPB ao vivo toda semana. Sem ingresso, com couvert artístico apenas nas noites de show."
+titulo = "Palco aberto"
+texto = "Jazz, samba-rock e MPB ao vivo toda semana, num palco colado ao balcão. Sem ingresso: couvert artístico só nas noites de show."
 imagem = "show-banda.jpg"
 
 [[cardapio.categorias]]
@@ -72,7 +72,6 @@ descricao = "Receitas da casa, todas com gelo cristalino."
   nome = "Cerrado Sour"
   descricao = "Gin, pequi em infusão, limão-siciliano, clara e amargo de laranja."
   preco = 39.0
-  imagem = "drink-laranja.jpg"
   selos = ["novo"]
 
   [[cardapio.categorias.itens]]
@@ -86,6 +85,7 @@ descricao = "Receitas da casa, todas com gelo cristalino."
   nome = "Pôr do Sol 33"
   descricao = "Rum envelhecido, maracujá, gengibre e cardamomo, finalizado com espuma cítrica."
   preco = 40.0
+  imagem = "drink-gelo.jpg"
   selos = ["vegetariano"]
 
   [[cardapio.categorias.itens]]
@@ -101,9 +101,9 @@ descricao = "Receitas de manual, feitas do jeito certo."
 
   [[cardapio.categorias.itens]]
   nome = "Negroni"
-  descricao = "Gin, Campari e vermute tinto, em partes iguais."
+  descricao = "Gin, Campari e vermute tinto, em partes iguais, com laranja desidratada."
   preco = 34.0
-  imagem = "drink-gelo.jpg"
+  imagem = "drink-laranja.jpg"
   selos = ["vegano"]
 
   [[cardapio.categorias.itens]]
@@ -195,17 +195,22 @@ nome = "Petiscos"
 descricao = "Para dividir no balcão."
 
   [[cardapio.categorias.itens]]
-  nome = "Tábua de Charcutaria"
-  descricao = "Copa, salame, queijo meia-cura, geleia de pimenta e torradas."
-  preco = 68.0
+  nome = "Montaditos do Balcão (6 un.)"
+  descricao = "Pão de fermentação natural com copa, pimentão assado, anchova, queijo meia-cura e azeitona."
+  preco = 58.0
   imagem = "petisco.jpg"
   selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Batata Rústica"
+  descricao = "Gomos com casca, páprica defumada e maionese de alho assado."
+  preco = 32.0
+  imagem = "carne.jpg"
 
   [[cardapio.categorias.itens]]
   nome = "Bolinho de Costela"
   descricao = "Seis unidades, com maionese defumada."
   preco = 38.0
-  imagem = "carne.jpg"
 
   [[cardapio.categorias.itens]]
   nome = "Mandioca Frita com Queijo Coalho"
@@ -301,6 +306,7 @@ vazio_mensagem = "Novas atrações em breve. Siga o Âmbar 33 no Instagram."
   valor = "Couvert R$ 20"
 
 [[fotos]]
+# capa.jpg foi recortada à mão (lado direito removido) para tirar o letreiro de um bar real; rebaixar a foto desfaz o recorte.
 arquivo = "capa.jpg"
 url = "https://images.unsplash.com/photo-1572116469696-31de0f17cc34"
 autor = "qui nguyen"
