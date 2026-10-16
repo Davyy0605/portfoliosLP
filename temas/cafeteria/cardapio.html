@@ -21,7 +21,7 @@
   {{ m.carrinho(site, wa_numero) }}
 </main>
 <div class="fecho fecho-menu">
-  {% if site.contato.instagram %}<a class="fecho-insta" href="https://instagram.com/{{ site.contato.instagram|replace('@', '') }}" rel="noopener">Marque a sua xícara: {{ site.contato.instagram }}</a>{% endif %}
+  {% if site.contato.instagram %}<a class="fecho-insta" href="https://instagram.com/{{ site.contato.instagram }}" rel="noopener">Marque a sua xícara: @{{ site.contato.instagram }}</a>{% endif %}
   {{ m.rodape(site, config) }}
 </div>
 {% endblock %}

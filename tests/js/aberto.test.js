@@ -42,3 +42,14 @@ test("texto que não entende esconde o bloco", () => {
   // "Fechado" é entendido e não abre o dia
   assert.strictEqual(txt([h("Seg a Sáb", "8h às 18h"), h("Domingo", "Fechado")], new Date(2026, 9, 25, 10, 0)), "Fechado agora. Abre amanhã às 8h");
 });
+
+test("formatos de hora 8:30, 8h30 e 7h30min", () => {
+  for (const horas of ["8:30 às 19:00", "8h30 às 19h", "7h30min às 19h00min"]) {
+    assert.match(txt([h("Seg a Sex", horas)], ter10), /^Aberto agora/, horas);
+  }
+});
+
+test("fechado só vale com o texto inteiro; texto misto oculta o bloco", () => {
+  assert.strictEqual(txt([h("Seg a Sex", "7h às 19h"), h("Dom", " Fechado ")], ter10), "Aberto agora, até 19h");
+  assert.strictEqual(txt([h("Seg a Sex", "7h às 19h"), h("Dom", "Fechado das 12h às 14h")], ter10), null);
+});

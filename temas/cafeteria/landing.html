@@ -9,7 +9,7 @@
 
 {% block conteudo %}
 {% set c = site.contato %}
-{% set insta = c.instagram|replace('@', '') if c.instagram else '' %}
+{% set insta = c.instagram if c.instagram else '' %}
 {% set categorias = site.cardapio.categorias|selectattr("itens")|list %}
 {% set vitrine = categorias[0] if categorias else none %}
 <a class="pular" href="#principal">Pular para o conteúdo</a>
@@ -30,7 +30,7 @@
       {% if site.capa.subtitulo %}<p class="capa-sub">{{ site.capa.subtitulo }}</p>{% endif %}
       <div class="capa-acoes">
         {{ m.cta(site, wa_numero, raiz) }}
-        {% if insta %}<a class="link-seco" href="https://instagram.com/{{ insta }}" rel="noopener">{{ c.instagram }} no Instagram</a>{% endif %}
+        {% if insta %}<a class="link-seco" href="https://instagram.com/{{ insta }}" rel="noopener">@{{ c.instagram }} no Instagram</a>{% endif %}
       </div>
       <p class="aberto" data-aberto hidden><span class="aberto-ponto" aria-hidden="true"></span><span data-aberto-texto></span></p>
     </div>
@@ -69,7 +69,7 @@
       <div class="pasta-corpo">
         <p class="pasta-texto">{{ d.texto }}</p>
         {% if insta and 'instagram' in d.titulo|lower %}
-        <a class="botao botao-claro" href="https://instagram.com/{{ insta }}" rel="noopener">Seguir {{ c.instagram }}</a>
+        <a class="botao botao-claro" href="https://instagram.com/{{ insta }}" rel="noopener">Seguir @{{ c.instagram }}</a>
         {% endif %}
         {% if d.imagem %}<div class="pasta-fruto">{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 34vw, 70vw", "pasta-foto") }}</div>{% endif %}
       </div>
@@ -96,7 +96,7 @@
     <div class="galeria-texto">
       <h2 id="galeria-titulo">Hoje no balcão</h2>
       {% if site.site.slogan %}<p>{{ site.site.slogan }}</p>{% endif %}
-      {% if insta %}<a class="link-seco" href="https://instagram.com/{{ insta }}" rel="noopener">Mais fotos em {{ c.instagram }}</a>{% endif %}
+      {% if insta %}<a class="link-seco" href="https://instagram.com/{{ insta }}" rel="noopener">Mais fotos em @{{ c.instagram }}</a>{% endif %}
     </div>
     {% set n = site.galeria|length %}
     {% if n > 1 %}

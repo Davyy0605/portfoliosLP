@@ -23,8 +23,9 @@ function statusAberto(horarios, agora) {
   var faixas = [];
   for (var i = 0; i < horarios.length; i++) {
     var h = horarios[i];
-    if (/fechado/.test(norm(h.horas))) continue;
-    var hs = Array.from(String(h.horas).matchAll(/(\d{1,2})h(\d{2})?/g));
+    if (norm(h.horas) === "fechado") continue;
+    if (/fechado/.test(norm(h.horas))) return null;
+    var hs = Array.from(String(h.horas).matchAll(/(\d{1,2})(?:h|:)(\d{2})?(?:min)?/g));
     var dias = diasDe(h.dias);
     if (!dias || hs.length < 2 || hs.length % 2) return null;
     for (var k = 0; k < hs.length; k += 2) {

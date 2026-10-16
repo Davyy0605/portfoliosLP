@@ -73,12 +73,13 @@ a { color: inherit; text-underline-offset: .2em; }
   background: var(--superficie);
   overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  height: calc(27vw * .9);
+  --tam-letreiro: min(27vw, calc((100vw - 1rem) / (var(--letras, 8) * .46)));
+  height: calc(var(--tam-letreiro) * .9);
 }
 .letreiro {
   margin: 0 0 -.17em;
   align-self: flex-end;
-  font: 900 27vw/1 var(--fonte-titulo);
+  font: 900 var(--tam-letreiro)/1 var(--fonte-titulo);
   letter-spacing: -.015em;
   text-transform: uppercase;
   white-space: nowrap;
@@ -314,7 +315,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .fecho .horarios dd { margin: 0; }
 .fecho-nome {
   grid-row: 3; margin: 0; white-space: nowrap; text-transform: uppercase;
-  font: 900 24.5vw/.95 var(--fonte-titulo); letter-spacing: -.02em; text-align: center;
+  font: 900 min(24.5vw, calc((100vw - 1rem) / (var(--letras, 8) * .5)))/.95 var(--fonte-titulo); letter-spacing: -.02em; text-align: center;
 }
 .fecho-nome .neon { color: inherit; }
 .rodape { font-size: var(--passo-pequeno); padding-top: 1.25rem; }
@@ -323,7 +324,7 @@ a { color: inherit; text-underline-offset: .2em; }
 @media (min-width: 900px) {
   .fecho-colunas { grid-template-columns: repeat(4, 1fr); }
   .fecho-colunas > div:first-child { grid-column: 1 / 3; max-width: 22rem; }
-  .fecho-nome { font-size: 25vw; }
+  .fecho-nome { font-size: min(25vw, calc((100vw - 1rem) / (var(--letras, 8) * .5))); }
 }
 
 /* ---------- Entradas (só onde o navegador sabe animar pela rolagem) ---------- */

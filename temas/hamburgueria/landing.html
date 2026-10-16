@@ -9,7 +9,7 @@
 {% set nome = site.site.nome %}
 {# monumento: a primeira palavra do nome que não seja artigo ou o próprio segmento #}
 {% set palavras = nome.split(" ") %}
-{% set marca = palavras[1] if palavras|length > 1 and palavras[0]|lower in ["hamburgueria", "o", "a", "os", "as"] else palavras[0] %}
+{% set marca = palavras[1] if palavras|length > 1 and palavras[0]|lower in ["hamburgueria", "o", "a", "os", "as", "do", "da", "de", "dos", "das"] else palavras[0] %}
 {% set categorias = site.cardapio.categorias|selectattr("itens")|list %}
 {% set usadas = [site.capa.imagem] + (site.sobre.imagens or []) + (site.destaques|map(attribute="imagem")|select|list) %}
 {% if categorias %}
@@ -62,7 +62,7 @@
     <div class="sobre-fatos">
       {% if site.contato.endereco %}<p>{{ site.contato.endereco }}</p>{% endif %}
       {% if site.horarios %}<p>{{ site.horarios[0].dias }}, {{ site.horarios[0].horas }}</p>{% endif %}
-      {% if site.contato.instagram %}<p>{{ site.contato.instagram }}</p>{% endif %}
+      {% if site.contato.instagram %}<p>@{{ site.contato.instagram }}</p>{% endif %}
     </div>
     <div class="sobre-corpo">
       <h2 id="sobre-titulo" class="titulo-secao">{{ site.sobre.titulo }}</h2>

@@ -21,7 +21,7 @@
 {% set end = site.contato.endereco.split(" — ") %}
 
 <header class="capa" id="topo">
-  <div class="capa-letreiro">
+  <div class="capa-letreiro" style="--letras: {{ site.site.nome|length }}">
     <h1 class="letreiro">{{ nome_letreiro(site.site.nome) }}</h1>
   </div>
   <nav class="capa-links" aria-label="Seções">
@@ -62,7 +62,7 @@
       <ul class="sobre-fatos">
         {% if end %}<li><strong>Onde</strong> {{ site.contato.endereco }}</li>{% endif %}
         {% if site.contato.telefone %}<li><strong>Reservas</strong> {{ site.contato.telefone }}</li>{% endif %}
-        {% if site.contato.instagram %}<li><strong>Instagram</strong> {{ site.contato.instagram }}</li>{% endif %}
+        {% if site.contato.instagram %}<li><strong>Instagram</strong> @{{ site.contato.instagram }}</li>{% endif %}
       </ul>
     </div>
   </section>
@@ -142,7 +142,7 @@
       {% for parte in end %}<li>{{ parte }}</li>{% endfor %}
       {% for h in site.horarios %}<li class="linha-hora"><span>{{ h.dias }}</span> <span>{{ h.horas }}</span></li>{% endfor %}
       {% if site.contato.telefone %}<li><a href="tel:{{ site.contato.telefone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ site.contato.telefone }}</a></li>{% endif %}
-      {% if site.contato.instagram %}<li><a href="https://instagram.com/{{ site.contato.instagram|replace('@', '') }}" rel="noopener">{{ site.contato.instagram }}</a></li>{% endif %}
+      {% if site.contato.instagram %}<li><a href="https://instagram.com/{{ site.contato.instagram }}" rel="noopener">@{{ site.contato.instagram }}</a></li>{% endif %}
       <li class="linha-convite"><span>Até mais tarde</span> {{ m.cta(site, wa_numero, raiz) }}</li>
     </ul>
     {% if site.contato.mapa_url %}<iframe class="contato-mapa" src="{{ site.contato.mapa_url }}" title="Mapa: {{ site.site.nome }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>{% endif %}
@@ -155,7 +155,7 @@
     <div><p><strong>Na casa</strong></p><p><a href="cardapio/">Cardápio</a></p>{% if site.eventos.lista %}<p><a href="#agenda">Agenda</a></p>{% endif %}<p><a href="{{ wa_numero|wa('Olá! Vim pelo site.') }}" rel="noopener">WhatsApp</a></p></div>
     <div><p><strong>Horários</strong></p>{{ m.horarios(site) }}</div>
   </div>
-  <p class="fecho-nome" aria-hidden="true">{{ nome_letreiro(site.site.nome) }}</p>
+  <p class="fecho-nome" style="--letras: {{ site.site.nome|length }}" aria-hidden="true">{{ nome_letreiro(site.site.nome) }}</p>
   {{ m.rodape(site, config) }}
 </div>
 {% endblock %}
