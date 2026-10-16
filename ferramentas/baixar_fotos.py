@@ -5,6 +5,7 @@ import urllib.request
 from pathlib import Path
 from urllib.parse import urlparse
 
+LIMITE = 25 * 1024 * 1024
 UA = "Mozilla/5.0 (compatible; cardapios-baixar-fotos/1.0)"
 
 
@@ -39,6 +40,10 @@ def main(argv: list[str]) -> int:
             falhas += 1
             print(f"site.toml: fotos[{i}]: entrada sem arquivo/url")
             continue
+        if arquivo in (".", "..") or Path(arquivo).name != arquivo or "\\" in arquivo:
+            falhas += 1
+            print(f"site.toml: fotos[{i}]: arquivo {arquivo!r} não pode conter caminho")
+            continue
         destino = pasta / "imagens" / arquivo
         if destino.exists():
             print(f"já existe: {arquivo}")
@@ -50,7 +55,10 @@ def main(argv: list[str]) -> int:
                 tipo = r.headers.get("Content-Type", "")
                 if not tipo.startswith("image/"):
                     raise ValueError(f"resposta não é imagem (Content-Type: {tipo or 'ausente'})")
-                tmp.write_bytes(r.read())
+                corpo = r.read(LIMITE + 1)
+                if len(corpo) > LIMITE:
+                    raise ValueError(f"download maior que {LIMITE // 1024 // 1024} MB")
+                tmp.write_bytes(corpo)
             tmp.replace(destino)
             print(f"baixada: {arquivo}")
         except Exception as e:  # rede, HTTP, URL inválida

@@ -75,8 +75,8 @@ class _Resp:
         self.headers = {"Content-Type": tipo}
         self._c = corpo
 
-    def read(self):
-        return self._c
+    def read(self, n=-1):
+        return self._c if n < 0 else self._c[:n]
 
     def __enter__(self):
         return self
@@ -111,6 +111,24 @@ def test_baixar_ok(tmp_path, monkeypatch):
     monkeypatch.setattr(baixar_fotos.urllib.request, "urlopen", lambda *a, **k: _Resp("image/jpeg", b"img"))
     assert baixar_fotos.main([str(pasta)]) == 0
     assert (pasta / "imagens" / "a.jpg").read_bytes() == b"img"
+
+
+def test_baixar_rejeita_arquivo_com_caminho(tmp_path, monkeypatch):
+    import baixar_fotos
+    monkeypatch.setattr(baixar_fotos.urllib.request, "urlopen", lambda *a, **k: _Resp("image/jpeg", b"img"))
+    for nome in ("../x.jpg", "a/b.jpg", "a" + chr(92) + "b.jpg", ".."):
+        pasta = _site(tmp_path, f"[[fotos]]\narquivo = '{nome}'\nurl = 'https://x/a'\n")
+        assert baixar_fotos.main([str(pasta)]) == 1
+    assert not (tmp_path / "x.jpg").exists() and list((tmp_path / "imagens").iterdir()) == []
+
+
+def test_baixar_limita_tamanho(tmp_path, monkeypatch):
+    import baixar_fotos
+    pasta = _site(tmp_path, '[[fotos]]\narquivo = "a.jpg"\nurl = "https://x/a"\n')
+    monkeypatch.setattr(baixar_fotos, "LIMITE", 10)
+    monkeypatch.setattr(baixar_fotos.urllib.request, "urlopen", lambda *a, **k: _Resp("image/jpeg", b"x" * 11))
+    assert baixar_fotos.main([str(pasta)]) == 1
+    assert list((pasta / "imagens").iterdir()) == []
 
 
 def test_cache_nao_reconverte_e_copia(tmp_path, monkeypatch):
