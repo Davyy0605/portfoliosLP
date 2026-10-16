@@ -1,0 +1,38 @@
+{# Destaca o prato do executivo do dia (itens nomeados "Segunda: ...", "Terça: ..." etc.).
+   Sem script, a semana inteira continua visível. #}
+<script>
+(function () {
+  var dias = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+  var hoje = dias[new Date().getDay()];
+  var aviso = document.querySelector("[data-hoje]");
+  var achado = null;
+  document.querySelectorAll("[data-dia]").forEach(function (el) {
+    if (el.getAttribute("data-dia") === hoje) {
+      el.classList.add("e-hoje");
+      el.setAttribute("aria-current", "date");
+      achado = achado || el;
+    }
+  });
+  document.querySelectorAll(".categoria .item-nome").forEach(function (h) {
+    var m = /^([^:]+):\s*(.+)$/.exec(h.textContent.trim());
+    if (!m || m[1].trim().toLowerCase() !== hoje) return;
+    var item = h.closest(".item");
+    item.classList.add("e-hoje");
+    var marca = document.createElement("span");
+    marca.className = "marca-hoje";
+    marca.textContent = "Hoje";
+    h.prepend(marca);
+    if (!achado) achado = { prato: m[2], preco: (item.querySelector(".item-preco") || {}).textContent || "" };
+  });
+  if (!aviso) return;
+  if (achado) {
+    var prato = (achado.prato || (achado.querySelector(".dia-prato") || {}).textContent || "").trim();
+    prato = prato.charAt(0).toUpperCase() + prato.slice(1);
+    var preco = achado.preco || (achado.querySelector(".dia-preco") || {}).textContent || "";
+    aviso.textContent = "Hoje é " + hoje + (hoje === "sábado" || hoje === "domingo" ? "" : "-feira") + ": " + prato.trim() + (preco ? ", " + preco.trim() : "") + ".";
+  } else {
+    aviso.textContent = "Hoje é " + hoje + ": o executivo volta na segunda. A carta completa está servida.";
+  }
+  aviso.hidden = false;
+})();
+</script>
