@@ -1,4 +1,4 @@
-galeria = ["mesa.jpg", "panela.jpg", "quintal.jpg", "mesa-redonda.jpg", "vapor.jpg", "prato-mesa.jpg"]
+galeria = ["mesa.jpg", "panela.jpg", "quintal.jpg", "mesa-redonda.jpg", "salao-madeira.jpg"]
 
 [site]
 slug = "restaurante"
@@ -42,9 +42,9 @@ texto = "A Cozinha Imbuia nasceu de uma mesa de domingo: cozidos que pedem horas
 imagens = ["familia.jpg", "cozinha.jpg"]
 
 [[destaques]]
-titulo = "Prato do dia, de segunda a sexta"
-texto = "Um executivo por dia, com prato principal, arroz, feijão, guarnição e salada. Das 11h30 às 15h30, a partir de R$ 38,00. Veja a semana completa no cardápio."
-imagem = "executivo-grelhado.jpg"
+titulo = "Panela no fogo desde cedo"
+texto = "O feijão começa a cozinhar às sete, o caldo do dia logo depois. Nada sai de saquinho: molhos, massas e sobremesas são feitos aqui, todos os dias."
+imagem = "vapor.jpg"
 
 [[destaques]]
 titulo = "Espaço família"
@@ -91,12 +91,13 @@ descricao = "Para abrir a mesa."
   selos = ["vegano", "picante"]
 
   [[cardapio.categorias.itens]]
-  nome = "Linguiça artesanal acebolada"
-  descricao = "Na chapa de ferro, com mandioca cozida, milho na brasa e vinagrete. Serve três pessoas."
+  nome = "Linguiça artesanal na frigideira"
+  descricao = "Dourada na frigideira de ferro, com mandioca cozida e vinagrete. Serve três pessoas."
   preco = 46.0
   imagem = "linguica.jpg"
   selos = ["sem-gluten"]
 
+# Executivo: mantenha id = "prato-do-dia" e nomeie os itens "Dia: prato" (ex.: "Segunda: ...") para o site destacar o prato de hoje; item sem "Dia:" aparece como "Todo dia".
 [[cardapio.categorias]]
 id = "prato-do-dia"
 nome = "Prato do dia / Executivo"
@@ -311,8 +312,8 @@ fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "linguica.jpg"
-url = "https://images.unsplash.com/photo-1562967914-70f9865b4c2f"
-autor = "Léo Roza"
+url = "https://images.unsplash.com/photo-1551135020-39e4ca508d9b"
+autor = "Rachel Clark"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -352,9 +353,9 @@ autor = "Eaters Collective"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "prato-mesa.jpg"
-url = "https://images.unsplash.com/photo-1565895405227-31cffbe0cf86"
-autor = "Louis Hansel"
+arquivo = "salao-madeira.jpg"
+url = "https://images.unsplash.com/photo-1670819917685-f1040e76b9b7"
+autor = "Caramel"
 fonte = "Unsplash"
 
 [[fotos]]

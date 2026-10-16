@@ -148,7 +148,7 @@ img { border-radius: var(--raio); }
 .pratos-lado h2 { font-size: var(--passo-titulo); max-width: 12ch; }
 .pratos-lado .link-seta { margin-top: 12px; }
 .pratos-fila {
-  display: flex; align-items: flex-end; gap: 6px; margin-top: 32px;
+  display: flex; align-items: flex-end; gap: 20px; margin-top: 32px;
   overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin;
   scrollbar-color: var(--cor-papel-suave) transparent; padding: 0 var(--margem) 18px 0;
 }
