@@ -1,4 +1,4 @@
-galeria = ["salao.jpg", "chef.jpg", "vinhedo.jpg", "sobremesa.jpg", "adega.jpg", "quarteto.jpg"]
+galeria = ["vinhedo.jpg", "sobremesa.jpg", "salmao.jpg", "massa.jpg", "carne.jpg"]
 
 [site]
 slug = "fino"
@@ -33,13 +33,13 @@ horas = "12h30 às 16h"
 [capa]
 titulo = "Uma mesa, uma conversa longa"
 subtitulo = "Sete passos de cozinha autoral, feitos com produtores do interior paulista e uma adega pensada para acompanhar cada um deles."
-imagem = "capa.jpg"
+imagem = "sala.jpg"
 cta = "reservar"
 
 [sobre]
 titulo = "O ofício de tecer sabores"
 texto = "Tessitura nasceu da ideia de que um jantar é uma trama: ingredientes, tempo, vinho e conversa entrelaçados com paciência. A cozinha do chef Henrique Vasconcellos trabalha com poucos produtos por prato, escolhidos pela estação e pela mão de quem os planta, e deixa a técnica discreta para que o sabor fale primeiro. A sala tem apenas 11 mesas, o serviço é sem pressa e o menu muda a cada seis semanas."
-imagens = ["sala.jpg", "salao.jpg"]
+imagens = ["vinho-taca.jpg", "salao.jpg"]
 
 [[destaques]]
 titulo = "Menu degustação em sete passos"
@@ -62,24 +62,23 @@ texto = "Aceitamos reservas com até 30 dias de antecedência, para grupos de 2 
 [[cardapio.categorias]]
 id = "degustacao"
 nome = "Menu degustação"
-descricao = "Servido para a mesa inteira, em sete passos. Menu da estação, atualizado a cada seis semanas."
+descricao = "Servido para a mesa inteira, em sete passos. A harmonização acompanha qualquer um dos menus, uma taça por passo. Menu da estação, renovado a cada seis semanas."
 
   [[cardapio.categorias.itens]]
   nome = "Sete Passos"
-  descricao = "I. Ostra, pepino e raiz-forte. II. Ovo mole, abacate e espinafre. III. Camarão, bisque e arroz de coco. IV. Tagliolini com burrata e ervas. V. Salmão curado, funcho e limão-siciliano. VI. Costela de boi 72 horas, purê de baroa. VII. Panna cotta de baunilha com morangos."
+  descricao = "I. Ostra, pepino e raiz-forte · II. Ovo mole, abacate e espinafre · III. Camarão, bisque e arroz de coco · IV. Tagliolini com burrata e ervas · V. Salmão curado, funcho e limão-siciliano · VI. Costela de boi 72 horas, purê de baroa · VII. Panna cotta de baunilha com morangos"
   preco = 490.0
   imagem = "chef.jpg"
   selos = ["chef"]
 
   [[cardapio.categorias.itens]]
-  nome = "Sete Passos com harmonização"
-  descricao = "O mesmo menu, com sete taças escolhidas pelo sommelier. Harmonização: I. espumante brut nature, II. Chardonnay da Serra Gaúcha, III. Albariño, IV. Vermentino, V. Riesling seco, VI. Tannat, VII. Moscato d'Asti."
-  preco = 790.0
-  selos = ["chef"]
+  nome = "Harmonização do sommelier"
+  descricao = "I. Espumante brut nature, Serra Gaúcha · II. Chardonnay, Vale dos Vinhedos · III. Albariño, Rías Baixas · IV. Vermentino, Sardenha · V. Riesling seco, Mosel · VI. Tannat, Campanha Gaúcha · VII. Moscato d'Asti, Piemonte"
+  preco = 300.0
 
   [[cardapio.categorias.itens]]
   nome = "Sete Passos Vegetal"
-  descricao = "Versão sem proteína animal, com os mesmos sete tempos. I. Cogumelo e castanha. II. Beterraba assada. III. Palmito pupunha. IV. Tagliolini de abóbora. V. Berinjela defumada. VI. Raízes ao carvão. VII. Sorvete de capim-santo. Harmonização opcional: R$ 690."
+  descricao = "I. Cogumelo e castanha · II. Beterraba assada e coalhada · III. Palmito pupunha na brasa · IV. Tagliolini de abóbora · V. Berinjela defumada · VI. Raízes ao carvão · VII. Sorvete de capim-santo"
   preco = 440.0
   selos = ["vegano", "novo"]
 
@@ -295,12 +294,6 @@ vazio_mensagem = "Novos jantares serão anunciados em breve. Reserve pelo WhatsA
   valor = "Entrada gratuita para clientes do jantar"
 
 [[fotos]]
-arquivo = "capa.jpg"
-url = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0"
-autor = "Colaborador Unsplash"
-fonte = "Unsplash"
-
-[[fotos]]
 arquivo = "sala.jpg"
 url = "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c"
 autor = "Colaborador Unsplash"
@@ -314,7 +307,7 @@ fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "chef.jpg"
-url = "https://images.unsplash.com/photo-1577219491135-ce391730fb2c"
+url = "https://images.unsplash.com/photo-1577106263724-2c8e03bfe9cf"
 autor = "Colaborador Unsplash"
 fonte = "Unsplash"
 
@@ -350,7 +343,7 @@ fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "adega.jpg"
-url = "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea"
+url = "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d"
 autor = "Colaborador Unsplash"
 fonte = "Unsplash"
 
