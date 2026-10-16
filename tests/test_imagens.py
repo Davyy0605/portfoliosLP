@@ -63,3 +63,51 @@ def test_url_unsplash_ganha_query():
     com = u + "?w=500"
     assert url_final(com) == com
     assert url_final("https://pexels.com/x.jpg") == "https://pexels.com/x.jpg"
+
+
+def test_host_unsplash_exato():
+    assert url_final("https://notunsplash.com/a").endswith("/a")
+    assert "w=2000" in url_final("https://unsplash.com/a")
+
+
+class _Resp:
+    def __init__(self, tipo, corpo=b"x"):
+        self.headers = {"Content-Type": tipo}
+        self._c = corpo
+
+    def read(self):
+        return self._c
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        pass
+
+
+def _site(tmp_path, fotos_toml):
+    (tmp_path / "site.toml").write_text(fotos_toml, encoding="utf-8")
+    return tmp_path
+
+
+def test_baixar_entrada_incompleta(tmp_path, capsys):
+    import baixar_fotos
+    pasta = _site(tmp_path, '[[fotos]]\nurl = "https://x/a.jpg"\n')
+    assert baixar_fotos.main([str(pasta)]) == 1
+    assert "fotos[0]: entrada sem arquivo/url" in capsys.readouterr().out
+
+
+def test_baixar_rejeita_nao_imagem(tmp_path, monkeypatch):
+    import baixar_fotos
+    pasta = _site(tmp_path, '[[fotos]]\narquivo = "a.jpg"\nurl = "https://x/a"\n')
+    monkeypatch.setattr(baixar_fotos.urllib.request, "urlopen", lambda *a, **k: _Resp("text/html"))
+    assert baixar_fotos.main([str(pasta)]) == 1
+    assert list((pasta / "imagens").iterdir()) == []
+
+
+def test_baixar_ok(tmp_path, monkeypatch):
+    import baixar_fotos
+    pasta = _site(tmp_path, '[[fotos]]\narquivo = "a.jpg"\nurl = "https://x/a"\n')
+    monkeypatch.setattr(baixar_fotos.urllib.request, "urlopen", lambda *a, **k: _Resp("image/jpeg", b"img"))
+    assert baixar_fotos.main([str(pasta)]) == 0
+    assert (pasta / "imagens" / "a.jpg").read_bytes() == b"img"

@@ -10,7 +10,8 @@ UA = "Mozilla/5.0 (compatible; cardapios-baixar-fotos/1.0)"
 
 def url_final(url: str) -> str:
     p = urlparse(url)
-    if p.hostname and p.hostname.endswith("unsplash.com") and not p.query:
+    host = p.hostname or ""
+    if (host == "unsplash.com" or host.endswith(".unsplash.com")) and not p.query:
         return url + "?w=2000&q=85&fm=jpg"
     return url
 
@@ -28,19 +29,30 @@ def main(argv: list[str]) -> int:
         return 1
     (pasta / "imagens").mkdir(exist_ok=True)
     falhas = 0
-    for foto in fotos:
-        destino = pasta / "imagens" / foto["arquivo"]
-        if destino.exists():
-            print(f"já existe: {foto['arquivo']}")
-            continue
-        try:
-            req = urllib.request.Request(url_final(foto["url"]), headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=30) as r:
-                destino.write_bytes(r.read())
-            print(f"baixada: {foto['arquivo']}")
-        except Exception as e:  # rede, HTTP, URL inválida
+    for i, foto in enumerate(fotos):
+        arquivo, url = foto.get("arquivo"), foto.get("url")
+        if not arquivo or not url:
             falhas += 1
-            print(f"erro ao baixar {foto['arquivo']} ({foto['url']}): {e}")
+            print(f"site.toml: fotos[{i}]: entrada sem arquivo/url")
+            continue
+        destino = pasta / "imagens" / arquivo
+        if destino.exists():
+            print(f"já existe: {arquivo}")
+            continue
+        tmp = destino.with_name(destino.name + ".part")
+        try:
+            req = urllib.request.Request(url_final(url), headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                tipo = r.headers.get("Content-Type", "")
+                if not tipo.startswith("image/"):
+                    raise ValueError(f"resposta não é imagem (Content-Type: {tipo or 'ausente'})")
+                tmp.write_bytes(r.read())
+            tmp.replace(destino)
+            print(f"baixada: {arquivo}")
+        except Exception as e:  # rede, HTTP, URL inválida
+            tmp.unlink(missing_ok=True)
+            falhas += 1
+            print(f"erro ao baixar {arquivo} ({url}): {e}")
     return 1 if falhas else 0
 
 
