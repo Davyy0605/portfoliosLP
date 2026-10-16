@@ -90,3 +90,8 @@ def test_build_usa_cache_de_imagens(raiz, tmp_path, monkeypatch):
     assert build.main(["--saida", str(tmp_path / "dist")]) == 0
     assert chamadas == [] and antes == {p: p.stat().st_mtime_ns for p in webps}
     assert list((tmp_path / "dist" / "completo" / "cardapio" / "img").glob("*.webp"))
+
+
+def test_site_com_slug_invalido_retorna_1(capsys):
+    assert build.main(["--site", "../x"]) == 1
+    assert "--site" in capsys.readouterr().err

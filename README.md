@@ -71,7 +71,7 @@ Antes, ajuste o `config.toml` do repositório (ou use um branch do cliente) com 
 3. Depois do primeiro deploy, copie o endereço real e edite `config.toml`: troque `url_base` (com barra final, ex.: `https://meu-portfolio.netlify.app/`) e `whatsapp` (só dígitos com DDI, ex.: `5511999998888`). Faça commit e push.
 4. A build a frio no Netlify reprocessa todas as imagens (não há cache persistente), por isso as fotos em `sites/*/imagens/` ficam limitadas a 1600px.
 
-Enquanto o `whatsapp` for o provisório `5500000000000`, o build imprime um `AVISO`, mas não falha.
+Enquanto o `whatsapp` for o provisório `5500000000000` ou a `url_base` for a provisória `https://davy.netlify.app/` (os QR codes apontam para ela), o build imprime um `AVISO` para cada um, mas não falha.
 
 ## Onde trocar marca, WhatsApp e URL
 

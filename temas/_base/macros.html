@@ -55,7 +55,7 @@
     </ul>
   </section>
   {% endfor %}
-  <p class="sem-resultado" data-sem-resultado hidden>Nenhum item encontrado.</p>
+  <p class="sem-resultado" data-sem-resultado role="status" hidden>Nenhum item encontrado.</p>
 </div>
 <script type="module" src="{{ raiz }}static/js/cardapio.js"></script>
 {% endmacro %}
@@ -78,7 +78,7 @@
     </li>
     {% endfor %}
   </ul>
-  <p class="eventos-vazio" data-eventos-vazio{% if lista %} hidden{% endif %}>{{ site.eventos.vazio_mensagem }}</p>
+  <p class="eventos-vazio" data-eventos-vazio role="status"{% if lista %} hidden{% endif %}>{{ site.eventos.vazio_mensagem }}</p>
 </div>
 <script type="module" src="{{ raiz }}static/js/eventos.js"></script>
 {% endmacro %}
@@ -116,7 +116,7 @@
 <address class="contato">
   {% if c.endereco %}<p class="contato-endereco">{{ c.endereco }}</p>{% endif %}
   {% if c.telefone %}<p><a href="tel:{{ c.telefone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ c.telefone }}</a></p>{% endif %}
-  {% if c.instagram %}<p><a href="https://instagram.com/{{ c.instagram|replace('@', '') }}" rel="noopener">{{ c.instagram }}</a></p>{% endif %}
+  {% if c.instagram %}<p><a href="https://instagram.com/{{ c.instagram }}" rel="noopener">@{{ c.instagram }}</a></p>{% endif %}
   <p><a href="{{ wa_numero|wa('Olá! Vim pelo site.') }}" rel="noopener">WhatsApp</a></p>
 </address>
 {% if c.mapa_url %}<iframe class="contato-mapa" src="{{ c.mapa_url }}" title="Mapa: {{ site.site.nome }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>{% endif %}

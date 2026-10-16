@@ -135,3 +135,51 @@ def test_preco_nan_inf_falha(site_dir, temas_dir, editar, valor):
     editar("preco = 32.0", f"preco = {valor}")
     with pytest.raises(ErroDeDados, match=r"site\.toml: cardapio\.categorias\[0\]\.itens\[0\]\.preco"):
         carregar_site(site_dir, temas_dir)
+
+
+@pytest.mark.parametrize("antigo,novo,campo", [
+    ('id = "drinks"', 'id = "Dri nks"', r"cardapio\.categorias\[0\]\.id"),
+    ('cor = "#112233"', 'cor = "roxo"', r"site\.cor"),
+    ('slug = "completo"', 'slug = "hub"', r"site\.slug"),
+    ('arquivo = "capa.jpg"', 'arquivo = "../capa.jpg"', r"fotos\[0\]\.arquivo"),
+    ('imagem = "capa.jpg"', 'imagem = "x/capa.jpg"', r"capa\.imagem"),
+    ('mapa_url = "https://www.google.com/maps/embed?pb=x"', 'mapa_url = "http://x"', r"contato\.mapa_url"),
+])
+def test_validacoes_de_formato(site_dir, temas_dir, editar, antigo, novo, campo):
+    editar(antigo, novo)
+    with pytest.raises(ErroDeDados, match=campo):
+        carregar_site(site_dir, temas_dir)
+
+
+def test_categoria_id_repetido(site_dir, temas_dir):
+    arq = site_dir / "site.toml"
+    arq.write_text(arq.read_text(encoding="utf-8") + '\n[[cardapio.categorias]]\nid = "drinks"\nnome = "Outra"\n', encoding="utf-8")
+    with pytest.raises(ErroDeDados, match=r"categorias\[\d+\]\.id.*repetido"):
+        carregar_site(site_dir, temas_dir)
+
+
+def test_mesmo_stem_de_imagem(site_dir, temas_dir):
+    from PIL import Image
+    Image.new("RGB", (8, 8)).save(site_dir / "imagens" / "capa.png")
+    with pytest.raises(ErroDeDados, match=r"capa\.jpg.*capa\.png"):
+        carregar_site(site_dir, temas_dir)
+
+
+@pytest.mark.parametrize("entrada", ["@usuario", "usuario", "instagram.com/usuario", "https://www.instagram.com/usuario/"])
+def test_instagram_normalizado(site_dir, temas_dir, editar, entrada):
+    editar('instagram = "@completo"', f'instagram = "{entrada}"')
+    assert carregar_site(site_dir, temas_dir)["contato"]["instagram"] == "usuario"
+
+
+def test_aviso_url_base_provisoria(tmp_path):
+    c = tmp_path / "config.toml"
+    c.write_text('url_base="https://davy.netlify.app/"\nwhatsapp="5511987654321"\n[marca]\nnome="D"\ncor="#7C3AED"\n')
+    (aviso,) = avisos_config(carregar_config(c))
+    assert "url_base" in aviso and "QR" in aviso and "Netlify" in aviso
+
+
+def test_cor_da_marca_invalida(tmp_path):
+    c = tmp_path / "config.toml"
+    c.write_text('url_base="https://x.app/"\nwhatsapp="5511987654321"\n[marca]\nnome="D"\ncor="roxo"\n')
+    with pytest.raises(ErroDeDados, match=r"marca\.cor"):
+        carregar_config(c)

@@ -1,6 +1,7 @@
 """Leitura e validação de config.toml e site.toml."""
 import datetime
 import math
+import re
 import tomllib
 from pathlib import Path
 
@@ -9,6 +10,12 @@ from gerador.formatos import NUMERO_PROVISORIO as PROVISORIO, normalizar_whatsap
 MODULOS = {"eventos", "pedido"}
 SELOS = {"vegano", "vegetariano", "sem-gluten", "picante", "novo", "chef"}
 CTAS = {"cardapio", "reservar", "pedir"}
+RE_ID = re.compile(r"[a-z0-9-]+")
+RE_COR = re.compile(r"#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})")
+RE_INSTAGRAM = re.compile(r"(?:https?://)?(?:www\.)?(?:instagram\.com/)?@?([A-Za-z0-9._]+)/?(?:\?.*)?")
+URL_PROVISORIA = "https://davy.netlify.app/"
+SLUGS_RESERVADOS = {"static", "img", "hub"}
+EXT_IMAGEM = {".jpg", ".jpeg", ".png", ".webp"}
 
 
 class ErroDeDados(Exception):
@@ -79,7 +86,18 @@ class _V:
             res.append(v)
         return res
 
+    def nome_arquivo(self, nome, caminho):
+        if nome in (".", "..") or "/" in nome or "\\" in nome or Path(nome).name != nome:
+            raise self.erro(caminho, f"nome de arquivo {nome!r} não pode conter caminho")
+
+    def cor(self, valor, caminho):
+        if valor and not RE_COR.fullmatch(valor):
+            raise self.erro(caminho, f"cor {valor!r} inválida; use #rrggbb")
+        return valor
+
     def arquivo_imagem(self, nome, caminho):
+        if nome:
+            self.nome_arquivo(nome, caminho)
         if nome and self.pasta_imagens is not None and not (self.pasta_imagens / nome).is_file():
             raise self.erro(caminho, f"imagem {nome!r} não encontrada em imagens/")
 
@@ -122,7 +140,7 @@ def carregar_config(caminho: Path) -> dict:
     return {
         "marca": {
             "nome": v.texto(marca, "nome", "marca.nome", obrigatorio=True),
-            "cor": v.texto(marca, "cor", "marca.cor", obrigatorio=True),
+            "cor": v.cor(v.texto(marca, "cor", "marca.cor", obrigatorio=True), "marca.cor"),
         },
         "whatsapp": digitos,
         "url_base": url if url.endswith("/") else url + "/",
@@ -130,9 +148,13 @@ def carregar_config(caminho: Path) -> dict:
 
 
 def avisos_config(config: dict) -> list[str]:
+    avisos = []
     if config["whatsapp"] == PROVISORIO:
-        return [f"config.toml: whatsapp ainda é o número provisório {PROVISORIO}"]
-    return []
+        avisos.append(f"config.toml: whatsapp ainda é o número provisório {PROVISORIO}")
+    if config["url_base"] == URL_PROVISORIA:
+        avisos.append(f"config.toml: url_base ainda é {URL_PROVISORIA}; os QR codes vão apontar para esse endereço. "
+                      "Troque pelo endereço real do Netlify")
+    return avisos
 
 
 def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
@@ -146,6 +168,8 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
         raise v.erro("site", "tabela obrigatória ausente")
     s = v.tabela(bruto, "site", "site")
     slug = v.texto(s, "slug", "site.slug", obrigatorio=True)
+    if not RE_ID.fullmatch(slug) or slug in SLUGS_RESERVADOS:
+        raise v.erro("site.slug", f"{slug!r} inválido; use letras minúsculas, números e hífen (não use {sorted(SLUGS_RESERVADOS)})")
     if slug != pasta.name:
         raise v.erro("site.slug", f"{slug!r} deve ser igual ao nome da pasta {pasta.name!r}")
     tema = v.texto(s, "tema", "site.tema", obrigatorio=True)
@@ -159,12 +183,19 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
         "slogan": v.texto(s, "slogan", "site.slogan"),
         "descricao": v.texto(s, "descricao", "site.descricao"),
         "modulos": v.escolhas(s, "modulos", "site.modulos", MODULOS),
-        "cor": v.texto(s, "cor", "site.cor"),
+        "cor": v.cor(v.texto(s, "cor", "site.cor"), "site.cor"),
     }
 
     c = v.tabela(bruto, "contato", "contato")
     contato = {k: v.texto(c, k, f"contato.{k}") for k in
                ("whatsapp", "telefone", "instagram", "endereco", "mapa_url")}
+    if contato["instagram"].strip():
+        m = RE_INSTAGRAM.fullmatch(contato["instagram"].strip())
+        if not m:
+            raise v.erro("contato.instagram", f"{contato['instagram']!r} não parece um perfil do Instagram")
+        contato["instagram"] = m.group(1)
+    if contato["mapa_url"] and not contato["mapa_url"].startswith("https://"):
+        raise v.erro("contato.mapa_url", "deve começar com https://")
     if contato["whatsapp"]:
         contato["whatsapp"] = v.whatsapp(contato["whatsapp"], "contato.whatsapp")
 
@@ -194,6 +225,14 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
                           "texto": v.texto(d, "texto", f"{p}.texto"),
                           "imagem": v.imagem(d, "imagem", f"{p}.imagem")})
 
+    if v.pasta_imagens is not None and v.pasta_imagens.is_dir():
+        vistos = {}
+        for f in sorted(v.pasta_imagens.iterdir()):
+            if f.suffix.lower() in EXT_IMAGEM:
+                if f.stem in vistos:
+                    raise v.erro("imagens/", f"{vistos[f.stem]!r} e {f.name!r} têm o mesmo nome base e gerariam o mesmo .webp")
+                vistos[f.stem] = f.name
+
     galeria = v.imagens(bruto, "galeria", "galeria")
 
     categorias = []
@@ -217,7 +256,12 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
                           "imagem": v.imagem(it, "imagem", f"{q}.imagem"),
                           "selos": v.escolhas(it, "selos", f"{q}.selos", SELOS),
                           "adicionais": adicionais})
-        categorias.append({"id": v.texto(cat, "id", f"{p}.id", obrigatorio=True),
+        cid = v.texto(cat, "id", f"{p}.id", obrigatorio=True)
+        if not RE_ID.fullmatch(cid):
+            raise v.erro(f"{p}.id", f"{cid!r} inválido; use letras minúsculas, números e hífen")
+        if any(c["id"] == cid for c in categorias):
+            raise v.erro(f"{p}.id", f"id {cid!r} repetido")
+        categorias.append({"id": cid,
                            "nome": v.texto(cat, "nome", f"{p}.nome", obrigatorio=True),
                            "descricao": v.texto(cat, "descricao", f"{p}.descricao"), "itens": itens})
 
@@ -245,8 +289,10 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
     for i, f in enumerate(v.lista(bruto, "fotos", "fotos")):
         p = f"fotos[{i}]"
         f = v.item_tabela(f, p)
-        fotos.append({n: v.texto(f, n, f"{p}.{n}", obrigatorio=(n == "arquivo"))
-                      for n in ("arquivo", "url", "autor", "fonte")})
+        foto = {n: v.texto(f, n, f"{p}.{n}", obrigatorio=(n == "arquivo"))
+                for n in ("arquivo", "url", "autor", "fonte")}
+        v.nome_arquivo(foto["arquivo"], f"{p}.arquivo")
+        fotos.append(foto)
 
     return {
         "site": site, "contato": contato, "horarios": horarios, "capa": capa, "sobre": sobre,

@@ -2,6 +2,7 @@
 import argparse
 import functools
 import http.server
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -66,6 +67,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--saida", default="dist")
     ap.add_argument("--serve", nargs="?", const=8000, type=int, metavar="PORTA")
     a = ap.parse_args(argv)
+    if a.site and not re.fullmatch(r"[a-z0-9-]+", a.site):
+        print(f"--site {a.site!r}: use apenas letras minúsculas, números e hífen", file=sys.stderr)
+        return 1
     saida = Path(a.saida)
     try:
         avisos = construir_cliente(RAIZ, a.site, saida) if a.site else construir_portfolio(RAIZ, saida)
