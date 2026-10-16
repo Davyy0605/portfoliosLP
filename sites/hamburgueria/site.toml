@@ -161,14 +161,14 @@ descricao = "Para dividir (ou não)."
   nome = "Fritas Rústicas"
   descricao = "Batata com casca, alho e alecrim. Porção de 300 g."
   preco = 24.9
-  imagem = "fritas.jpg"
+  imagem = "burger-fries.jpg"
   selos = ["vegano"]
 
   [[cardapio.categorias.itens]]
   nome = "Fritas com Cheddar e Bacon"
   descricao = "Porção de 300 g coberta de cheddar cremoso e farofa de bacon."
   preco = 34.9
-  imagem = "fritas-cheddar.jpg"
+  imagem = "fritas.jpg"
 
   [[cardapio.categorias.itens]]
   nome = "Anéis de Cebola"
@@ -332,6 +332,6 @@ fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "bandeja.jpg"
-url = "https://images.unsplash.com/photo-1763689389824-dd2cea2e5772"
-autor = "HANVIN CHEONG"
+url = "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5"
+autor = "Colaborador Unsplash"
 fonte = "Unsplash"

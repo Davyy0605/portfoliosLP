@@ -1,0 +1,142 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
+{% endblock %}
+{% block conteudo %}
+{% set nome = site.site.nome %}
+{# monumento: a primeira palavra do nome que não seja artigo ou o próprio segmento #}
+{% set palavras = nome.split(" ") %}
+{% set marca = palavras[1] if palavras|length > 1 and palavras[0]|lower in ["hamburgueria", "o", "a", "os", "as"] else palavras[0] %}
+{% set categorias = site.cardapio.categorias|selectattr("itens")|list %}
+{% set usadas = [site.capa.imagem] + (site.sobre.imagens or []) + (site.destaques|map(attribute="imagem")|select|list) %}
+{% if categorias %}
+{% set com_foto = categorias[0]['itens']|selectattr("imagem")|list %}
+{% set foto_combo = com_foto|rejectattr("imagem", "in", usadas)|first or com_foto|first %}
+{% endif %}
+<a class="pular" href="#sobre">Pular para o conteúdo</a>
+
+<header class="barra">
+  <a class="barra-marca" href="./">{{ nome }}</a>
+  <nav class="barra-links" aria-label="Seções">
+    <a href="cardapio/">Cardápio</a>
+    {% if categorias %}<a href="#ofertas">{{ categorias[0].nome }}</a>{% endif %}
+    <a href="#contato">Endereço</a>
+  </nav>
+  {{ m.cta(site, wa_numero, raiz) }}
+</header>
+
+<main>
+  {# Palco: o nome fica preso no topo enquanto a capa e os destaques passam por baixo, cada um com o seu chão de cor. #}
+  <div class="palco" style="--letras: {{ marca|length }}">
+    <section class="quadro quadro-1" aria-labelledby="titulo">
+      <div class="quadro-nome"><h1 id="titulo" class="monumento"><span aria-hidden="true">{{ marca }}</span><span class="sr-only">{{ nome }}</span></h1></div>
+      <figure class="quadro-foto">
+        {{ m.imagem(imagens, site.capa.imagem, "Burger artesanal da " ~ nome, "(min-width: 900px) 38vw, 92vw", prioridade=True) }}
+      </figure>
+      <div class="quadro-legenda">
+        <p class="declaracao">{{ site.capa.titulo }}</p>
+        {% if site.capa.subtitulo %}<p class="quadro-texto">{{ site.capa.subtitulo }}</p>{% endif %}
+      </div>
+      <div class="quadro-acao">{{ m.cta(site, wa_numero, raiz) }}</div>
+    </section>
+    {% for d in site.destaques %}
+    <section class="quadro quadro-{{ loop.index + 1 }}" aria-labelledby="destaque-{{ loop.index }}">
+      <div class="quadro-nome" aria-hidden="true"><p class="monumento">{{ marca }}</p></div>
+      {% if d.imagem %}
+      <figure class="quadro-foto">
+        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 38vw, 92vw") }}
+      </figure>
+      {% endif %}
+      <div class="quadro-legenda">
+        <h2 id="destaque-{{ loop.index }}" class="quadro-titulo">{{ d.titulo }}</h2>
+        <p class="quadro-texto">{{ d.texto }}</p>
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+
+  <section class="sobre" id="sobre" aria-labelledby="sobre-titulo">
+    <div class="sobre-fatos">
+      {% if site.contato.endereco %}<p>{{ site.contato.endereco }}</p>{% endif %}
+      {% if site.horarios %}<p>{{ site.horarios[0].dias }}, {{ site.horarios[0].horas }}</p>{% endif %}
+      {% if site.contato.instagram %}<p>{{ site.contato.instagram }}</p>{% endif %}
+    </div>
+    <div class="sobre-corpo">
+      <h2 id="sobre-titulo" class="titulo-secao">{{ site.sobre.titulo }}</h2>
+      <p class="sobre-texto">
+        {% if site.sobre.imagens %}{{ m.imagem(imagens, site.sobre.imagens[0], "A chapa da " ~ nome, "120px", "sobre-capitular") }}{% endif %}
+        {{ site.sobre.texto }}
+      </p>
+    </div>
+    {% if site.sobre.imagens|length > 1 %}
+    <figure class="sobre-foto">
+      {{ m.imagem(imagens, site.sobre.imagens[1], "Burgers na grelha", "(min-width: 900px) 30vw, 70vw") }}
+    </figure>
+    {% endif %}
+  </section>
+
+  {% if categorias %}
+  <section class="ofertas" id="ofertas" aria-labelledby="ofertas-titulo">
+    <h2 id="ofertas-titulo" class="titulo-grande">{{ categorias[0].nome }}</h2>
+    {% if categorias[0].descricao %}<p class="declaracao ofertas-lead">{{ categorias[0].descricao }}</p>{% endif %}
+    <div class="ofertas-grade">
+      {% if foto_combo %}
+      <figure class="ofertas-foto">
+        {{ m.imagem(imagens, foto_combo.imagem, foto_combo.nome, "(min-width: 900px) 26vw, 60vw") }}
+      </figure>
+      {% endif %}
+      <div class="ofertas-tabelas">
+        {% for c in categorias[:2] %}
+        <div class="tabela">
+          {% if not loop.first %}<h3 class="tabela-nome">{{ c.nome }}</h3>{% endif %}
+          <ul>
+            {% for item in c['itens'] %}
+            <li>
+              <span class="tabela-item">{{ item.nome }}</span>
+              <span class="tabela-preco">{{ item.preco|brl }}</span>
+              {% if item.descricao %}<span class="tabela-desc">{{ item.descricao }}</span>{% endif %}
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+        <a class="botao" href="cardapio/#pedido">Montar meu pedido</a>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  {# a faixa mostra só fotos que ainda não apareceram na página #}
+  {% set galeria = (site.galeria or [])|reject("in", usadas + ([foto_combo.imagem] if foto_combo else []))|list or site.galeria %}
+  {% if galeria %}
+  <section class="faixa" aria-labelledby="faixa-titulo">
+    <h2 id="faixa-titulo" class="titulo-secao">Direto da chapa</h2>
+    {% for grupo in galeria|batch(4) %}
+    <div class="faixa-linha">
+      {% for foto in grupo %}
+      <figure class="faixa-painel">{{ m.imagem(imagens, foto, "Foto da " ~ nome, "(min-width: 900px) 40vw, 50vw") }}</figure>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  <section class="contato-bloco" id="contato" aria-labelledby="contato-titulo">
+    <h2 id="contato-titulo" class="sr-only">Endereço e contato</h2>
+    {{ m.contato(site, wa_numero) }}
+    {{ m.horarios(site) }}
+  </section>
+</main>
+
+<div class="fecho" style="--letras: {{ marca|length }}">
+  <div class="fecho-topo">
+    <p class="fecho-convite">Bateu a fome? Chapa quente.</p>
+    {{ m.cta(site, wa_numero, raiz) }}
+  </div>
+  {{ m.rodape(site, config) }}
+  <p class="fecho-nome" aria-hidden="true">{{ marca }}</p>
+</div>
+{% endblock %}
