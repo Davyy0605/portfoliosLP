@@ -1,0 +1,414 @@
+galeria = ["sala.jpg", "cozinha.jpg", "mesa.jpg", "tabua.jpg", "brinde.jpg", "sax.jpg"]
+
+[site]
+slug = "bistro"
+tema = "bistro"
+nome = "Entrelinhas"
+segmento = "Bistrô"
+ordem = 6
+slogan = "Bistrô de bairro, menu escrito à mão"
+descricao = "Entrelinhas: bistrô em Santa Tereza, Belo Horizonte. Menu do dia na lousa, carta de vinhos curta e noites de jazz às quintas."
+modulos = ["eventos"]
+cor = "#2F3B35"
+
+[contato]
+whatsapp = ""
+telefone = "(31) 4000-0147"
+instagram = "@entrelinhas.bistro"
+endereco = "Rua Mármore, Santa Tereza, Belo Horizonte - MG"
+mapa_url = "https://www.google.com/maps?q=Santa+Tereza,+Belo+Horizonte&output=embed"
+
+[[horarios]]
+dias = "Ter a Qui"
+horas = "12h às 15h e 18h às 23h"
+
+[[horarios]]
+dias = "Sex e Sáb"
+horas = "12h às 00h"
+
+[[horarios]]
+dias = "Dom"
+horas = "12h às 17h"
+
+[capa]
+titulo = "O que está na lousa hoje"
+subtitulo = "Cozinha de bistrô com ingredientes mineiros, um menu que muda todo dia e vinhos pequenos servidos sem cerimônia."
+imagem = "capa.jpg"
+cta = "reservar"
+
+[sobre]
+titulo = "Uma casa pequena, de conversa comprida"
+texto = "O Entrelinhas ocupa um sobrado antigo de Santa Tereza, com 28 lugares, mesas de madeira e uma lousa na parede que a cozinha reescreve toda manhã. A chef Lívia Cantarino aprendeu o ofício entre Lyon e Belo Horizonte e cozinha como se cozinha para amigos: poucos ingredientes, bom molho, pão de fermentação natural. A carta de vinhos é curta de propósito, com rótulos de produtores pequenos que a casa conhece pelo nome."
+imagens = ["sala.jpg", "cafe.jpg"]
+
+[[destaques]]
+titulo = "Menu do dia"
+texto = "De terça a sexta, no almoço: entrada, prato e sobremesa escolhidos pela cozinha de manhã, a partir do que chegou do mercado. O cardápio fica escrito na lousa."
+imagem = "frites.jpg"
+
+[[destaques]]
+titulo = "Quintas de jazz"
+texto = "Toda quinta, trio ao vivo a partir das 20h30, sem palco e sem pressa. Reserve para jantar e ganhe a melhor mesa para ouvir."
+imagem = "sax.jpg"
+
+[[destaques]]
+titulo = "Vinhos pequenos"
+texto = "Vinte rótulos de produtores pequenos de Minas, do Sul do Brasil, de Portugal e da França. Todos por taça, a partir de R$ 28."
+imagem = "vinhos.jpg"
+
+[[cardapio.categorias]]
+id = "menu-do-dia"
+nome = "Menu do dia"
+descricao = "Terça a sexta, no almoço. Escrito na lousa todas as manhãs."
+
+  [[cardapio.categorias.itens]]
+  nome = "Entrada do dia: salada de folhas, laranja e queijo"
+  descricao = "Folhas da horta, gomos de laranja, queijo Canastra e vinagrete de mel."
+  preco = 24.0
+  imagem = "salada.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Prato do dia: bife com fritas e manteiga de ervas"
+  descricao = "Bife de contrafilé, fritas finas, manteiga de ervas e salada verde."
+  preco = 48.0
+  imagem = "frites.jpg"
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Sobremesa do dia: creme de baunilha com frutas"
+  descricao = "Creme de baunilha com frutas da estação."
+  preco = 18.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Menu completo do dia"
+  descricao = "Entrada, prato e sobremesa do dia, com água e café."
+  preco = 64.0
+
+[[cardapio.categorias]]
+id = "entradas"
+nome = "Para começar"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Tábua de frios e figos"
+  descricao = "Presunto cru, queijos curados, figos, azeitonas e ovo de codorna. Para duas pessoas."
+  preco = 78.0
+  imagem = "tabua.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Sopa de cebola gratinada"
+  descricao = "Clássica, com caldo de carne longo e crouton de queijo gruyère."
+  preco = 36.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Pão da casa com manteiga de ervas"
+  descricao = "Fermentação natural de 36 horas, manteiga batida com alho e salsa."
+  preco = 22.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Salada de folhas e laranja"
+  descricao = "Folhas da horta, laranja, queijo Canastra e vinagrete de mel."
+  preco = 34.0
+  imagem = "salada.jpg"
+  selos = ["vegetariano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Escargots à provençale"
+  descricao = "Seis unidades, manteiga de alho, salsa e pão para molhar."
+  preco = 58.0
+
+[[cardapio.categorias]]
+id = "pratos"
+nome = "Pratos"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Steak frites"
+  descricao = "Contrafilé grelhado, fritas finas e molho béarnaise."
+  preco = 82.0
+  imagem = "carne.jpg"
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Almôndegas da casa com rúcula"
+  descricao = "Carne bovina e suína, molho de tomate rústico, rúcula e parmesão."
+  preco = 56.0
+  imagem = "almondegas.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Farfalle ao pesto e tomate"
+  descricao = "Massa fresca, pesto de manjericão, tomate confit e rúcula."
+  preco = 58.0
+  imagem = "farfalle.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Talharim com ovo e cogumelos"
+  descricao = "Talharim, gema mole, cogumelos salteados e parmesão."
+  preco = 62.0
+  imagem = "ovo.jpg"
+  selos = ["vegetariano", "novo"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Bowl de legumes e grão-de-bico"
+  descricao = "Abacate, rabanete, tomate, abóbora assada e grão-de-bico temperado."
+  preco = 48.0
+  imagem = "vegetais.jpg"
+  selos = ["vegano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Truta com amêndoas"
+  descricao = "Truta de Minas, manteiga de amêndoas e batatas novas."
+  preco = 76.0
+  selos = ["sem-gluten"]
+
+[[cardapio.categorias]]
+id = "sobremesas"
+nome = "Doces"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Macarons da semana"
+  descricao = "Três sabores escolhidos pela confeiteira, servidos com café."
+  preco = 32.0
+  imagem = "macarons.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Creme brûlée de baunilha"
+  descricao = "Casquinha de açúcar queimada na hora."
+  preco = 30.0
+  selos = ["vegetariano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Mousse de chocolate meio amargo"
+  descricao = "Com flor de sal e crocante de cacau."
+  preco = 28.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Queijo Canastra com goiabada"
+  descricao = "Queijo meia-cura, goiabada cascão e nozes."
+  preco = 34.0
+  selos = ["vegetariano", "sem-gluten"]
+
+[[cardapio.categorias]]
+id = "vinhos"
+nome = "Carta de vinhos"
+descricao = "Taça de 125 ml ou garrafa. Rótulos de produtores pequenos, que mudam com a estação."
+
+  [[cardapio.categorias.itens]]
+  nome = "Vinho da casa, branco"
+  descricao = "Blend de uvas brancas, Serra Gaúcha. Fresco e cítrico. Taça."
+  preco = 28.0
+  imagem = "vinhos.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Vinho da casa, tinto"
+  descricao = "Merlot e Cabernet, Campanha. Macio, de frutas escuras. Taça."
+  preco = 28.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Vinho verde, Minho"
+  descricao = "Portugal. Leve, levemente efervescente. Garrafa."
+  preco = 148.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Côtes du Rhône"
+  descricao = "França. Grenache e Syrah, especiarias e fruta madura. Garrafa."
+  preco = 196.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Syrah de Minas, Sul de Minas"
+  descricao = "Dupla poda, colheita de inverno. Intenso e elegante. Garrafa."
+  preco = 218.0
+  selos = ["novo"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Espumante rosé brut"
+  descricao = "Serra Gaúcha. Bolha fina, morango e cítricos. Garrafa."
+  preco = 168.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Taça de vinho do Porto tawny"
+  descricao = "Dez anos em barrica. Para o fim da noite. Dose."
+  preco = 36.0
+
+[[cardapio.categorias]]
+id = "bebidas"
+nome = "Cafés e outras bebidas"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Espresso"
+  descricao = "Grão do Sul de Minas, torra média."
+  preco = 9.0
+  imagem = "cafe-espresso.jpg"
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Limonada com hortelã"
+  descricao = "Limão-siciliano espremido na hora."
+  preco = 16.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cerveja artesanal, Pilsen"
+  descricao = "Cervejaria mineira, long neck 355 ml."
+  preco = 22.0
+
+[eventos]
+vazio_mensagem = "A agenda da casa será atualizada em breve. Siga o Instagram."
+
+  [[eventos.lista]]
+  titulo = "Noite de vinhos: Sul de Minas"
+  em_dias = 5
+  hora = "19h30"
+  atracao = "Sommelier convidado Tiago Nogueira"
+  descricao = "Cinco taças de vinhos de inverno do Sul de Minas, acompanhadas de pequenos pratos da chef."
+  imagem = "brinde.jpg"
+  valor = "R$ 180 por pessoa"
+
+  [[eventos.lista]]
+  titulo = "Quinta de jazz: Trio Calçada"
+  em_dias = 9
+  hora = "20h30"
+  atracao = "Trio Calçada"
+  descricao = "Standards e bossa nova em formato de trio, sem palco e sem pressa."
+  imagem = "sax.jpg"
+  valor = "Couvert R$ 25"
+
+  [[eventos.lista]]
+  titulo = "Quinta de jazz: noite do trompete"
+  em_dias = 16
+  hora = "20h30"
+  atracao = "Marcelo Duarte Quinteto"
+  descricao = "Repertório de Miles Davis e Chet Baker, com participação especial ao final."
+  imagem = "trompete.jpg"
+  valor = "Couvert R$ 30"
+
+  [[eventos.lista]]
+  titulo = "Queijos e vinhos mineiros"
+  em_dias = 25
+  hora = "19h"
+  atracao = "Chef Lívia Cantarino"
+  descricao = "Degustação guiada de seis queijos da Canastra e do Serro com vinhos de Minas."
+  imagem = "tabua.jpg"
+  valor = "R$ 140 por pessoa"
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1514933651103-005eec06c04b"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sala.jpg"
+url = "https://images.unsplash.com/photo-1544148103-0773bf10d330"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cafe.jpg"
+url = "https://images.unsplash.com/photo-1525610553991-2bede1a236e2"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "mesa.jpg"
+url = "https://images.unsplash.com/photo-1528605248644-14dd04022da1"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cozinha.jpg"
+url = "https://images.unsplash.com/photo-1428515613728-6b4607e44363"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "frites.jpg"
+url = "https://images.unsplash.com/photo-1600891964092-4316c288032e"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "tabua.jpg"
+url = "https://images.unsplash.com/photo-1478145046317-39f10e56b5e9"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "vegetais.jpg"
+url = "https://images.unsplash.com/photo-1512621776951-a57141f2eefd"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "farfalle.jpg"
+url = "https://images.unsplash.com/photo-1473093295043-cdd812d0e601"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "almondegas.jpg"
+url = "https://images.unsplash.com/photo-1529042410759-befb1204b468"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "ovo.jpg"
+url = "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "macarons.jpg"
+url = "https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cafe-espresso.jpg"
+url = "https://images.unsplash.com/photo-1511920170033-f8396924c348"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "salada.jpg"
+url = "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "vinhos.jpg"
+url = "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "brinde.jpg"
+url = "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sax.jpg"
+url = "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "trompete.jpg"
+url = "https://images.unsplash.com/photo-1511192336575-5a79af67a629"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "carne.jpg"
+url = "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"

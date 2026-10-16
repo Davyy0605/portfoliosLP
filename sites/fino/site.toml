@@ -1,0 +1,397 @@
+galeria = ["salao.jpg", "chef.jpg", "vinhedo.jpg", "sobremesa.jpg", "adega.jpg", "quarteto.jpg"]
+
+[site]
+slug = "fino"
+tema = "fino"
+nome = "Tessitura"
+segmento = "Restaurante fino"
+ordem = 5
+slogan = "Cozinha de autor em sete passos"
+descricao = "Tessitura: restaurante de cozinha autoral nos Jardins, em São Paulo. Menu degustação em sete passos, adega com mais de 300 rótulos, jantares harmonizados e música ao vivo."
+modulos = ["eventos"]
+cor = "#1A1A1A"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-0182"
+instagram = "@tessitura.mesa"
+endereco = "Alameda Lorena, Jardim Paulista, São Paulo - SP"
+mapa_url = "https://www.google.com/maps?q=Jardim+Paulista,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Ter a Qui"
+horas = "19h às 23h"
+
+[[horarios]]
+dias = "Sex e Sáb"
+horas = "19h às 00h"
+
+[[horarios]]
+dias = "Sáb (almoço)"
+horas = "12h30 às 16h"
+
+[capa]
+titulo = "Uma mesa, uma conversa longa"
+subtitulo = "Sete passos de cozinha autoral, feitos com produtores do interior paulista e uma adega pensada para acompanhar cada um deles."
+imagem = "capa.jpg"
+cta = "reservar"
+
+[sobre]
+titulo = "O ofício de tecer sabores"
+texto = "Tessitura nasceu da ideia de que um jantar é uma trama: ingredientes, tempo, vinho e conversa entrelaçados com paciência. A cozinha do chef Henrique Vasconcellos trabalha com poucos produtos por prato, escolhidos pela estação e pela mão de quem os planta, e deixa a técnica discreta para que o sabor fale primeiro. A sala tem apenas 11 mesas, o serviço é sem pressa e o menu muda a cada seis semanas."
+imagens = ["sala.jpg", "salao.jpg"]
+
+[[destaques]]
+titulo = "Menu degustação em sete passos"
+texto = "Do primeiro amuse-bouche à sobremesa, a sequência é pensada como um único texto. Opção com harmonização de vinhos, ou versão inteiramente vegetal."
+imagem = "chef.jpg"
+
+[[destaques]]
+titulo = "Adega com 300 rótulos"
+texto = "Vinhos de pequenos produtores do Brasil, Portugal, França e Itália, servidos por taça ou garrafa. O sommelier ajusta a harmonização ao seu paladar."
+imagem = "adega.jpg"
+
+[[destaques]]
+titulo = "Dress code"
+texto = "Esporte fino. Pedimos que evitem bermudas, regatas e chinelos. Não é preciso paletó, mas a noite pede um pouco de capricho."
+
+[[destaques]]
+titulo = "Reservas"
+texto = "Aceitamos reservas com até 30 dias de antecedência, para grupos de 2 a 8 pessoas. Tolerância de 20 minutos. Restrições alimentares devem ser avisadas com 48 horas de antecedência. Cancelamentos até 24 horas antes, sem custo."
+
+[[cardapio.categorias]]
+id = "degustacao"
+nome = "Menu degustação"
+descricao = "Servido para a mesa inteira, em sete passos. Menu da estação, atualizado a cada seis semanas."
+
+  [[cardapio.categorias.itens]]
+  nome = "Sete Passos"
+  descricao = "I. Ostra, pepino e raiz-forte. II. Ovo mole, abacate e espinafre. III. Camarão, bisque e arroz de coco. IV. Tagliolini com burrata e ervas. V. Salmão curado, funcho e limão-siciliano. VI. Costela de boi 72 horas, purê de baroa. VII. Panna cotta de baunilha com morangos."
+  preco = 490.0
+  imagem = "chef.jpg"
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Sete Passos com harmonização"
+  descricao = "O mesmo menu, com sete taças escolhidas pelo sommelier. Harmonização: I. espumante brut nature, II. Chardonnay da Serra Gaúcha, III. Albariño, IV. Vermentino, V. Riesling seco, VI. Tannat, VII. Moscato d'Asti."
+  preco = 790.0
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Sete Passos Vegetal"
+  descricao = "Versão sem proteína animal, com os mesmos sete tempos. I. Cogumelo e castanha. II. Beterraba assada. III. Palmito pupunha. IV. Tagliolini de abóbora. V. Berinjela defumada. VI. Raízes ao carvão. VII. Sorvete de capim-santo. Harmonização opcional: R$ 690."
+  preco = 440.0
+  selos = ["vegano", "novo"]
+
+[[cardapio.categorias]]
+id = "entradas"
+nome = "À la carte: entradas"
+descricao = "Para quem prefere montar a própria sequência."
+
+  [[cardapio.categorias.itens]]
+  nome = "Ostra com pepino e raiz-forte"
+  descricao = "Ostra de Florianópolis, gelatina de pepino e raiz-forte ralada na hora."
+  preco = 42.0
+  selos = ["sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Ovo mole, abacate e espinafre"
+  descricao = "Ovo caipira a 64 graus, creme de abacate, espinafre salteado e farofa de pão de fermentação natural."
+  preco = 58.0
+  imagem = "ovo.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Camarão, bisque e arroz de coco"
+  descricao = "Camarão-rosa grelhado, bisque de casca e arroz de coco tostado."
+  preco = 96.0
+  imagem = "camarao.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Tagliolini com burrata"
+  descricao = "Massa fresca de gema, burrata, ervas e limão-siciliano."
+  preco = 84.0
+  imagem = "massa.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Tartare de carne com mostarda antiga"
+  descricao = "Corte de coxão mole, alcaparra, gema curada e torrada fina."
+  preco = 78.0
+
+[[cardapio.categorias]]
+id = "principais"
+nome = "Pratos principais"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Salmão curado com funcho"
+  descricao = "Salmão selado, funcho braseado, limão-siciliano e manteiga noisette."
+  preco = 142.0
+  imagem = "salmao.jpg"
+  selos = ["sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Costela de boi 72 horas"
+  descricao = "Cozida lentamente, laqueada no próprio molho, purê de baroa e brócolis."
+  preco = 168.0
+  imagem = "carne.jpg"
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Costeleta de porco caipira"
+  descricao = "Costeleta madurada, batatas rústicas, maçã assada e brócolis ninja."
+  preco = 134.0
+  imagem = "porco.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Robalo com vinagrete de tucupi"
+  descricao = "Filé de robalo, jambu, tucupi reduzido e farinha de mandioca crocante."
+  preco = 152.0
+  selos = ["picante"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cogumelos ao carvão"
+  descricao = "Shimeji, shiitake e portobello, creme de castanha-de-caju e ervas frescas."
+  preco = 108.0
+  selos = ["vegano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Pato confitado com laranja"
+  descricao = "Coxa confitada, redução de laranja-baía e purê de mandioquinha."
+  preco = 156.0
+
+[[cardapio.categorias]]
+id = "sobremesas"
+nome = "Sobremesas"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Panna cotta de baunilha"
+  descricao = "Baunilha de Tahiti, morangos macerados em vinho do Porto e alecrim."
+  preco = 48.0
+  imagem = "sobremesa.jpg"
+  selos = ["vegetariano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Chocolate 70% com sal e azeite"
+  descricao = "Ganache morna de cacau da Bahia, flor de sal e azeite extravirgem."
+  preco = 52.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Sorvete de capim-santo"
+  descricao = "Sorvete artesanal, farofa doce de castanha e frutas vermelhas."
+  preco = 44.0
+  selos = ["vegano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Seleção de queijos nacionais"
+  descricao = "Três queijos da Canastra e do Serro, geleia de goiaba e nozes."
+  preco = 68.0
+  selos = ["vegetariano"]
+
+[[cardapio.categorias]]
+id = "adega"
+nome = "Adega, por taça"
+descricao = "Seleção do sommelier. Garrafas e safras raras na carta completa, na mesa."
+
+  [[cardapio.categorias.itens]]
+  nome = "Espumante brut nature"
+  descricao = "Serra Gaúcha, método tradicional, 36 meses sobre as borras."
+  preco = 46.0
+  imagem = "vinho-taca.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Chardonnay amadeirado"
+  descricao = "Vale dos Vinhedos, safra 2022. Notas de manteiga e fruta branca."
+  preco = 52.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Albariño"
+  descricao = "Rías Baixas, Espanha. Mineral, cítrico, de final salino."
+  preco = 58.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Pinot Noir"
+  descricao = "Borgonha, França. Frutas vermelhas e terra úmida."
+  preco = 74.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Tannat"
+  descricao = "Campanha Gaúcha. Corpo e taninos firmes."
+  preco = 56.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Moscato d'Asti"
+  descricao = "Piemonte, Itália. Doce, leve e levemente efervescente."
+  preco = 48.0
+
+[[cardapio.categorias]]
+id = "sem-alcool"
+nome = "Sem álcool e digestivos"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Infusão de ervas da casa"
+  descricao = "Capim-santo, hortelã e gengibre, servida em bule."
+  preco = 24.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Kombucha de jabuticaba"
+  descricao = "Fermentação própria, gaseificação natural."
+  preco = 28.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Café coado, grão do Cerrado Mineiro"
+  descricao = "Torra clara, notas de caramelo e frutas amarelas."
+  preco = 18.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cachaça envelhecida em bálsamo"
+  descricao = "Dose de 50 ml, produtor de Paraty."
+  preco = 38.0
+
+[eventos]
+vazio_mensagem = "Novos jantares serão anunciados em breve. Reserve pelo WhatsApp."
+
+  [[eventos.lista]]
+  titulo = "Jantar harmonizado: vinhos da Borgonha"
+  em_dias = 6
+  hora = "20h"
+  atracao = "Sommelier Beatriz Almeida"
+  descricao = "Cinco tempos, cinco taças de Borgonha, com apresentação da sommelière à mesa. Lugares limitados a 22 convidados."
+  imagem = "brinde.jpg"
+  valor = "R$ 640 por pessoa"
+
+  [[eventos.lista]]
+  titulo = "Noite de Quarteto de Cordas"
+  em_dias = 13
+  hora = "20h30"
+  atracao = "Quarteto Rubato"
+  descricao = "Música de câmara ao vivo durante o Menu Sete Passos. Peças de Villa-Lobos e Ginastera."
+  imagem = "quarteto.jpg"
+  valor = "Menu degustação + R$ 90 de couvert artístico"
+
+  [[eventos.lista]]
+  titulo = "Jantar a quatro mãos"
+  em_dias = 21
+  hora = "20h"
+  atracao = "Chef Henrique Vasconcellos e chef convidada Marina Teles"
+  descricao = "Um menu inédito de seis tempos escrito pelos dois chefs, com harmonização de vinhos brasileiros."
+  imagem = "chef.jpg"
+  valor = "R$ 720 por pessoa"
+
+  [[eventos.lista]]
+  titulo = "Piano ao jantar"
+  em_dias = 34
+  hora = "20h"
+  atracao = "Rafael Moraes ao piano"
+  descricao = "Repertório de bossa nova e standards em volume discreto, para jantar conversando."
+  imagem = "partitura.jpg"
+  valor = "Entrada gratuita para clientes do jantar"
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sala.jpg"
+url = "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "salao.jpg"
+url = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "chef.jpg"
+url = "https://images.unsplash.com/photo-1577219491135-ce391730fb2c"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "salmao.jpg"
+url = "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "carne.jpg"
+url = "https://images.unsplash.com/photo-1432139509613-5c4255815697"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "porco.jpg"
+url = "https://images.unsplash.com/photo-1432139555190-58524dae6a55"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "vinho-taca.jpg"
+url = "https://images.unsplash.com/photo-1474722883778-792e7990302f"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "vinhedo.jpg"
+url = "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "adega.jpg"
+url = "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "ovo.jpg"
+url = "https://images.unsplash.com/photo-1482049016688-2d3e1b311543"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sobremesa.jpg"
+url = "https://images.unsplash.com/photo-1488477181946-6428a0291777"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "massa.jpg"
+url = "https://images.unsplash.com/photo-1481931098730-318b6f776db0"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "quarteto.jpg"
+url = "https://images.unsplash.com/photo-1465847899084-d164df4dedc6"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "partitura.jpg"
+url = "https://images.unsplash.com/photo-1507838153414-b4b713384a76"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "brinde.jpg"
+url = "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "camarao.jpg"
+url = "https://images.unsplash.com/photo-1559847844-5315695dadae"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"
