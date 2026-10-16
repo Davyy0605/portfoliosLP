@@ -1,0 +1,152 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+{% endblock %}
+{% block conteudo %}
+{% set cats = site.cardapio.categorias|selectattr("itens")|list %}
+{# A lousa mostra a categoria "menu-do-dia"; sem ela, a primeira categoria do cardápio. #}
+{% set lousa = cats|selectattr("id", "equalto", "menu-do-dia")|list|first or cats|first %}
+{% set vinhos = cats|selectattr("id", "equalto", "vinhos")|list|first %}
+{% set galeria = site.galeria or [] %}
+{% set tem_eventos = "eventos" in site.site.modulos %}
+
+<header class="topo">
+  <a class="marca" href="./">{{ site.site.nome }}</a>
+  <nav class="topo-links" aria-label="Seções">
+    {% if lousa %}<a href="#lousa">Lousa</a>{% endif %}
+    {% if vinhos %}<a href="#vinhos">Vinhos</a>{% endif %}
+    {% if tem_eventos %}<a href="#agenda">Agenda</a>{% endif %}
+    <a href="cardapio/">Cardápio</a>
+  </nav>
+  {{ m.cta(site, wa_numero, raiz) }}
+</header>
+
+<main>
+  <section class="capa" id="lousa" aria-labelledby="capa-titulo">
+    <div class="lousa">
+      <p class="lousa-data"><span data-lousa-data>Hoje</span>{% if lousa and lousa.descricao %} · {{ lousa.descricao }}{% endif %}</p>
+      <h1 id="capa-titulo" class="lousa-titulo">{{ site.capa.titulo }}</h1>
+      {% if lousa %}
+      <ul class="lousa-itens">
+        {% for item in lousa['itens'] %}
+        {% set partes = item.nome.split(":", 1) %}
+        <li>
+          {% if partes|length == 2 %}<span class="lousa-rotulo">{{ partes[0]|trim }}</span>{% endif %}
+          {% set prato = partes[-1]|trim %}
+          <span class="lousa-prato">{{ prato[:1]|upper }}{{ prato[1:] }}</span>
+          <span class="lousa-preco">{{ item.preco|brl }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="capa-acoes">
+        {{ m.cta(site, wa_numero, raiz) }}
+        <a class="link-giz" href="cardapio/">Cardápio completo</a>
+      </div>
+    </div>
+    <figure class="capa-foto">
+      {{ m.imagem(imagens, site.capa.imagem, "Mesa à luz de velas no salão do " ~ site.site.nome, "(min-width: 960px) 44vw, 100vw", prioridade=True) }}
+      <figcaption>{{ site.capa.subtitulo }}</figcaption>
+    </figure>
+  </section>
+
+  <section class="casa" id="sobre" aria-labelledby="sobre-titulo">
+    <div class="casa-texto">
+      <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
+      <p class="caderno">{{ site.sobre.texto }}</p>
+    </div>
+    {% for f in site.sobre.imagens[:2] %}
+    <figure class="casa-foto casa-foto-{{ loop.index }}">
+      {{ m.imagem(imagens, f, "Salão do " ~ site.site.nome if loop.first else "Clientes à mesa no " ~ site.site.nome, "(min-width: 960px) 30vw, 80vw") }}
+    </figure>
+    {% endfor %}
+  </section>
+
+  {% if vinhos %}
+  <section class="adega" id="vinhos" aria-labelledby="vinhos-titulo">
+    <div class="adega-cabeca">
+      <h2 id="vinhos-titulo">{{ vinhos.nome }}</h2>
+      {% if vinhos.descricao %}<p>{{ vinhos.descricao }}</p>{% endif %}
+    </div>
+    {% set foto_vinho = vinhos['itens']|selectattr("imagem")|list|first %}
+    {% if foto_vinho %}
+    <figure class="adega-foto">{{ m.imagem(imagens, foto_vinho.imagem, "Vinho tinto sendo servido na taça", "(min-width: 960px) 34vw, 100vw") }}</figure>
+    {% endif %}
+    <ul class="adega-lista">
+      {% for v in vinhos['itens'] %}
+      <li>
+        <span class="adega-nome">{{ v.nome }}</span>
+        <span class="adega-preco">{{ v.preco|brl }}</span>
+        {% if v.descricao %}<span class="adega-nota">{{ v.descricao }}</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if site.destaques %}
+  <section class="notas" aria-labelledby="notas-titulo">
+    <h2 id="notas-titulo" class="notas-titulo">O que faz a gente voltar</h2>
+    <div class="notas-lista">
+      {% for d in site.destaques %}
+      <article class="nota">
+        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 960px) 28vw, 86vw", "nota-foto") }}
+        <h3>{{ d.titulo }}</h3>
+        <p>{{ d.texto }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if tem_eventos %}
+  <section class="agenda" id="agenda" aria-labelledby="agenda-titulo">
+    <div class="agenda-cabeca">
+      <h2 id="agenda-titulo">Agenda da casa</h2>
+      <p>Noites especiais numa sala pequena. Os lugares acabam rápido: reserve pelo botão de cada evento.</p>
+    </div>
+    {{ m.eventos(site, imagens, wa_numero) }}
+  </section>
+  {% endif %}
+
+  {% if galeria %}
+  <section class="galeria" aria-label="Fotos do {{ site.site.nome }}">
+    {% for g in galeria[:6] %}
+    <figure class="galeria-foto">{{ m.imagem(imagens, g, "Foto do " ~ site.site.nome, "(min-width: 960px) 33vw, 50vw") }}</figure>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  <section class="reserva" id="contato" aria-labelledby="contato-titulo">
+    <div class="reserva-convite">
+      <h2 id="contato-titulo">Guardamos uma mesa para você</h2>
+      <p>Mande pelo WhatsApp o dia, o horário e quantas pessoas vêm. A casa é pequena e a resposta é rápida.</p>
+      {{ m.cta(site, wa_numero, raiz) }}
+    </div>
+    <div class="reserva-quadro">
+      <h3>Horários</h3>
+      {{ m.horarios(site) }}
+    </div>
+    <div class="reserva-dados">
+      <h3>Onde estamos</h3>
+      {{ m.contato(site, wa_numero) }}
+    </div>
+  </section>
+</main>
+
+<div class="fim">
+  <p class="fim-frase" aria-hidden="true">Até a próxima linha.</p>
+  <nav class="fim-links" aria-label="Rodapé">
+    <a href="cardapio/">Cardápio</a>
+    {% if tem_eventos %}<a href="#agenda">Agenda</a>{% endif %}
+    <a href="#contato">Reservas</a>
+  </nav>
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}
+{% block scripts %}
+{% include "bistro/_data.html" %}
+{% endblock %}
