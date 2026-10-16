@@ -127,9 +127,14 @@
   <p>&copy; {{ site.site.nome }}</p>
   {% if site._pasta.parent.name == "sites" %}<p>Site de demonstração por {{ config.marca.nome }}</p>{% endif %}
   {% if site.fotos %}
-  <p class="rodape-creditos">Fotos:
-    {% for f in site.fotos if f.autor %}{{ f.autor }}{% if f.fonte %} ({{ f.fonte }}){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}
-  </p>
+  {% set ns = namespace(partes=[]) %}
+  {% for g in site.fotos|groupby('fonte', default='') %}
+    {% set anon = 'Colaborador ' ~ g.grouper %}
+    {% set nomes = g.list|selectattr('autor')|map(attribute='autor')|unique|reject('equalto', anon)|list %}
+    {% if anon in g.list|map(attribute='autor')|list %}{% set nomes = nomes + ['colaboradores da ' ~ g.grouper] %}{% endif %}
+    {% if nomes %}{% set ns.partes = ns.partes + [(g.grouper ~ ': ' if g.grouper else '') ~ nomes|join(', ')] %}{% endif %}
+  {% endfor %}
+  {% if ns.partes %}<p class="rodape-creditos">Fotos: {{ ns.partes|join(' · ') }}</p>{% endif %}
   {% endif %}
 </footer>
 {% endmacro %}

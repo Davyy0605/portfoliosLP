@@ -264,7 +264,7 @@ vazio_mensagem = "Novas atrações em breve. Siga o Âmbar 33 no Instagram."
   valor = "Couvert R$ 20"
 
   [[eventos.lista]]
-  titulo = "Samba-Rock de Sexta"
+  titulo = "Samba-Rock na Pista"
   em_dias = 4
   hora = "22h"
   atracao = "Banda Os Vira-Latas"
@@ -290,7 +290,7 @@ vazio_mensagem = "Novas atrações em breve. Siga o Âmbar 33 no Instagram."
   valor = "Entrada gratuita"
 
   [[eventos.lista]]
-  titulo = "Sexta de DJ e Vinil"
+  titulo = "Noite de DJ e Vinil"
   em_dias = 18
   hora = "23h"
   atracao = "DJ Neon Sul"

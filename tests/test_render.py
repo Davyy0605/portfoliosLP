@@ -115,3 +115,14 @@ def test_cache_separado_por_pasta_de_origem(raiz, tmp_path):
     a = Image.open(tmp_path / "a" / "img" / "capa-8.webp").convert("RGB").getpixel((0, 0))
     b = Image.open(tmp_path / "b" / "img" / "capa-8.webp").convert("RGB").getpixel((0, 0))
     assert a[0] > 200 and b[2] > 200
+
+
+def test_rodape_agrupa_creditos(raiz, editar):
+    base = 'autor = "Fulano"\nfonte = "Unsplash"\n'
+    extra = "".join(f'\n[[fotos]]\narquivo = "{a}.jpg"\nurl = "u"\nautor = "{au}"\nfonte = "{f}"\n'
+                    for a, au, f in [("a", "Fulano", "Unsplash"), ("b", "Colaborador Unsplash", "Unsplash"),
+                                     ("c", "Colaborador Unsplash", "Unsplash"), ("d", "Zé", "Pexels")])
+    editar(base, base + extra)
+    html = _html(raiz, "landing")
+    assert "Fotos: Pexels: Zé · Unsplash: Fulano, colaboradores da Unsplash" in html
+    assert "Colaborador Unsplash" not in html
