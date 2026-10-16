@@ -1,0 +1,7 @@
+dist/
+dist-*/
+__pycache__/
+.superpowers/
+node_modules/
+.venv/
+capturas/
