@@ -95,4 +95,23 @@ def test_hub_otimiza_so_a_capa(raiz, tmp_path):
     render_hub(env, [site], config, out, tmp_path / "cache")
     nomes = [p.name for p in (out / "img" / "completo").iterdir()]
     assert nomes and all(n.startswith("capa-") for n in nomes)
-    assert (tmp_path / "cache" / "hub" / "completo").is_dir()
+    assert (tmp_path / "cache" / "hub" / "sites" / "completo").is_dir()
+
+
+def test_cache_separado_por_pasta_de_origem(raiz, tmp_path):
+    import shutil
+    from PIL import Image
+    env = criar_ambiente(raiz)
+    config = carregar_config(raiz / "config.toml")
+    demo = carregar_site(raiz / "sites" / "completo", raiz / "temas")
+    (raiz / "clientes").mkdir(exist_ok=True)
+    shutil.copytree(raiz / "sites" / "completo", raiz / "clientes" / "completo")
+    Image.new("RGB", (8, 8), "blue").save(raiz / "clientes" / "completo" / "imagens" / "capa.jpg")
+    cli = carregar_site(raiz / "clientes" / "completo", raiz / "temas")
+    cache = tmp_path / "cache"
+    render_site(env, demo, config, tmp_path / "a", "", "", cache)
+    render_site(env, cli, config, tmp_path / "b", "", "", cache)
+    assert (cache / "sites" / "completo").is_dir() and (cache / "clientes" / "completo").is_dir()
+    a = Image.open(tmp_path / "a" / "img" / "capa-8.webp").convert("RGB").getpixel((0, 0))
+    b = Image.open(tmp_path / "b" / "img" / "capa-8.webp").convert("RGB").getpixel((0, 0))
+    assert a[0] > 200 and b[2] > 200

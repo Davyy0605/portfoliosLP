@@ -1,4 +1,5 @@
 """Otimização de imagens: WebP em várias larguras + srcset."""
+import os
 import shutil
 from collections.abc import Iterable
 from pathlib import Path
@@ -36,7 +37,9 @@ def otimizar_imagens(origem: Path, destino: Path, larguras: tuple[int, ...] = (8
                         transposta = ImageOps.exif_transpose(im)
                     v = transposta.convert("RGBA" if im.mode in ("RGBA", "LA", "P") else "RGB")
                     v = v.resize((w, round(h0 * w / w0)), Image.LANCZOS)
-                    v.save(alvo, "WEBP", quality=78)
+                    tmp = alvo.with_name(alvo.name + ".tmp")  # save truncado nunca vira cache
+                    v.save(tmp, "WEBP", quality=78)
+                    os.replace(tmp, alvo)
                 if gerar_em != destino:
                     shutil.copyfile(alvo, destino / alvo.name)
         pasta = destino.name

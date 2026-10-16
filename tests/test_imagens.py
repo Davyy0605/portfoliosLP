@@ -133,3 +133,17 @@ def test_arquivos_restringe(tmp_path):
     _img(o / "b.jpg", (100, 100))
     r = otimizar_imagens(o, d, arquivos=["a.jpg"])
     assert list(r) == ["a.jpg"] and [x.name for x in d.iterdir()] == ["a-100.webp"]
+
+
+def test_exif_rotaciona_dimensoes_frio_e_quente(tmp_path):
+    o, c = tmp_path / "o", tmp_path / "cache"
+    o.mkdir()
+    im = Image.new("RGB", (900, 600), "red")
+    ex = Image.Exif()
+    ex[0x0112] = 6
+    im.save(o / "r.jpg", exif=ex)
+    for d in ("d1", "d2"):  # frio, depois cache hit
+        r = otimizar_imagens(o, tmp_path / d / "img", cache=c)["r.jpg"]
+        assert (r["largura"], r["altura"]) == (600, 900)
+    with Image.open(c / "r-600.webp") as w:
+        assert w.size == (600, 900)

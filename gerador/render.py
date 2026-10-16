@@ -29,6 +29,11 @@ def _imagens(site, destino: Path, larguras=(800, 1600), arquivos=None, cache: Pa
     return otimizar_imagens(pasta, destino, larguras, arquivos, cache)
 
 
+def _chave(site) -> Path:
+    """sites/<slug> e clientes/<slug> não podem compartilhar cache."""
+    return Path(site["_pasta"].parent.name) / site["_pasta"].name
+
+
 def render_site(env, site: dict, config: dict, destino: Path, raiz_rel: str, url_site: str = "",
                 cache: Path | None = None) -> None:
     destino = Path(destino)
@@ -38,7 +43,7 @@ def render_site(env, site: dict, config: dict, destino: Path, raiz_rel: str, url
     paginas = (("landing", destino, raiz_rel, "tema.css"),
                ("cardapio", destino / "cardapio", raiz_rel + "../", "../tema.css"))
     for pagina, pasta, raiz, tema_css in paginas:
-        imagens = _imagens(site, pasta / "img", cache=cache and Path(cache) / site["site"]["slug"])
+        imagens = _imagens(site, pasta / "img", cache=cache and Path(cache) / _chave(site))
         _escrever(env, f"{tema}/{pagina}.html", pasta / "index.html", site=site, config=config,
                   imagens=imagens, wa_numero=wa, raiz=raiz, tema_css=tema_css, pagina=pagina, url_site=url_site)
     shutil.copy(Path(env.loader.searchpath[0]) / tema / "tema.css", destino / "tema.css")
@@ -50,7 +55,7 @@ def render_hub(env, sites: list[dict], config: dict, destino: Path, cache: Path 
     for s in sites:
         slug = s["site"]["slug"]
         imgs = _imagens(s, destino / "img" / slug, (800,), [s["capa"]["imagem"]],
-                        cache and Path(cache) / "hub" / slug)
+                        cache and Path(cache) / "hub" / _chave(s))
         capa = imgs.get(s["capa"]["imagem"])
         if capa:  # otimizar_imagens usa o nome da pasta ("<slug>/..."); o hub precisa de "img/<slug>/..."
             capa = {**capa, "src": "img/" + capa["src"],

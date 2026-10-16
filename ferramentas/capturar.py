@@ -58,7 +58,7 @@ def capturar(base, saida):
                 for slug, nome, caminho in paginas(base):
                     # "networkidle" nunca chega com o iframe do Google Maps
                     pagina.goto(base + caminho, wait_until="load")
-                    pagina.evaluate("document.fonts.ready")
+                    pagina.evaluate("document.fonts.ready.then(() => 0)")
                     arq = saida / f"{slug}-{nome}-{largura}.png"
                     pagina.screenshot(path=str(arq), full_page=True)
                     gravados.append(arq)
