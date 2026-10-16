@@ -1,0 +1,345 @@
+galeria = ["salao.jpg", "cozinha.jpg", "prato-mesa.jpg", "peixe.jpg", "massa-ragu.jpg", "torta.jpg"]
+
+[site]
+slug = "restaurante"
+tema = "restaurante"
+nome = "Cozinha Imbuia"
+segmento = "Restaurante"
+ordem = 2
+slogan = "Comida de casa, feita com tempo, em mesa grande."
+descricao = "Cozinha Imbuia, em Pinheiros: executivo de segunda a sexta, pratos de forno e fogão, espaço família e reservas pelo WhatsApp."
+modulos = []
+cor = "#B4532A"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-0102"
+instagram = "@cozinhaimbuia"
+endereco = "Rua dos Pinheiros, Pinheiros, São Paulo - SP"
+mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Seg a Sex"
+horas = "11h30 às 15h30 e 19h às 23h"
+
+[[horarios]]
+dias = "Sábado"
+horas = "12h às 23h30"
+
+[[horarios]]
+dias = "Domingo"
+horas = "12h às 17h"
+
+[capa]
+titulo = "Almoço de verdade, todo dia."
+subtitulo = "Panela no fogo desde as sete da manhã. Executivo de segunda a sexta, carta completa à noite e aos fins de semana."
+imagem = "capa.jpg"
+cta = "reservar"
+
+[sobre]
+titulo = "Uma casa de comida, não de moda"
+texto = "A Cozinha Imbuia nasceu de uma mesa de domingo: cozidos que pedem horas, molhos feitos na hora e porções para dividir. Compramos de pequenos produtores do interior paulista, temperamos sem pressa e servimos em pratos fundos, porque comida boa pede fartura. Venha almoçar entre reuniões, jantar com a família ou fechar a tarde de sábado com a gente."
+imagens = ["familia.jpg", "cozinha.jpg"]
+
+[[destaques]]
+titulo = "Prato do dia, de segunda a sexta"
+texto = "Um executivo por dia, com prato principal, arroz, feijão, guarnição e salada. Das 11h30 às 15h30, a partir de R$ 38,00. Veja a semana completa no cardápio."
+imagem = "executivo-grelhado.jpg"
+
+[[destaques]]
+titulo = "Espaço família"
+texto = "Mesas amplas, cadeirão, cardápio infantil e um canto de desenho para os pequenos. Aos sábados e domingos, as crianças até 6 anos não pagam o menu kids."
+imagem = "familia.jpg"
+
+[[destaques]]
+titulo = "Reservas para grupos"
+texto = "Aceitamos reservas para 2 a 20 pessoas, inclusive almoços de empresa e comemorações. Chame no WhatsApp com dia, horário e número de pessoas."
+imagem = "salao.jpg"
+
+[[cardapio.categorias]]
+id = "entradas"
+nome = "Entradas"
+descricao = "Para abrir a mesa."
+
+  [[cardapio.categorias.itens]]
+  nome = "Bolinho de feijoada"
+  descricao = "Seis unidades, com geleia de laranja e couve crocante."
+  preco = 36.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Pastel de forno de queijo canastra"
+  descricao = "Massa folhada fina, queijo curado e mel de laranjeira."
+  preco = 32.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Salada de tomate e burrata"
+  descricao = "Tomates maduros, burrata, manjericão e azeite da casa."
+  preco = 44.0
+  selos = ["vegetariano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Caldo verde da casa"
+  descricao = "Batata cremosa, couve fatiada fina e torresmo."
+  preco = 28.0
+  selos = ["sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Mandioca frita com molho de pimenta biquinho"
+  descricao = "Porção para dividir."
+  preco = 30.0
+  selos = ["vegano", "picante"]
+
+[[cardapio.categorias]]
+id = "prato-do-dia"
+nome = "Prato do dia / Executivo"
+descricao = "Segunda a sexta, das 11h30 às 15h30. Acompanha arroz, feijão, guarnição, salada e suco do dia."
+
+  [[cardapio.categorias.itens]]
+  nome = "Segunda: frango assado com batata rústica"
+  descricao = "Coxa e sobrecoxa assadas com alecrim, batatas douradas e farofa de ervas."
+  preco = 38.0
+  imagem = "cozido.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Terça: peixe grelhado com legumes"
+  descricao = "Filé de merluza na chapa, purê de mandioquinha e legumes salteados."
+  preco = 42.0
+  imagem = "executivo-grelhado.jpg"
+  selos = ["sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Quarta: feijoada completa"
+  descricao = "Feijão preto, cortes defumados, couve, laranja, farofa e torresmo."
+  preco = 46.0
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Quinta: strogonoff de carne com arroz branco"
+  descricao = "Filé em tiras, cogumelos, creme fresco e batata palha artesanal."
+  preco = 40.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Sexta: moqueca baiana com pirão"
+  descricao = "Peixe e camarão no leite de coco e dendê, pirão e arroz."
+  preco = 52.0
+  imagem = "arroz-peixe.jpg"
+  selos = ["picante", "chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Opção vegetariana do dia"
+  descricao = "Todos os dias, um prato sem carne: escondidinho de abóbora, quibe de grão-de-bico ou risoto de cogumelos."
+  preco = 36.0
+  selos = ["vegetariano"]
+
+[[cardapio.categorias]]
+id = "principais"
+nome = "Pratos principais"
+descricao = "À noite e nos fins de semana. Servem bem duas pessoas, conforme o apetite."
+
+  [[cardapio.categorias.itens]]
+  nome = "Filé à parmegiana da casa"
+  descricao = "Filé mignon empanado, molho de tomate fresco, mussarela gratinada, arroz e fritas."
+  preco = 74.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Costela de forno com mandioca"
+  descricao = "Oito horas no forno, desfiando, com purê de mandioca e vinagrete."
+  preco = 86.0
+  imagem = "carne-molho.jpg"
+  selos = ["chef", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Salmão grelhado ao limão siciliano"
+  descricao = "Arroz de ervas e legumes assados."
+  preco = 88.0
+  imagem = "peixe.jpg"
+  selos = ["sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Frango caipira com quiabo"
+  descricao = "Cozido lentamente, com angu mole e arroz."
+  preco = 64.0
+  imagem = "prato-mesa.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Risoto de cogumelos e parmesão"
+  descricao = "Arroz arbóreo, mix de cogumelos frescos e finalização com manteiga."
+  preco = 68.0
+  imagem = "prato-branco.jpg"
+  selos = ["vegetariano"]
+
+[[cardapio.categorias]]
+id = "massas"
+nome = "Massas"
+descricao = "Feitas na casa todos os dias."
+
+  [[cardapio.categorias.itens]]
+  nome = "Rigatoni ao ragu de pernil"
+  descricao = "Pernil cozido por seis horas, molho de tomate e parmesão."
+  preco = 58.0
+  imagem = "massa-ragu.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Espaguete ao pesto de manjericão"
+  descricao = "Pesto da casa, tomate confit e lascas de parmesão."
+  preco = 52.0
+  imagem = "massa-pesto.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Talharim com camarão e alho-poró"
+  descricao = "Camarões salteados em manteiga de ervas."
+  preco = 72.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Nhoque de batata ao sugo"
+  descricao = "Molho de tomate assado e manjericão."
+  preco = 48.0
+  selos = ["vegano"]
+
+[[cardapio.categorias]]
+id = "kids"
+nome = "Espaço família"
+descricao = "Menu infantil, para crianças até 10 anos."
+
+  [[cardapio.categorias.itens]]
+  nome = "Mini filé com arroz, feijão e batata"
+  descricao = "Porção pensada para os pequenos."
+  preco = 34.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Macarrão ao molho de tomate"
+  descricao = "Com queijo ralado à parte."
+  preco = 26.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Tirinhas de frango empanado"
+  descricao = "Com purê de batata."
+  preco = 32.0
+
+[[cardapio.categorias]]
+id = "sobremesas"
+nome = "Sobremesas e bebidas"
+descricao = "Para fechar a conversa."
+
+  [[cardapio.categorias.itens]]
+  nome = "Torta de limão"
+  descricao = "Base crocante, creme cítrico e merengue maçaricado."
+  preco = 24.0
+  imagem = "torta.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Pudim de leite condensado"
+  descricao = "Calda de caramelo e flor de sal."
+  preco = 22.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Doce de leite com queijo fresco"
+  descricao = "Colher de doce cremoso com queijo minas."
+  preco = 26.0
+  selos = ["sem-gluten", "vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Suco natural"
+  descricao = "Laranja, limão, abacaxi com hortelã ou maracujá. 400 ml."
+  preco = 14.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Limonada com água com gás"
+  descricao = "Jarra de 1 litro, serve até três pessoas."
+  preco = 28.0
+  selos = ["novo", "vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cerveja long neck"
+  descricao = "Pilsen ou IPA brasileira."
+  preco = 16.0
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1538334421852-687c439c92f4"
+autor = "Alexander Faé"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "salao.jpg"
+url = "https://images.unsplash.com/photo-1526069631228-723c945bea6b"
+autor = "Toa Heftiba"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "familia.jpg"
+url = "https://images.unsplash.com/photo-1544031064-9de80864ade5"
+autor = "Janosch Lino"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "executivo-grelhado.jpg"
+url = "https://images.unsplash.com/photo-1600175074394-f2f4c500f7ea"
+autor = "Faisal"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "peixe.jpg"
+url = "https://images.unsplash.com/photo-1676471926534-d5c9771909fa"
+autor = "Nima Naseri"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "massa-ragu.jpg"
+url = "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9"
+autor = "Ben Lei"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "massa-pesto.jpg"
+url = "https://images.unsplash.com/photo-1473093295043-cdd812d0e601"
+autor = "Eaters Collective"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "carne-molho.jpg"
+url = "https://images.unsplash.com/photo-1663530761401-15eefb544889"
+autor = "Urban Gyllström"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "prato-mesa.jpg"
+url = "https://images.unsplash.com/photo-1565895405227-31cffbe0cf86"
+autor = "Louis Hansel"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "prato-branco.jpg"
+url = "https://images.unsplash.com/photo-1564759296729-771e78c26df7"
+autor = "Spencer Davis"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "arroz-peixe.jpg"
+url = "https://images.unsplash.com/photo-1665332195309-9d75071138f0"
+autor = "Keesha's Kitchen"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cozido.jpg"
+url = "https://images.unsplash.com/photo-1627858034922-72a657d6b3c2"
+autor = "Focused on You"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "torta.jpg"
+url = "https://images.unsplash.com/photo-1476887334197-56adbf254e1a"
+autor = "Alexander Mils"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cozinha.jpg"
+url = "https://images.unsplash.com/photo-1681270543584-8e541a1bb056"
+autor = "Lucas Law"
+fonte = "Unsplash"
