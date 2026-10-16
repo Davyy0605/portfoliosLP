@@ -7,7 +7,7 @@
 <meta name="description" content="{{ site.site.descricao }}">
 <meta property="og:title" content="{{ site.site.nome }}">
 <meta property="og:description" content="{{ site.site.descricao }}">
-{% if site.capa.imagem and site.capa.imagem in imagens %}<meta property="og:image" content="{{ raiz }}{{ imagens[site.capa.imagem].src }}">
+{% if site.capa.imagem and site.capa.imagem in imagens %}<meta property="og:image" content="{{ url_site }}{{ imagens[site.capa.imagem].src }}">
 {% endif %}
 <meta name="theme-color" content="{{ site.site.cor or config.marca.cor }}">
 {% block fontes %}{% endblock %}

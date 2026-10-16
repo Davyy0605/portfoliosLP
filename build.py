@@ -12,23 +12,38 @@ from gerador.render import copiar_estaticos, criar_ambiente, render_hub, render_
 RAIZ = Path(__file__).parent
 
 
-def _preparar(raiz: Path, saida: Path):
-    config = carregar_config(raiz / "config.toml")
-    shutil.rmtree(saida, ignore_errors=True)
-    saida.mkdir(parents=True)
-    copiar_estaticos(raiz, saida)
-    return config, criar_ambiente(raiz), avisos_config(config)
+MARCADOR = ".gerado-por-build"
+
+
+def _preparar(raiz: Path, saida: Path) -> None:
+    """Apaga e recria a saída, recusando diretórios que não são saída do build."""
+    r, s = raiz.resolve(), saida.resolve()
+    if s == r or s in r.parents or any((s / n).exists() for n in ("config.toml", "sites", "temas")):
+        raise ErroDeDados(f"--saida {saida}: recusado, o diretório contém o projeto")
+    if s.exists():
+        if not s.is_dir() or (any(s.iterdir()) and not (s / MARCADOR).is_file()):
+            raise ErroDeDados(f"--saida {saida}: recusado, diretório não vazio que não foi gerado pelo build")
+        try:
+            shutil.rmtree(s)
+        except OSError as e:
+            raise ErroDeDados(f"--saida {saida}: não foi possível apagar ({e.strerror or e})") from None
+    s.mkdir(parents=True)
+    (s / MARCADOR).write_text("", encoding="utf-8")
+    copiar_estaticos(raiz, s)
 
 
 def construir_portfolio(raiz: Path, saida: Path) -> list[str]:
     raiz, saida = Path(raiz), Path(saida)
-    config, env, avisos = _preparar(raiz, saida)
+    config = carregar_config(raiz / "config.toml")
     pasta = raiz / "sites"
     sites = listar_sites(pasta, raiz / "temas") if pasta.is_dir() else []
+    _preparar(raiz, saida)
+    env = criar_ambiente(raiz)
     render_hub(env, sites, config, saida)
     for s in sites:
-        render_site(env, s, config, saida / s["site"]["slug"], "../")
-    return avisos
+        slug = s["site"]["slug"]
+        render_site(env, s, config, saida / slug, "../", config["url_base"] + slug + "/")
+    return avisos_config(config)
 
 
 def construir_cliente(raiz: Path, slug: str, saida: Path) -> list[str]:
@@ -36,9 +51,11 @@ def construir_cliente(raiz: Path, slug: str, saida: Path) -> list[str]:
     pasta = next((p for p in (raiz / "clientes" / slug, raiz / "sites" / slug) if p.is_dir()), None)
     if pasta is None:
         raise ErroDeDados(f"{slug}: site não encontrado em clientes/ nem em sites/")
-    config, env, avisos = _preparar(raiz, saida)
-    render_site(env, carregar_site(pasta, raiz / "temas"), config, saida, "")
-    return avisos
+    config = carregar_config(raiz / "config.toml")
+    site = carregar_site(pasta, raiz / "temas")
+    _preparar(raiz, saida)
+    render_site(criar_ambiente(raiz), site, config, saida, "", config["url_base"])
+    return avisos_config(config)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -59,7 +76,7 @@ def main(argv: list[str] | None = None) -> int:
         h = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(saida))
         print(f"Servindo {saida} em http://localhost:{a.serve}/")
         try:
-            http.server.ThreadingHTTPServer(("", a.serve), h).serve_forever()
+            http.server.ThreadingHTTPServer(("127.0.0.1", a.serve), h).serve_forever()
         except KeyboardInterrupt:
             pass
     return 0

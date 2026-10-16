@@ -27,19 +27,18 @@ def _imagens(site, destino: Path, larguras=(800, 1600)):
     return otimizar_imagens(pasta, destino, larguras) if pasta.is_dir() else {}
 
 
-def render_site(env, site: dict, config: dict, destino: Path, raiz_rel: str) -> None:
+def render_site(env, site: dict, config: dict, destino: Path, raiz_rel: str, url_site: str = "") -> None:
     destino = Path(destino)
     tema = site["site"]["tema"]
     wa = site["contato"]["whatsapp"] or config["whatsapp"]
     # shortcut: imagens duplicadas no cardápio; trocar por prefixo "../" se o deploy pesar.
-    paginas = (("landing", destino, raiz_rel, "tema.css", "index.html"),
-               ("cardapio", destino / "cardapio", raiz_rel + "../", "../tema.css", "cardapio/index.html"))
-    for pagina, pasta, raiz, tema_css, _ in paginas:
+    paginas = (("landing", destino, raiz_rel, "tema.css"),
+               ("cardapio", destino / "cardapio", raiz_rel + "../", "../tema.css"))
+    for pagina, pasta, raiz, tema_css in paginas:
         imagens = _imagens(site, pasta / "img")
         _escrever(env, f"{tema}/{pagina}.html", pasta / "index.html", site=site, config=config,
-                  imagens=imagens, wa_numero=wa, raiz=raiz, tema_css=tema_css, pagina=pagina)
-    css = env.loader.searchpath[0]
-    shutil.copy(Path(css) / tema / "tema.css", destino / "tema.css")
+                  imagens=imagens, wa_numero=wa, raiz=raiz, tema_css=tema_css, pagina=pagina, url_site=url_site)
+    shutil.copy(Path(env.loader.searchpath[0]) / tema / "tema.css", destino / "tema.css")
 
 
 def render_hub(env, sites: list[dict], config: dict, destino: Path) -> None:

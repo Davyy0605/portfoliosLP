@@ -1,4 +1,4 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><title>{{ config.marca.nome }}</title></head>
-<body>{% for c in cards %}<a href="{{ c.url }}">{{ c.site.site.nome }}</a>{{ c.qr|safe }}
+<body>{% for c in cards %}<a href="{{ c.url }}">{{ c.site.site.nome }}</a>{% if c.capa %}<img src="{{ c.capa.src }}" srcset="{{ c.capa.srcset }}" alt="">{% endif %}{{ c.qr }}
 {% endfor %}</body></html>
