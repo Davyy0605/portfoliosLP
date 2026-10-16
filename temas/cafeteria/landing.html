@@ -98,7 +98,15 @@
       {% if site.site.slogan %}<p>{{ site.site.slogan }}</p>{% endif %}
       {% if insta %}<a class="link-seco" href="https://instagram.com/{{ insta }}" rel="noopener">Mais fotos em {{ c.instagram }}</a>{% endif %}
     </div>
-    <button type="button" class="galeria-fruto" data-galeria style="--total: {{ site.galeria|length }}" aria-label="Próxima foto">
+    {% set n = site.galeria|length %}
+    {% if n > 1 %}
+    {# cada foto fica 3s; o fade (0,6s) é 20% da sua fatia, então as paradas dependem de n #}
+    <style>@media (prefers-reduced-motion: no-preference) {
+      .galeria-quadro { animation: girar {{ n * 3 }}s linear infinite; animation-delay: calc(var(--i) * 3s - .6s); }
+      @keyframes girar { 0% { opacity: 0; } {{ '%.3f'|format(20 / n) }}% { opacity: 1; } {{ '%.3f'|format(100 / n) }}% { opacity: 1; } {{ '%.3f'|format(120 / n) }}% { opacity: 0; } 100% { opacity: 0; } }
+    }</style>
+    {% endif %}
+    <button type="button" class="galeria-fruto" data-galeria aria-label="Próxima foto"{% if n < 2 %} disabled{% endif %}>
       {% for g in site.galeria %}
       <span class="galeria-quadro" style="--i: {{ loop.index0 }}">{{ m.imagem(imagens, g, "Foto " ~ loop.index ~ " de " ~ site.site.nome, "(min-width: 900px) 36vw, 72vw", "galeria-foto") }}</span>
       {% endfor %}
@@ -124,50 +132,16 @@
 
 {% block scripts %}
 <script>
+{% include "cafeteria/aberto.js" %}
 (() => {
   const el = document.querySelector("[data-aberto]");
   const fonte = document.getElementById("horarios-dados");
   if (!el || !fonte) return;
-  const DIAS = { dom: 0, seg: 1, ter: 2, qua: 3, qui: 4, sex: 5, sab: 6 };
-  const NOMES = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
-  const norm = (t) => t.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
-  const dia = (p) => DIAS[norm(p).trim().slice(0, 3)];
-  const diasDe = (txt) => {
-    const t = norm(txt), r = new Set();
-    for (const parte of t.split(/,|\se\s/)) {
-      const ab = parte.split(/\sa\s/);
-      const a = dia(ab[0]), b = ab[1] !== undefined ? dia(ab[1]) : a;
-      if (a === undefined || b === undefined) continue;
-      for (let d = a; ; d = (d + 1) % 7) { r.add(d); if (d === b) break; }
-    }
-    return r;
-  };
-  const min = (h, m) => +h * 60 + (+m || 0);
   try {
-    const faixas = [];
-    for (const h of JSON.parse(fonte.textContent)) {
-      const hs = [...String(h.horas).matchAll(/(\d{1,2})h(\d{2})?/g)];
-      if (hs.length < 2) continue;
-      const ini = min(hs[0][1], hs[0][2]);
-      let fim = min(hs[1][1], hs[1][2]);
-      if (fim <= ini) fim += 1440;
-      for (const d of diasDe(h.dias)) faixas.push({ d, ini, fim, txtIni: hs[0][0], txtFim: hs[1][0] });
-    }
-    if (!faixas.length) return;
-    const agora = new Date(), hoje = agora.getDay(), m = agora.getHours() * 60 + agora.getMinutes();
-    const aberta = faixas.find((f) => (f.d === hoje && m >= f.ini && m < f.fim) || (f.d === (hoje + 6) % 7 && m + 1440 < f.fim));
-    let texto;
-    if (aberta) texto = `Aberto agora, até ${aberta.txtFim}`;
-    else {
-      for (let k = 0; k < 7 && !texto; k++) {
-        const d = (hoje + k) % 7;
-        const f = faixas.filter((x) => x.d === d && (k > 0 || x.ini > m)).sort((a, b) => a.ini - b.ini)[0];
-        if (f) texto = `Fechado agora. Abre ${k === 0 ? "hoje" : k === 1 ? "amanhã" : NOMES[d]} às ${f.txtIni}`;
-      }
-    }
-    if (!texto) return;
-    el.querySelector("[data-aberto-texto]").textContent = texto;
-    el.classList.toggle("fechado", !aberta);
+    const s = statusAberto(JSON.parse(fonte.textContent), new Date());
+    if (!s) return;
+    el.querySelector("[data-aberto-texto]").textContent = s.texto;
+    el.classList.toggle("fechado", !s.aberto);
     el.hidden = false;
   } catch (e) { /* sem horário legível: o bloco segue oculto */ }
 })();

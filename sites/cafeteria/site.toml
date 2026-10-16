@@ -1,4 +1,4 @@
-galeria = ["paes.jpg", "latte-coracao.jpg", "croissant.jpg", "cappuccino.jpg", "bolo-morango.jpg", "latte-art.jpg"]
+galeria = ["paes.jpg", "cappuccino-croissant.jpg", "croissant.jpg", "cappuccino.jpg", "bolo-morango.jpg", "latte-art.jpg"]
 
 [site]
 slug = "cafeteria"

@@ -173,9 +173,7 @@ a { color: inherit; }
 .galeria-foto { width: 100%; height: 100%; object-fit: cover; }
 .galeria-fruto.manual .galeria-quadro { animation: none !important; opacity: 0; }
 .galeria-fruto.manual .galeria-quadro.ativo { opacity: 1; }
-@media (prefers-reduced-motion: no-preference) {
-  .galeria-quadro { animation: girar calc(var(--total, 6) * 3s) linear infinite; animation-delay: calc(var(--i) * 3s - .6s); }
-}
+/* o crossfade (@keyframes girar) é gerado na landing, com as paradas calculadas para o número de fotos */
 @media (min-width: 900px) {
   .galeria { grid-template-columns: 1fr 1fr; column-gap: 6vw; }
   .galeria-fruto { width: 36vw; }
@@ -261,7 +259,6 @@ a { color: inherit; }
 /* ---------- Movimento ---------- */
 @keyframes respirar { from { transform: scale(1) rotate(0deg); } to { transform: scale(1.06) rotate(4deg); } }
 @keyframes pulsar { 50% { transform: scale(.75); } }
-@keyframes girar { 0% { opacity: 0; } 3% { opacity: 1; } 16.6% { opacity: 1; } 19.6% { opacity: 0; } 100% { opacity: 0; } }
 @keyframes subir { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: no-preference) {
