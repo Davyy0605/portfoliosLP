@@ -23,10 +23,14 @@
   --passo-texto: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
   --passo-destaque: clamp(1.375rem, 1.1rem + 1.1vw, 2.125rem);
   --passo-titulo: clamp(2.25rem, 1.4rem + 3.6vw, 4.75rem);
-  /* "FORNALHA" em Archivo 125/900 mede ~7,2em: o nome ocupa a largura útil inteira */
-  --passo-monumento: calc((100vw - 2 * var(--margem)) / 7.35);
+  /* Archivo 125/900 em caixa alta mede ~0,9em por letra ("FORNALHA" = 7,2em): o nome ocupa a largura útil.
+     --letras vem do template; o teto evita um monumento absurdo com nomes de 3 letras. */
+  --passo-monumento: min(calc((100vw - 2 * var(--margem)) / (var(--letras, 8) * 0.92)), 24vw);
   --respiro: clamp(88px, 11vw, 176px);
 }
+
+/* custom property com var() é resolvida onde é declarada: redeclarar onde o template põe --letras */
+.palco, .fecho, .balcao { --passo-monumento: min(calc((100vw - 2 * var(--margem)) / (var(--letras, 8) * 0.92)), 24vw); }
 
 html { background: var(--carvao); }
 body {
@@ -271,7 +275,7 @@ a { color: inherit; }
 .contato-bloco .horarios > div:nth-child(even) { background: var(--mostarda-fundo); }
 .contato-bloco .contato a { text-decoration: none; }
 .contato-bloco .contato a:hover { text-decoration: underline; text-decoration-thickness: .08em; text-underline-offset: .12em; }
-.contato-bloco .contato-endereco { font-size: clamp(1.25rem, 0.8rem + 2.4vw, 3rem) !important; }
+.contato-bloco .contato p.contato-endereco { font-size: clamp(1.25rem, 0.8rem + 2.4vw, 3rem); }
 .contato-bloco .contato p:last-child { background: var(--carvao); color: var(--mostarda); }
 .contato-bloco .contato p:last-child a { display: inline-flex; align-items: flex-end; gap: .4em; width: 100%; }
 .contato-bloco .contato p:last-child a::after { content: "→"; margin-left: auto; }
@@ -305,7 +309,7 @@ a { color: inherit; }
 .balcao { padding: 14px var(--margem) clamp(32px, 4vw, 56px); background: var(--vermelho); color: var(--branco); }
 .balcao-voltar { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; text-decoration: none; }
 .balcao-voltar:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
-.balcao-nome { margin: clamp(12px, 2vw, 28px) 0 0; display: grid; gap: .6rem; }
+.balcao-nome { margin: clamp(12px, 2vw, 28px) 0 0; display: grid; gap: .6rem; max-width: 100%; overflow: hidden; }
 .balcao-nome .monumento { color: var(--papel); }
 .balcao-sub {
   font-weight: 900; font-variation-settings: "wdth" 118; text-transform: uppercase;
@@ -350,11 +354,12 @@ a { color: inherit; }
 .categoria h2 {
   margin: 0; font-family: var(--fonte-titulo); font-weight: 900; font-variation-settings: "wdth" 125;
   font-size: clamp(2.75rem, 1rem + 8vw, 8.5rem); line-height: .85; letter-spacing: -0.04em;
-  text-transform: uppercase; color: var(--vermelho); overflow-wrap: anywhere;
+  text-transform: uppercase; color: var(--vermelho); overflow-wrap: normal; hyphens: manual;
 }
+.categoria { overflow-x: clip; } /* palavra longa demais é cortada, nunca cria rolagem lateral */
 @media (max-width: 699px) {
-  /* "SOBREMESAS" precisa caber em 358px: largura normal no celular */
-  .categoria h2 { font-variation-settings: "wdth" 100; font-size: 12.5vw; letter-spacing: -0.035em; }
+  /* "SOBREMESAS" (10 letras) precisa caber inteira em 328px (360px menos margens): largura normal no celular */
+  .categoria h2 { font-variation-settings: "wdth" 100; font-size: 10.5vw; letter-spacing: -0.035em; }
 }
 .categoria-descricao { margin: .9rem 0 0; font-weight: 600; font-size: var(--passo-texto); max-width: 50ch; }
 .itens { margin-top: clamp(24px, 3vw, 40px); gap: 12px; }
@@ -394,6 +399,7 @@ a { color: inherit; }
 /* primeira categoria (combos): vitrine com foto grande e chão de mostarda */
 .categoria:first-of-type .itens { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
 @media (min-width: 900px) { .categoria:first-of-type .itens { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.categoria:first-of-type .itens { align-items: start; }
 .categoria:first-of-type .item { background: var(--mostarda); flex-direction: column; align-items: stretch; }
 .categoria:first-of-type .item-foto { width: calc(100% + 32px); max-width: none; height: auto; aspect-ratio: 4 / 3; margin: -16px -16px 0; }
 .categoria:first-of-type .item-texto { flex: 1 0 auto; }

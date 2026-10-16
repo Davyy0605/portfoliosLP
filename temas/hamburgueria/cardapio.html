@@ -7,11 +7,12 @@
 {% endblock %}
 {% block conteudo %}
 {% set nome = site.site.nome %}
-{% set marca = nome.split(" ")[0] %}
+{% set palavras = nome.split(" ") %}
+{% set marca = palavras[1] if palavras|length > 1 and palavras[0]|lower in ["hamburgueria", "o", "a", "os", "as"] else palavras[0] %}
 {% set pedido = "pedido" in site.site.modulos %}
-<header class="balcao">
+<header class="balcao" style="--letras: {{ marca|length }}">
   <a class="balcao-voltar" href="../">← {{ nome }}</a>
-  <h1 class="balcao-nome"><span class="monumento">{{ marca }}</span> <span class="balcao-sub">Cardápio{% if pedido %} e pedido{% endif %}</span></h1>
+  <h1 class="balcao-nome"><span class="monumento" aria-hidden="true">{{ marca }}</span><span class="sr-only">{{ nome }}</span> <span class="balcao-sub">Cardápio{% if pedido %} e pedido{% endif %}</span></h1>
   {% if pedido %}
   <ol class="balcao-passos">
     <li><span>Toque em <strong>Adicionar</strong> nos itens.</span></li>
