@@ -1,0 +1,160 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap">
+{% endblock %}
+
+{% block conteudo %}
+{% set c = site.contato %}
+{% set insta = c.instagram if c.instagram else '' %}
+{% set categorias = site.cardapio.categorias|selectattr("itens")|list %}
+{% set vitrine = categorias[0] if categorias else none %}
+<a class="pular" href="#principal">Pular para o conteúdo</a>
+<header class="topo">
+  <a class="marca" href="./"><span class="marca-fruto" aria-hidden="true"></span>{{ site.site.nome }}</a>
+  <nav class="topo-links" aria-label="Seções">
+    {% if vitrine %}<a href="#cafes">Cafés</a>{% endif %}
+    {% if site.destaques %}<a href="#casa">A casa</a>{% endif %}
+    <a href="#contato">Visitar</a>
+  </nav>
+  <a class="topo-acao" href="cardapio/">Cardápio</a>
+</header>
+
+<main id="principal">
+  <section class="capa" aria-labelledby="capa-titulo">
+    <div class="capa-texto">
+      <h1 id="capa-titulo">{{ site.capa.titulo }}</h1>
+      {% if site.capa.subtitulo %}<p class="capa-sub">{{ site.capa.subtitulo }}</p>{% endif %}
+      <div class="capa-acoes">
+        {{ m.cta(site, wa_numero, raiz) }}
+        {% if insta %}<a class="link-seco" href="https://instagram.com/{{ insta }}" rel="noopener">@{{ c.instagram }} no Instagram</a>{% endif %}
+      </div>
+      <p class="aberto" data-aberto hidden><span class="aberto-ponto" aria-hidden="true"></span><span data-aberto-texto></span></p>
+    </div>
+    <div class="capa-fruto">
+      {{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, "(min-width: 900px) 60vw, 120vw", "capa-foto", prioridade=True) }}
+    </div>
+  </section>
+
+  {% if vitrine %}
+  <section class="vitrine" id="cafes" aria-labelledby="vitrine-titulo">
+    <div class="vitrine-cabeca">
+      <h2 id="vitrine-titulo">{{ vitrine.nome }}</h2>
+      <p class="vitrine-conta">{{ vitrine['itens']|length }} no balcão</p>
+    </div>
+    {% if vitrine.descricao %}<p class="vitrine-desc">{{ vitrine.descricao }}</p>{% endif %}
+    <ul class="vitrine-lista">
+      {% for item in vitrine['itens'] %}
+      <li class="vitrine-item">
+        <span class="vitrine-bala">{{ m.imagem(imagens, item.imagem, item.nome, "64px", "bala-foto") }}</span>
+        <div class="vitrine-corpo">
+          <h3><span>{{ item.nome }}</span> <span class="vitrine-preco">{{ item.preco|brl }}</span></h3>
+          {% if item.descricao %}<p>{{ item.descricao }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <a class="botao" href="cardapio/">Ver o cardápio completo</a>
+  </section>
+  {% endif %}
+
+  {% if site.destaques %}
+  <section class="pastas" id="casa" aria-label="A casa">
+    {% for d in site.destaques %}
+    <article class="pasta" id="casa-{{ loop.index }}" aria-labelledby="pasta-{{ loop.index }}">
+      <h2 class="pasta-aba" id="pasta-{{ loop.index }}">{{ d.titulo }}</h2>
+      <div class="pasta-corpo">
+        <p class="pasta-texto">{{ d.texto }}</p>
+        {% if insta and 'instagram' in d.titulo|lower %}
+        <a class="botao botao-claro" href="https://instagram.com/{{ insta }}" rel="noopener">Seguir @{{ c.instagram }}</a>
+        {% endif %}
+        {% if d.imagem %}<div class="pasta-fruto">{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 34vw, 70vw", "pasta-foto") }}</div>{% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if site.sobre %}
+  <section class="sobre" aria-labelledby="sobre-titulo">
+    <div class="sobre-painel">
+      <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
+      <div class="sobre-texto">
+        <p>{{ site.sobre.texto }}</p>
+        <a class="botao botao-claro" href="cardapio/">Ver cardápio</a>
+      </div>
+      {% if site.sobre.imagens %}<div class="sobre-fruto">{{ m.imagem(imagens, site.sobre.imagens[0], site.sobre.titulo, "(min-width: 900px) 38vw, 86vw", "sobre-foto") }}</div>{% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if site.galeria %}
+  <section class="galeria" aria-labelledby="galeria-titulo">
+    <div class="galeria-texto">
+      <h2 id="galeria-titulo">Hoje no balcão</h2>
+      {% if site.site.slogan %}<p>{{ site.site.slogan }}</p>{% endif %}
+      {% if insta %}<a class="link-seco" href="https://instagram.com/{{ insta }}" rel="noopener">Mais fotos em @{{ c.instagram }}</a>{% endif %}
+    </div>
+    {% set n = site.galeria|length %}
+    {% if n > 1 %}
+    {# cada foto fica 3s; o fade (0,6s) é 20% da sua fatia, então as paradas dependem de n #}
+    <style>@media (prefers-reduced-motion: no-preference) {
+      .galeria-quadro { animation: girar {{ n * 3 }}s linear infinite; animation-delay: calc(var(--i) * 3s - .6s); }
+      @keyframes girar { 0% { opacity: 0; } {{ '%.3f'|format(20 / n) }}% { opacity: 1; } {{ '%.3f'|format(100 / n) }}% { opacity: 1; } {{ '%.3f'|format(120 / n) }}% { opacity: 0; } 100% { opacity: 0; } }
+    }</style>
+    {% endif %}
+    <button type="button" class="galeria-fruto" data-galeria aria-label="Próxima foto"{% if n < 2 %} disabled{% endif %}>
+      {% for g in site.galeria %}
+      <span class="galeria-quadro" style="--i: {{ loop.index0 }}">{{ m.imagem(imagens, g, "Foto " ~ loop.index ~ " de " ~ site.site.nome, "(min-width: 900px) 36vw, 72vw", "galeria-foto") }}</span>
+      {% endfor %}
+    </button>
+  </section>
+  {% endif %}
+
+  <section class="visitar" id="contato" aria-labelledby="visitar-titulo">
+    <div class="visitar-texto">
+      <h2 id="visitar-titulo">Passe para um café</h2>
+      {{ m.horarios(site) }}
+      {{ m.contato(site, wa_numero) }}
+    </div>
+  </section>
+</main>
+
+<div class="fecho">
+  <a class="fecho-marca" href="cardapio/" aria-label="Ver o cardápio de {{ site.site.nome }}">{{ site.site.nome }}</a>
+  {{ m.rodape(site, config) }}
+</div>
+<script type="application/json" id="horarios-dados">{{ site.horarios|tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script>
+{% include "cafeteria/aberto.js" %}
+(() => {
+  const el = document.querySelector("[data-aberto]");
+  const fonte = document.getElementById("horarios-dados");
+  if (!el || !fonte) return;
+  try {
+    const s = statusAberto(JSON.parse(fonte.textContent), new Date());
+    if (!s) return;
+    el.querySelector("[data-aberto-texto]").textContent = s.texto;
+    el.classList.toggle("fechado", !s.aberto);
+    el.hidden = false;
+  } catch (e) { /* sem horário legível: o bloco segue oculto */ }
+})();
+(() => {
+  const g = document.querySelector("[data-galeria]");
+  if (!g) return;
+  const quadros = [...g.querySelectorAll(".galeria-quadro")];
+  let atual = -1;
+  g.addEventListener("click", () => {
+    g.classList.add("manual");
+    atual = (atual + 1) % quadros.length;
+    quadros.forEach((q, i) => q.classList.toggle("ativo", i === atual));
+  });
+})();
+</script>
+{% endblock %}

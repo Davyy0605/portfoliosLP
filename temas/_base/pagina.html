@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ site.site.nome }}{% if pagina == "cardapio" %} · Cardápio{% endif %}</title>
+<meta name="description" content="{{ site.site.descricao }}">
+<meta property="og:title" content="{{ site.site.nome }}">
+<meta property="og:description" content="{{ site.site.descricao }}">
+{% if site.capa.imagem and site.capa.imagem in imagens %}<meta property="og:image" content="{{ url_site }}{{ imagens[site.capa.imagem].src }}">
+{% endif %}
+<meta name="theme-color" content="{{ site.site.cor or config.marca.cor }}">
+{% block fontes %}{% endblock %}
+<link rel="stylesheet" href="{{ raiz }}static/css/base.css">
+<link rel="stylesheet" href="{{ tema_css }}">
+</head>
+<body class="pagina-{{ pagina }}">
+{% block conteudo %}{% endblock %}
+{% block scripts %}{% endblock %}
+</body>
+</html>

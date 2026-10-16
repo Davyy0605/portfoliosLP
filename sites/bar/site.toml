@@ -1,0 +1,391 @@
+galeria = ["show-banda.jpg", "palco.jpg", "whisky.jpg", "martini.jpg", "balcao.jpg", "neon.jpg", "drink-pour.jpg", "drink-gelo.jpg"]
+
+[site]
+slug = "bar"
+tema = "bar"
+nome = "Âmbar 33"
+segmento = "Bar"
+ordem = 1
+slogan = "Drinks autorais depois que o sol cai."
+descricao = "Âmbar 33, coquetelaria autoral e música ao vivo em Pinheiros, São Paulo. Veja o cardápio, o happy hour e a agenda de shows."
+modulos = ["eventos"]
+cor = "#F59E0B"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-3333"
+instagram = "@ambar33bar"
+endereco = "Rua dos Pinhais Velhos, 33 — Pinheiros, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Ter a Qui"
+horas = "18h às 00h"
+
+[[horarios]]
+dias = "Sex e Sáb"
+horas = "18h às 03h"
+
+[[horarios]]
+dias = "Dom"
+horas = "17h às 23h"
+
+[capa]
+titulo = "A noite tem cor de âmbar."
+subtitulo = "Coquetelaria autoral, whiskies raros e palco aberto de terça a domingo, no coração de Pinheiros."
+imagem = "capa.jpg"
+cta = "reservar"
+
+[sobre]
+titulo = "Um balcão comprido, pouca luz e muito ofício."
+texto = "O Âmbar 33 nasceu da vontade de ter um bar onde o drink é pensado como prato: cada receita parte de um ingrediente brasileiro, passa por infusões feitas na casa e chega ao copo sem exagero. Aqui o bartender conversa com você, a luz é baixa e a trilha é tocada por quem sobe no palco ao lado do balcão."
+imagens = ["whisky2.jpg", "neon.jpg"]
+
+[[destaques]]
+titulo = "Drinks autorais"
+texto = "Dez receitas que mudam por estação, com cachaça artesanal, frutas do Cerrado e xaropes feitos aqui. O Fumaça de Cumaru é o que a casa mais serve."
+imagem = "drink-pour.jpg"
+
+[[destaques]]
+titulo = "Happy hour âmbar"
+texto = "De terça a sexta, das 18h às 20h: todos os clássicos da casa pela metade do preço no primeiro copo e petiscos a partir de R$ 24."
+imagem = "drink-laranja.jpg"
+
+[[destaques]]
+titulo = "Palco aberto"
+texto = "Jazz, samba-rock e MPB ao vivo toda semana, num palco colado ao balcão. Sem ingresso: couvert artístico só nas noites de show."
+imagem = "show-banda.jpg"
+
+[[cardapio.categorias]]
+id = "autorais"
+nome = "Drinks autorais"
+descricao = "Receitas da casa, todas com gelo cristalino."
+
+  [[cardapio.categorias.itens]]
+  nome = "Fumaça de Cumaru"
+  descricao = "Cachaça envelhecida em amburana, fava de cumaru, laranja e fumaça de madeira."
+  preco = 42.0
+  imagem = "drink-pour.jpg"
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cerrado Sour"
+  descricao = "Gin, pequi em infusão, limão-siciliano, clara e amargo de laranja."
+  preco = 39.0
+  selos = ["novo"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Jabuticaba Noir"
+  descricao = "Vodca, jabuticaba, vermute tinto e toque de pimenta-rosa."
+  preco = 38.0
+  imagem = "drink-rosa.jpg"
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Pôr do Sol 33"
+  descricao = "Rum envelhecido, maracujá, gengibre e cardamomo, finalizado com espuma cítrica."
+  preco = 40.0
+  imagem = "drink-gelo.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Pimenta e Mel"
+  descricao = "Tequila, mel de laranjeira, limão e pimenta-dedo-de-moça."
+  preco = 37.0
+  selos = ["picante"]
+
+[[cardapio.categorias]]
+id = "classicos"
+nome = "Clássicos"
+descricao = "Receitas de manual, feitas do jeito certo."
+
+  [[cardapio.categorias.itens]]
+  nome = "Negroni"
+  descricao = "Gin, Campari e vermute tinto, em partes iguais, com laranja desidratada."
+  preco = 34.0
+  imagem = "drink-laranja.jpg"
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Old Fashioned"
+  descricao = "Bourbon, açúcar mascavo, amargo de Angostura e casca de laranja."
+  preco = 38.0
+  imagem = "whisky2.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Dry Martini"
+  descricao = "Gin, vermute seco e azeitona ou twist de limão."
+  preco = 36.0
+  imagem = "martini.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Caipirinha de Limão"
+  descricao = "Cachaça prata, limão-taiti e açúcar. Opção com saquê ou vodca."
+  preco = 26.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Moscow Mule"
+  descricao = "Vodca, ginger beer, limão e hortelã, na caneca de cobre."
+  preco = 33.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Aperol Spritz"
+  descricao = "Aperol, espumante brut, água com gás e laranja."
+  preco = 35.0
+
+[[cardapio.categorias]]
+id = "whiskies"
+nome = "Whiskies e destilados"
+descricao = "Dose de 50 ml, servida com água ou gelo."
+
+  [[cardapio.categorias.itens]]
+  nome = "Single Malt 12 anos"
+  descricao = "Speyside, notas de mel, maçã e carvalho."
+  preco = 46.0
+  imagem = "whisky.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Bourbon Reserva"
+  descricao = "Barril único, caramelo e baunilha."
+  preco = 38.0
+  imagem = "whisky2.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Cachaça de Amburana"
+  descricao = "Alambique mineiro, 3 anos em barril."
+  preco = 24.0
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Rum Envelhecido 8 anos"
+  descricao = "Doce, com notas de café e especiarias."
+  preco = 36.0
+
+[[cardapio.categorias]]
+id = "cervejas"
+nome = "Cervejas e sem álcool"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "IPA da casa (chope 400 ml)"
+  descricao = "Cervejaria paulista, lúpulo cítrico e amargor médio."
+  preco = 22.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Pilsen artesanal (long neck)"
+  descricao = "Leve, seca e bem gelada."
+  preco = 18.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Gin Tônica sem álcool"
+  descricao = "Destilado botânico zero álcool, tônica e alecrim."
+  preco = 24.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Limonada de Gengibre"
+  descricao = "Limão, gengibre fresco, hortelã e água com gás."
+  preco = 16.0
+  selos = ["vegano"]
+
+[[cardapio.categorias]]
+id = "petiscos"
+nome = "Petiscos"
+descricao = "Para dividir no balcão."
+
+  [[cardapio.categorias.itens]]
+  nome = "Montaditos do Balcão (6 un.)"
+  descricao = "Pão de fermentação natural com copa, pimentão assado, anchova, queijo meia-cura e azeitona."
+  preco = 58.0
+  imagem = "petisco.jpg"
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Batata Rústica"
+  descricao = "Gomos com casca, páprica defumada e maionese de alho assado."
+  preco = 32.0
+  imagem = "carne.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Bolinho de Costela"
+  descricao = "Seis unidades, com maionese defumada."
+  preco = 38.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Mandioca Frita com Queijo Coalho"
+  descricao = "Crocante por fora, macia por dentro, com melado de cana."
+  preco = 32.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Torresmo de Rolo"
+  descricao = "Porção com vinagrete de limão."
+  preco = 34.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Azeitonas Marinadas"
+  descricao = "Com laranja, alecrim e pimenta calabresa."
+  preco = 24.0
+  selos = ["vegano", "picante"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Pastel de Camarão (6 un.)"
+  descricao = "Massa fina e recheio de camarão com catupiry."
+  preco = 42.0
+
+[[cardapio.categorias]]
+id = "sobremesas"
+nome = "Para fechar a noite"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Brownie com Sorvete de Creme"
+  descricao = "Chocolate 70%, calda quente e nozes."
+  preco = 28.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Pudim de Cachaça"
+  descricao = "Receita da casa, calda de caramelo e flor de sal."
+  preco = 26.0
+  selos = ["vegetariano"]
+
+[eventos]
+vazio_mensagem = "Novas atrações em breve. Siga o Âmbar 33 no Instagram."
+
+  [[eventos.lista]]
+  titulo = "Jazz no Balcão"
+  em_dias = 2
+  hora = "21h"
+  atracao = "Trio Lenha Fina"
+  descricao = "Standards e releituras de bossa nova, com o balcão como plateia."
+  imagem = "palco.jpg"
+  valor = "Couvert R$ 20"
+
+  [[eventos.lista]]
+  titulo = "Samba-Rock na Pista"
+  em_dias = 4
+  hora = "22h"
+  atracao = "Banda Os Vira-Latas"
+  descricao = "Pista improvisada e drinks em dobro até meia-noite."
+  imagem = "show-banda.jpg"
+  valor = "Couvert R$ 25"
+
+  [[eventos.lista]]
+  titulo = "Noite do Whisky"
+  em_dias = 8
+  hora = "20h"
+  atracao = "Degustação guiada com 5 rótulos"
+  descricao = "Conduzida pelo bartender da casa, com petiscos harmonizados."
+  imagem = "whisky.jpg"
+  valor = "R$ 120 por pessoa"
+
+  [[eventos.lista]]
+  titulo = "Roda de MPB"
+  em_dias = 12
+  hora = "19h"
+  atracao = "Duo Casa Aberta"
+  descricao = "Clássicos da MPB para cantar junto. Entrada livre."
+  valor = "Entrada gratuita"
+
+  [[eventos.lista]]
+  titulo = "Noite de DJ e Vinil"
+  em_dias = 18
+  hora = "23h"
+  atracao = "DJ Neon Sul"
+  descricao = "Soul, funk e disco do primeiro ao último disco."
+  valor = "Couvert R$ 30"
+
+  [[eventos.lista]]
+  titulo = "Réveillon de Verão"
+  data = 2026-01-10
+  hora = "21h"
+  atracao = "Banda Sol Posto"
+  descricao = "Evento passado, só para comprovar que ele some da lista."
+  valor = "Couvert R$ 20"
+
+[[fotos]]
+# capa.jpg foi recortada à mão (lado direito removido) para tirar o letreiro de um bar real; rebaixar a foto desfaz o recorte.
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1572116469696-31de0f17cc34"
+autor = "qui nguyen"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "balcao.jpg"
+url = "https://images.unsplash.com/photo-1689037772787-1847524c5e56"
+autor = "Britt Fowler"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "drink-pour.jpg"
+url = "https://images.unsplash.com/photo-1470337458703-46ad1756a187"
+autor = "Adam Jaime"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "drink-laranja.jpg"
+url = "https://images.unsplash.com/photo-1651877546976-ab61bf889b68"
+autor = "Aurela Redenica"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "drink-rosa.jpg"
+url = "https://images.unsplash.com/photo-1605270012917-bf157c5a9541"
+autor = "M.S. Meeuwesen"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "drink-gelo.jpg"
+url = "https://images.unsplash.com/photo-1586338211598-e2d64cf97e28"
+autor = "Andrea Riezzo"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "whisky.jpg"
+url = "https://images.unsplash.com/photo-1695057672316-7efe5b856ab0"
+autor = "Donna White"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "whisky2.jpg"
+url = "https://images.unsplash.com/photo-1649640547107-6bf197e3a30f"
+autor = "Timothy James"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "martini.jpg"
+url = "https://images.unsplash.com/photo-1597075687490-8f673c6c17f6"
+autor = "Ambitious Studio* | Rick Barrett"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "neon.jpg"
+url = "https://images.unsplash.com/photo-1641910106897-c399362a6d0c"
+autor = "Khoi Tran"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "show-banda.jpg"
+url = "https://images.unsplash.com/photo-1501612780327-45045538702b"
+autor = "Yannis Papanastasopoulos"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "palco.jpg"
+url = "https://images.unsplash.com/photo-1600779547877-be592ef5aad3"
+autor = "Magnus Lunay"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "petisco.jpg"
+url = "https://images.unsplash.com/photo-1776191707227-109f5f3f09d3"
+autor = "Raúl Mermans García"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "carne.jpg"
+url = "https://images.unsplash.com/photo-1584269974503-653d2d40c75c"
+autor = "Kankan"
+fonte = "Unsplash"

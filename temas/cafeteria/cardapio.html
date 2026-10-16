@@ -1,0 +1,27 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600&display=swap">
+{% endblock %}
+
+{% block conteudo %}
+<header class="menu-topo">
+  <a class="marca" href="../"><span class="marca-fruto" aria-hidden="true"></span>{{ site.site.nome }}</a>
+  <h1>Cardápio</h1>
+  {% if site.site.slogan %}<p class="menu-slogan">{{ site.site.slogan }}</p>{% endif %}
+  {% if site.horarios %}
+  <p class="menu-horas">{% for h in site.horarios %}{{ h.dias }} {{ h.horas }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+  {% endif %}
+</header>
+<main class="menu">
+  {{ m.cardapio(site, imagens, pedido="pedido" in site.site.modulos) }}
+  {{ m.carrinho(site, wa_numero) }}
+</main>
+<div class="fecho fecho-menu">
+  {% if site.contato.instagram %}<a class="fecho-insta" href="https://instagram.com/{{ site.contato.instagram }}" rel="noopener">Marque a sua xícara: @{{ site.contato.instagram }}</a>{% endif %}
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}

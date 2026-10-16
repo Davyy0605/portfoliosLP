@@ -1,0 +1,26 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&family=Imbue:opsz,wght@10..100,300..500&display=swap">
+{% endblock %}
+{% block conteudo %}
+<header class="carta-topo">
+  <a class="carta-voltar" href="../">{{ site.site.nome }}</a>
+  <h1>Cardápio</h1>
+  {% if site.site.slogan %}<p class="carta-slogan">{{ site.site.slogan }}</p>{% endif %}
+</header>
+<main class="carta-pagina folha">
+  {{ m.cardapio(site, imagens, pedido="pedido" in site.site.modulos) }}
+  {{ m.carrinho(site, wa_numero) }}
+  <div class="carta-reserva">
+    <p>Para reservar uma mesa ou avisar sobre restrições alimentares:</p>
+    <a class="cta" href="{{ wa_numero|wa('Olá! Gostaria de fazer uma reserva.') }}">Reservar pelo WhatsApp</a>
+  </div>
+</main>
+<div class="fecho">
+  <p class="fecho-nome" aria-hidden="true">{{ site.site.nome }}</p>
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}

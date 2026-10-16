@@ -1,0 +1,124 @@
+/* Hub "Davy": neutro e contido, para as demos serem o destaque. Roxo só na marca e nas ações. */
+:root {
+  --cor-fundo: #f7f7f5;
+  --cor-superficie: #ecebe7;
+  --cor-texto: #18181b;
+  --cor-suave: #4a4a52;
+  /* --cor-destaque vem de config.marca.cor (inline no index.html) */
+  --fonte-texto: "Instrument Sans", system-ui, sans-serif;
+  --margem: clamp(1rem, 4vw, 3rem);
+}
+
+body {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font: 400 1.0625rem/1.55 var(--fonte-texto);
+}
+h1, h2, h3, p, figure { margin: 0; }
+a { color: inherit; }
+
+/* Topo */
+.topo {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.25rem var(--margem);
+}
+.marca {
+  font-size: 1.5rem; font-weight: 600; letter-spacing: -0.03em; text-decoration: none;
+  color: var(--cor-destaque);
+}
+.topo-acao {
+  font-weight: 500; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center;
+  border-bottom: 2px solid var(--cor-destaque);
+}
+.topo-acao:hover { color: var(--cor-destaque); }
+
+/* Abertura */
+.abertura {
+  padding: clamp(3rem, 9vw, 7.5rem) var(--margem) clamp(2.5rem, 6vw, 5rem);
+  display: grid; gap: 1.5rem;
+}
+.abertura h1 {
+  font-size: clamp(2.25rem, 6.2vw, 5.75rem); font-weight: 500;
+  line-height: 1; letter-spacing: -0.035em; max-width: 17ch;
+}
+.abertura p { max-width: 38rem; font-size: 1.1875rem; color: var(--cor-suave); }
+
+/* Grade de modelos */
+.modelos { padding: 0 var(--margem); }
+.grade {
+  display: grid; gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+}
+.card {
+  display: flex; flex-direction: column;
+  background: var(--cor-superficie);
+}
+.card-capa { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.card-corpo { flex: 1; display: flex; flex-direction: column; gap: .5rem; padding: 1.25rem 1.25rem 1.5rem; }
+.card-segmento { font-size: .9375rem; font-weight: 500; color: var(--cor-destaque); }
+.card h3 { font-size: 1.75rem; font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
+.card-slogan { color: var(--cor-suave); }
+.card-acoes { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+
+.card-qr {
+  display: flex; align-items: center; gap: .875rem;
+  margin-top: auto; padding-top: 1.75rem;
+}
+.card-qr svg { width: 5.5rem; height: auto; flex: none; background: #fff; }
+.card-qr figcaption { font-size: .9375rem; color: var(--cor-suave); max-width: 12rem; }
+/* No celular o lead já está no aparelho: o QR só ocupa espaço. */
+@media (max-width: 639px) { .card-qr { display: none; } }
+
+/* Botões */
+.botao {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: .625rem 1.25rem; border-radius: 999px;
+  background: var(--cor-destaque); color: #fff; font-weight: 500; text-decoration: none;
+  transition: transform .15s ease, background-color .15s ease;
+}
+.botao:hover { background: #6a2ed6; }
+.botao:active { transform: scale(.97); }
+.botao-leve { background: var(--cor-fundo); color: var(--cor-texto); }
+.botao-leve:hover { background: #fff; color: var(--cor-destaque); }
+.botao-grande { min-height: 56px; padding: 1rem 2rem; font-size: 1.125rem; background: #fff; color: var(--cor-destaque); }
+.botao-grande:hover { background: var(--cor-fundo); }
+
+/* Como funciona */
+.como {
+  padding: clamp(5rem, 12vw, 10rem) var(--margem);
+  display: grid; gap: 2.5rem;
+}
+.como h2, .contato h2 {
+  font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.05;
+}
+.como ol {
+  margin: 0; padding: 0; list-style: none; counter-reset: passo;
+  display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+.como li { display: grid; gap: .5rem; max-width: 24rem; }
+.como h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; }
+.como h3::before {
+  counter-increment: passo; content: counter(passo) ".";
+  display: block; color: var(--cor-destaque); font-size: 2.75rem; line-height: 1; margin-bottom: .75rem;
+}
+
+/* Contato */
+.contato {
+  background: var(--cor-destaque); color: #fff;
+  padding: clamp(4rem, 10vw, 8rem) var(--margem);
+  display: grid; gap: 1.25rem; justify-items: start;
+}
+.contato p { max-width: 34rem; font-size: 1.1875rem; margin-bottom: 1rem; }
+.contato :focus-visible { outline-color: #fff; }
+
+/* Rodapé */
+.rodape {
+  padding: 2.5rem var(--margem) 3rem;
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem;
+  color: var(--cor-suave); font-size: .9375rem;
+}
+.rodape .marca { font-size: 1.25rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .botao:active { transform: none; }
+}

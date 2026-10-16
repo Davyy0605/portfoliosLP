@@ -1,0 +1,338 @@
+galeria = ["paes.jpg", "cappuccino-croissant.jpg", "croissant.jpg", "cappuccino.jpg", "bolo-morango.jpg", "latte-art.jpg"]
+
+[site]
+slug = "cafeteria"
+tema = "cafeteria"
+nome = "Café Pitangueira"
+segmento = "Cafeteria"
+ordem = 4
+slogan = "Café de safra, bolo de forno e uma mesa para ficar."
+descricao = "Café Pitangueira, na Savassi, em Belo Horizonte: cafés especiais de pequenos produtores, doces de confeitaria e ambiente com wi-fi e tomadas para trabalhar."
+modulos = []
+cor = "#8A5A3C"
+
+[contato]
+whatsapp = ""
+telefone = "(31) 4000-0103"
+instagram = "@cafepitangueira"
+endereco = "Rua Pernambuco, Savassi, Belo Horizonte - MG"
+mapa_url = "https://www.google.com/maps?q=Savassi,+Belo+Horizonte&output=embed"
+
+[[horarios]]
+dias = "Seg a Sex"
+horas = "7h30 às 19h"
+
+[[horarios]]
+dias = "Sábado"
+horas = "8h às 18h"
+
+[[horarios]]
+dias = "Domingo"
+horas = "9h às 15h"
+
+[capa]
+titulo = "Um café que merece a pausa."
+subtitulo = "Grãos de pequenos produtores mineiros, torra clara e doces assados todas as manhãs."
+imagem = "capa.jpg"
+cta = "cardapio"
+
+[sobre]
+titulo = "Do pé de café à xícara, sem pressa"
+texto = "Trabalhamos com microlotes da Mantiqueira, do Cerrado Mineiro e do Sul de Minas, torrados em pequenas bateladas e moídos na hora. Cada café traz no cardápio a fazenda de origem e o método de preparo que valoriza o grão. Na confeitaria, bolos, tortas e pães saem do forno ao longo do dia, com manteiga de verdade e açúcar na medida."
+imagens = ["servindo.jpg", "espresso.jpg"]
+
+[[destaques]]
+titulo = "Cafés de origem, com ficha técnica"
+texto = "Sempre dois a quatro microlotes em rotação. Perguntamos como você gosta e indicamos o grão e o método: espresso, V60, prensa francesa ou coado em Chemex."
+imagem = "coado.jpg"
+
+[[destaques]]
+titulo = "Ambiente para trabalhar"
+texto = "Wi-fi de 300 Mbps, tomadas em todas as mesas da varanda e do mezanino, luz natural e música baixa. Ficar duas horas com um notebook é bem-vindo; peça um café-hora, que inclui refil do filtrado do dia."
+imagem = "mesa-notebook.jpg"
+
+[[destaques]]
+titulo = "Confeitaria da casa"
+texto = "Bolo de cenoura com calda de chocolate, cheesecake de mirtilo, croissant folhado de manteiga. Tudo feito de manhã, até acabar."
+imagem = "bolo-chocolate.jpg"
+
+[[destaques]]
+titulo = "Siga a gente no Instagram"
+texto = "O café da semana, as fornadas do dia e os eventos de degustação são anunciados em @cafepitangueira. Marque a sua xícara e a gente reposta."
+imagem = "latte-coracao.jpg"
+
+[[cardapio.categorias]]
+id = "especiais"
+nome = "Cafés especiais"
+descricao = "Microlotes em rotação. Pergunte qual está no balcão hoje."
+
+  [[cardapio.categorias.itens]]
+  nome = "Espresso Mantiqueira, notas de chocolate"
+  descricao = "Fazenda Santa Rita, lavado, Catuaí amarelo. Espresso curto, 30 ml."
+  preco = 9.0
+  imagem = "espresso.jpg"
+  selos = ["vegano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "V60 Cerrado Mineiro, notas de caramelo"
+  descricao = "Fazenda Boa Vista, natural, Mundo Novo. Método V60, 200 ml."
+  preco = 18.0
+  imagem = "coado.jpg"
+  selos = ["vegano", "sem-gluten", "chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Chemex Sul de Minas, notas florais"
+  descricao = "Sítio Ouro Verde, honey, Bourbon amarelo. Chemex para dividir, 400 ml."
+  preco = 32.0
+  selos = ["vegano", "sem-gluten", "novo"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Prensa francesa Matas de Minas"
+  descricao = "Fazenda Pedra Branca, natural. Corpo cremoso e final de frutas vermelhas. 350 ml."
+  preco = 22.0
+  selos = ["vegano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cold brew de 18 horas"
+  descricao = "Blend da casa, infusão a frio com gelo e casca de laranja."
+  preco = 17.0
+  selos = ["vegano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Voo de cafés"
+  descricao = "Três espressos de origens diferentes, com notas de degustação."
+  preco = 26.0
+  selos = ["chef"]
+
+[[cardapio.categorias]]
+id = "classicos"
+nome = "Clássicos de espresso"
+descricao = "Blend da casa, com leite integral ou bebida vegetal (+ R$ 3,00)."
+
+  [[cardapio.categorias.itens]]
+  nome = "Espresso duplo"
+  descricao = "60 ml."
+  preco = 11.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cappuccino"
+  descricao = "Espresso, leite vaporizado e espuma sedosa."
+  preco = 14.0
+  imagem = "cappuccino.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Latte"
+  descricao = "Mais leite, menos intensidade. 300 ml."
+  preco = 16.0
+  imagem = "latte-art.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Flat white"
+  descricao = "Duplo ristretto com leite microespumado."
+  preco = 16.0
+  imagem = "latte-coracao.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Mocha de cacau mineiro"
+  descricao = "Espresso, chocolate 70% e leite."
+  preco = 18.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Café coado da casa"
+  descricao = "Filtrado do dia no coador de pano, 250 ml."
+  preco = 8.0
+  selos = ["vegano"]
+
+[[cardapio.categorias]]
+id = "doces"
+nome = "Doces e confeitaria"
+descricao = "Assados todas as manhãs, até acabar."
+
+  [[cardapio.categorias.itens]]
+  nome = "Bolo de cenoura com chocolate"
+  descricao = "Fatia generosa, cobertura de brigadeiro quente."
+  preco = 18.0
+  imagem = "bolo-chocolate.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cheesecake de mirtilo"
+  descricao = "Base de biscoito amanteigado e calda de mirtilo da Mantiqueira."
+  preco = 22.0
+  imagem = "cheesecake.jpg"
+  selos = ["vegetariano", "chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Bolo de fubá com cream cheese"
+  descricao = "Receita mineira com cobertura de cream cheese e goiabada."
+  preco = 15.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Bolo de frutas vermelhas"
+  descricao = "Massa amanteigada, creme de baunilha e framboesas frescas."
+  preco = 24.0
+  imagem = "bolo-morango.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Brownie de cacau 70%"
+  descricao = "Úmido, com nozes. Sem glúten."
+  preco = 14.0
+  selos = ["sem-gluten", "vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Cookie de gotas de chocolate"
+  descricao = "Crocante por fora, macio por dentro."
+  preco = 10.0
+  selos = ["vegetariano"]
+
+[[cardapio.categorias]]
+id = "padaria"
+nome = "Pães e salgados"
+descricao = "Para a pausa do almoço ou o café da manhã."
+
+  [[cardapio.categorias.itens]]
+  nome = "Croissant de manteiga"
+  descricao = "Folhado em 27 camadas, assado na hora."
+  preco = 14.0
+  imagem = "croissant.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Croissant de queijo minas e presunto"
+  descricao = "Com geleia de pimenta."
+  preco = 22.0
+  imagem = "cappuccino-croissant.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Pão de queijo mineiro (porção com 5)"
+  descricao = "Quentinho, com queijo da Canastra."
+  preco = 16.0
+  selos = ["sem-gluten", "vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Torrada com ovos mexidos e abacate"
+  descricao = "Pão de fermentação natural, ovos cremosos e limão."
+  preco = 28.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Tapioca de queijo coalho e doce de leite"
+  descricao = "Crocante por fora, cremosa por dentro."
+  preco = 19.0
+  selos = ["sem-gluten", "vegetariano"]
+
+[[cardapio.categorias]]
+id = "outras"
+nome = "Outras bebidas"
+descricao = "Para quem não toma café."
+
+  [[cardapio.categorias.itens]]
+  nome = "Chá matcha latte"
+  descricao = "Matcha japonês, leite e um toque de mel."
+  preco = 19.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Chocolate quente cremoso"
+  descricao = "Cacau 55% derretido com leite. 250 ml."
+  preco = 17.0
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Suco de laranja natural"
+  descricao = "Espremido na hora, 300 ml."
+  preco = 12.0
+  selos = ["vegano", "sem-gluten"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Limonada de hortelã"
+  descricao = "Com água com gás e gelo."
+  preco = 11.0
+  selos = ["vegano", "sem-gluten"]
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1559001724-fbad036dbc9e"
+autor = "Phil Desforges"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "latte-art.jpg"
+url = "https://images.unsplash.com/photo-1541167760496-1628856ab772"
+autor = "Fahmi Fakhrudin"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cappuccino.jpg"
+url = "https://images.unsplash.com/photo-1497636577773-f1231844b336"
+autor = "Nathan Dumlao"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "latte-coracao.jpg"
+url = "https://images.unsplash.com/photo-1512568400610-62da28bc8a13"
+autor = "Nathan Dumlao"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "espresso.jpg"
+url = "https://images.unsplash.com/photo-1609050471053-8636409f9f5b"
+autor = "Nathan Dumlao"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "coado.jpg"
+url = "https://images.unsplash.com/photo-1758221052634-33f352d1318b"
+autor = "Marie G."
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "croissant.jpg"
+url = "https://images.unsplash.com/photo-1555507036-ab1f4038808a"
+autor = "Mae Mu"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "paes.jpg"
+url = "https://images.unsplash.com/photo-1515823662972-da6a2e4d3002"
+autor = "Nathan Dumlao"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cappuccino-croissant.jpg"
+url = "https://images.unsplash.com/photo-1565252556328-92ee4a9a0983"
+autor = "David Dvořáček"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "bolo-chocolate.jpg"
+url = "https://images.unsplash.com/photo-1517427294546-5aa121f68e8a"
+autor = "Will Echols"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cheesecake.jpg"
+url = "https://images.unsplash.com/photo-1533134242443-d4fd215305ad"
+autor = "Mink Mingle"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "bolo-morango.jpg"
+url = "https://images.unsplash.com/photo-1551879400-111a9087cd86"
+autor = "Diliara Garifullina"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "mesa-notebook.jpg"
+url = "https://images.unsplash.com/photo-1583300599061-ae5ebf5208e9"
+autor = "Joshua Sun"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "servindo.jpg"
+url = "https://images.unsplash.com/photo-1495862433577-132cf20d7902"
+autor = "Nathan Dumlao"
+fonte = "Unsplash"

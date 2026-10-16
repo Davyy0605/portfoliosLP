@@ -1,0 +1,287 @@
+/* Tessitura: a página é o menu impresso. Folhas de papel sobre pedra, tinta quase preta, um só tom de vinho. */
+:root {
+  --cor-fundo: #e6e3dd;      /* pedra: o chão onde as folhas pousam */
+  --cor-papel: #faf8f4;
+  --cor-texto: #1a1917;
+  --cor-suave: #55514b;      /* 7:1 no papel */
+  --cor-destaque: #6b2430;   /* vinho: só nas ações */
+  --cor-escuro: #1a1917;
+  --fonte-titulo: "Imbue", "Didot", "Bodoni MT", serif;
+  --fonte-texto: "Albert Sans", system-ui, sans-serif;
+  --raio: 0;
+  --margem: clamp(1rem, 4vw, 3rem);
+  --passo-pequeno: .875rem;
+  --passo-texto: clamp(1rem, .96rem + .2vw, 1.125rem);
+  --passo-lead: clamp(1.25rem, 1.1rem + .7vw, 1.625rem);
+  --passo-titulo: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --passo-gigante: clamp(4rem, 2rem + 10vw, 12rem);
+}
+
+body {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-size: var(--passo-texto);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--fonte-titulo); font-weight: 400; margin: 0; letter-spacing: -.01em; line-height: .95; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+img { border-radius: var(--raio); }
+
+.folha { background: var(--cor-papel); }
+
+/* a trama: fios de urdume alternados, o único ornamento da casa */
+.trama { display: flex; height: 1.75rem; margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.trama span { flex: 1; }
+.trama span:nth-child(odd) { background: var(--cor-texto); }
+
+/* botões e links fortes */
+.cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 3.25rem; padding: 0 2rem;
+  background: var(--cor-destaque); color: var(--cor-papel);
+  font-weight: 500; text-decoration: none; letter-spacing: .01em;
+  transition: background-color .25s ease, transform .2s ease;
+}
+.cta:hover { background: var(--cor-texto); }
+.cta:active { transform: translateY(1px); }
+.link-forte { font-weight: 500; text-underline-offset: .3em; text-decoration-thickness: 1px; }
+.link-forte:hover { color: var(--cor-destaque); }
+
+/* topo */
+.topo {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem 1.5rem;
+  padding: .75rem var(--margem);
+}
+.topo-marca { font-family: var(--fonte-titulo); font-size: 1.5rem; text-transform: uppercase; text-decoration: none; letter-spacing: .02em; min-height: 44px; display: inline-flex; align-items: center; }
+.topo-links { display: flex; flex-wrap: wrap; gap: 0 1.25rem; }
+.topo-links a { min-height: 44px; display: inline-flex; align-items: center; text-decoration: none; font-size: .9375rem; }
+.topo-links a:hover { color: var(--cor-destaque); }
+
+/* capa: folha do menu ao lado da sala */
+.capa { display: grid; gap: .75rem; padding: 0 .75rem; }
+.capa-foto img { width: 100%; height: 52svh; object-fit: cover; }
+.capa-cartao {
+  margin: -2rem .75rem 0; position: relative;
+  padding: 0 1.5rem 2.5rem; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+}
+.capa-cartao .trama { margin: 0 -1.5rem 1rem; align-self: stretch; height: 2.5rem; }
+.capa-marca { font-family: var(--fonte-titulo); font-size: var(--passo-gigante); text-transform: uppercase; line-height: .85; letter-spacing: -.01em; overflow-wrap: anywhere; font-variation-settings: "opsz" 100; }
+.capa h1 { font-size: clamp(1.75rem, 1.3rem + 2vw, 3rem); max-width: 16ch; }
+.capa-sub { max-width: 36ch; color: var(--cor-suave); }
+.capa-slogan { font-size: var(--passo-pequeno); color: var(--cor-suave); }
+
+@media (min-width: 900px) {
+  .capa { grid-template-columns: 1fr 1fr; align-items: start; min-height: calc(100svh - 4.5rem); }
+  .capa-foto { order: 2; position: sticky; top: .75rem; }
+  .capa-foto img { height: calc(100svh - 5.25rem); }
+  .capa-cartao { margin: 0; min-height: calc(100svh - 5.25rem); justify-content: center; padding: 0 3rem 3rem; }
+  .capa-cartao .trama { margin: 0 -3rem auto; height: 3.5rem; }
+  .capa-slogan { margin-top: auto; }
+}
+
+/* seções: respiro largo entre elas */
+main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
+
+/* carta do chef */
+.carta { display: grid; gap: 1.5rem; padding: 0 .75rem; }
+.carta-folha { padding: clamp(2rem, 6vw, 4.5rem); max-width: 42rem; }
+.carta h2 { font-size: var(--passo-titulo); margin-bottom: 2rem; max-width: 14ch; }
+.carta-texto { font-size: var(--passo-lead); line-height: 1.5; font-family: var(--fonte-titulo); font-variation-settings: "opsz" 24; }
+.carta-assinatura { margin-top: 2rem; font-size: var(--passo-pequeno); color: var(--cor-suave); }
+.carta-fotos { display: grid; gap: .75rem; }
+.carta-fotos img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+@media (min-width: 900px) {
+  .carta { grid-template-columns: 7fr 5fr; padding: 0 var(--margem); align-items: end; }
+  .carta-folha { justify-self: end; }
+}
+
+/* o menu impresso */
+.menu { padding: 0 .625rem; }
+.menu-folha { max-width: 72rem; margin: 0 auto; padding: 0 1.75rem clamp(2.5rem, 6vw, 4.5rem); text-align: center; }
+.menu-folha .trama { margin: 0 -1.75rem clamp(2.5rem, 6vw, 4rem); }
+.menu h2 { font-size: var(--passo-titulo); text-transform: uppercase; }
+.menu-nota { max-width: 44ch; margin: 1.25rem auto 0; color: var(--cor-suave); }
+.menu-colunas { display: grid; gap: 3.5rem; margin-top: clamp(3rem, 7vw, 5rem); text-align: left; }
+.menu-grupo h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; font-size: 2rem; line-height: 1; margin-bottom: 1.5rem; }
+.menu-preco { font-family: var(--fonte-texto); font-size: var(--passo-texto); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.passos { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.passos li { display: grid; grid-template-columns: 2.75rem 1fr; }
+.passo-num { font-family: var(--fonte-titulo); color: var(--cor-destaque); font-size: 1.375rem; line-height: 1.1; }
+.menu-fim { margin-top: clamp(3rem, 6vw, 4.5rem); }
+.menu-fim a { display: inline-flex; min-height: 44px; align-items: center; }
+@media (min-width: 900px) {
+  .menu-folha { padding: 0 4rem 4.5rem; }
+  .menu-folha .trama { margin: 0 -4rem 4rem; }
+  .menu-colunas { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 3.5rem; }
+}
+
+/* destaques com foto: prato quadrado, texto curto */
+.prato { display: grid; gap: 1.75rem; padding: 0 var(--margem); }
+.prato-foto img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.prato h2 { font-size: var(--passo-titulo); max-width: 12ch; margin-bottom: 1.5rem; }
+.prato-texto p { max-width: 38ch; font-size: var(--passo-lead); line-height: 1.45; }
+@media (min-width: 900px) {
+  .prato { grid-template-columns: 1fr 1fr; gap: 5vw; align-items: center; }
+  .prato-foto img { max-height: 80svh; }
+  .prato-inverso .prato-foto { order: 2; }
+  .prato-inverso .prato-texto { justify-self: end; }
+}
+
+/* dress code e reservas: um convite com canhoto destacável */
+.convite { padding: 0 .625rem; display: grid; max-width: 72rem; margin-left: auto; margin-right: auto; }
+.convite-folha { display: grid; gap: 2.5rem; padding: clamp(2rem, 6vw, 4.5rem); }
+.convite h2 { font-size: clamp(2rem, 1.5rem + 2vw, 3rem); margin-bottom: 1rem; }
+.convite-nota p { max-width: 44ch; }
+.convite-canhoto {
+  display: flex; flex-direction: column; gap: 1.25rem; align-items: flex-start;
+  padding: 2rem clamp(2rem, 6vw, 4.5rem);
+  border-top: 5px dotted #c4bfb6; /* picote do canhoto */
+}
+.convite-canhoto .cta { width: 100%; }
+@media (min-width: 900px) {
+  .convite { grid-template-columns: 1fr 20rem; }
+  .convite-folha { grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .convite-canhoto { border-top: 0; border-left: 5px dotted #c4bfb6; justify-content: flex-end; padding: 4.5rem 2.5rem; }
+}
+
+/* agenda */
+.agenda { padding: 0 var(--margem); }
+.agenda h2 { font-size: var(--passo-titulo); }
+.agenda-nota { margin: 1rem 0 clamp(2.5rem, 5vw, 4rem); color: var(--cor-suave); max-width: 40ch; }
+.eventos-lista { gap: .75rem; }
+.evento { display: grid; background: var(--cor-papel); }
+.evento-foto { aspect-ratio: 3 / 2; height: auto; filter: grayscale(.35); }
+.evento-texto { padding: 1.5rem 1.5rem 1.75rem; display: flex; flex-direction: column; gap: .5rem; }
+.evento-data { font-variant-numeric: tabular-nums; color: var(--cor-destaque); font-weight: 500; }
+.evento-data::first-letter { text-transform: uppercase; }
+.evento-titulo { font-size: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem); line-height: 1.05; }
+.evento-atracao { font-weight: 500; }
+.evento-descricao { color: var(--cor-suave); max-width: 52ch; }
+.evento-valor { font-size: var(--passo-pequeno); }
+.evento-reservar {
+  align-self: flex-start; justify-self: start; margin-top: .75rem; min-height: 44px; display: inline-flex; align-items: center;
+  padding: 0 1.5rem; background: var(--cor-texto); color: var(--cor-papel); text-decoration: none; font-weight: 500;
+  transition: background-color .25s ease;
+}
+.evento-reservar:hover { background: var(--cor-destaque); }
+.eventos-vazio { padding: 2rem; background: var(--cor-papel); }
+@media (min-width: 900px) {
+  .evento { grid-template-columns: 22rem 1fr; }
+  .evento-foto { height: 100%; aspect-ratio: auto; min-height: 16rem; }
+  .evento-texto { padding: 2.5rem 3rem; display: grid; grid-template-columns: 12rem 1fr; gap: .5rem 3rem; align-content: center; }
+  .evento-texto > * { grid-column: 2; }
+  .evento-data { grid-column: 1; grid-row: 1 / span 3; font-size: var(--passo-lead); font-family: var(--fonte-titulo); font-weight: 400; line-height: 1.15; }
+}
+
+/* galeria: poucas fotos, tamanhos desiguais */
+.galeria { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; padding: 0 .75rem; }
+.galeria figure { margin: 0; }
+.galeria img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; }
+.galeria-1, .galeria-5 { grid-column: span 2; }
+.galeria-1 img, .galeria-5 img { aspect-ratio: 3 / 2; }
+@media (min-width: 900px) {
+  .galeria { grid-template-columns: repeat(12, 1fr); padding: 0 var(--margem); align-items: start; }
+  .galeria figure { grid-column: span 4; }
+  .galeria-1 { grid-column: 1 / span 7; }
+  .galeria-2 { grid-column: 9 / span 4; margin-top: 8rem; }
+  .galeria-3 { grid-column: 2 / span 4; }
+  .galeria-4 { grid-column: 7 / span 6; margin-top: -4rem; }
+  .galeria-4 img { aspect-ratio: 3 / 2; }
+  .galeria-5 { grid-column: 3 / span 6; }
+  .galeria-5 img { aspect-ratio: 3 / 2; }
+}
+
+/* visita: cartão sobre a sala */
+.visita { position: relative; }
+.visita-foto img { width: 100%; height: 70svh; object-fit: cover; }
+.visita-cartao {
+  position: relative; margin: -5rem 1rem 0; padding: 2rem 1.5rem 0;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.visita h2 { font-size: var(--passo-titulo); }
+.horarios div { display: flex; justify-content: space-between; gap: 1rem; padding: .375rem 0; }
+.horarios dd { margin: 0; font-variant-numeric: tabular-nums; }
+.horarios dt { color: var(--cor-suave); }
+.contato p { margin: .25rem 0; }
+.contato a { display: inline-flex; min-height: 44px; align-items: center; text-underline-offset: .3em; }
+.contato { font-style: normal; }
+.contato-mapa { min-height: 12rem; filter: grayscale(1) contrast(.9); }
+.visita-cartao .cta { margin: 0 -1.5rem; }
+@media (min-width: 900px) {
+  .visita-foto img { height: 100svh; }
+  .visita-cartao { position: absolute; top: 3.75rem; right: 3.75rem; width: 25rem; margin: 0; padding: 2.5rem 2rem 0; }
+  .visita-cartao .cta { margin: 0 -2rem; }
+}
+
+/* fecho: o verso do cartão */
+.fecho { margin-top: clamp(6rem, 12vw, 11rem); background: var(--cor-escuro); color: var(--cor-papel); padding: clamp(3rem, 8vw, 6rem) var(--margem) 2rem; }
+.fecho-nome { font-family: var(--fonte-titulo); font-size: var(--passo-gigante); text-transform: uppercase; line-height: .85; overflow-wrap: anywhere; font-variation-settings: "opsz" 100; }
+.rodape { margin-top: 2.5rem; display: grid; gap: .5rem; font-size: var(--passo-pequeno); color: #c9c5bd; }
+.rodape-creditos { max-width: 80ch; }
+
+/* ---------- cardápio ---------- */
+.carta-topo { padding: 1rem var(--margem) clamp(2.5rem, 6vw, 4rem); text-align: center; }
+.carta-voltar { font-family: var(--fonte-titulo); text-transform: uppercase; font-size: 1.375rem; text-decoration: none; display: inline-flex; min-height: 44px; align-items: center; letter-spacing: .02em; }
+.carta-topo h1 { font-size: var(--passo-gigante); text-transform: uppercase; line-height: .85; margin-top: 1.5rem; font-variation-settings: "opsz" 100; }
+.carta-slogan { margin-top: 1rem; color: var(--cor-suave); }
+
+.carta-pagina { max-width: 48rem; margin: 0 auto; padding: 0 0 3rem; }
+.cardapio-busca { padding: 1.5rem 1.25rem .5rem; }
+.cardapio-busca input {
+  width: 100%; min-height: 48px; padding: 0 1rem; border: 0; border-radius: 0;
+  background: var(--cor-fundo); color: var(--cor-texto);
+}
+.cardapio-busca input::placeholder { color: var(--cor-suave); opacity: 1; }
+.cardapio-abas { background: var(--cor-papel); padding: 0 .5rem; gap: 0; }
+.cardapio-abas a { min-height: 48px; display: inline-flex; align-items: center; padding: 0 .75rem; font-size: .9375rem; color: var(--cor-suave); }
+.cardapio-abas a[aria-current] { color: var(--cor-texto); font-weight: 500; text-decoration: underline; text-decoration-color: var(--cor-destaque); text-decoration-thickness: 2px; text-underline-offset: .5em; }
+
+.categoria { padding: clamp(3.5rem, 8vw, 5.5rem) 1.25rem 0; }
+.categoria h2 { font-size: var(--passo-titulo); text-transform: uppercase; text-align: center; }
+.categoria-descricao { text-align: center; color: var(--cor-suave); max-width: 40ch; margin: 1rem auto 0; }
+.itens { gap: 2rem; margin-top: 2.5rem; }
+.item { display: grid; grid-template-columns: 1fr auto; gap: .25rem 1.25rem; align-items: baseline; }
+.item-texto { grid-column: 1; }
+.item-compra { grid-column: 2; grid-row: 1; }
+.item-nome { font-size: 1.5rem; line-height: 1.1; }
+.item-descricao { margin-top: .375rem; color: var(--cor-suave); }
+.item-preco { font-variant-numeric: tabular-nums; font-weight: 500; white-space: nowrap; }
+.selos { margin-top: .5rem; gap: .25rem 1rem; }
+.selo { font-size: var(--passo-pequeno); color: var(--cor-destaque); }
+
+/* poucas fotos, grandes: o prato com foto ocupa a largura da folha */
+.item:has(.item-foto) { margin: 1rem 0; }
+.item .item-foto { grid-column: 1 / -1; max-width: none; width: calc(100% + 2.5rem); height: auto; aspect-ratio: 4 / 3; margin: 0 -1.25rem 1.25rem; object-fit: cover; }
+.item:has(.item-foto) .item-compra { grid-row: 2; }
+.item:has(.item-foto) .item-nome { font-size: 2rem; }
+
+/* menu degustação: a descrição em passos ganha corpo de texto */
+#degustacao .item-descricao { color: var(--cor-texto); line-height: 1.75; }
+
+.sem-resultado { padding: 3rem 1.25rem; text-align: center; }
+.carta-reserva { margin: clamp(3.5rem, 8vw, 5rem) 1.25rem 0; padding: 2rem 0 0; border-top: 5px dotted #c4bfb6; display: grid; gap: 1.25rem; }
+@media (min-width: 700px) {
+  .categoria, .cardapio-busca { padding-left: 3.5rem; padding-right: 3.5rem; }
+  .cardapio-abas { justify-content: center; flex-wrap: wrap; }
+  .item .item-foto { width: calc(100% + 7rem); margin: 0 -3.5rem 1.5rem; aspect-ratio: 16 / 10; }
+  .carta-reserva { margin-left: 3.5rem; margin-right: 3.5rem; }
+}
+
+/* só a capa entra devagar; o resto da página nunca depende de animação para aparecer */
+@media (prefers-reduced-motion: no-preference) {
+  .capa-foto { animation: surgir 1.2s ease both; }
+  .capa-cartao > * { animation: subir .9s cubic-bezier(.2, .7, .2, 1) both; }
+  .capa-cartao > :nth-child(3) { animation-delay: .08s; }
+  .capa-cartao > :nth-child(4) { animation-delay: .16s; }
+  .capa-cartao > :nth-child(n+5) { animation-delay: .24s; }
+  .trama span { transform-origin: top; animation: fio .7s cubic-bezier(.2, .7, .2, 1) both; }
+  .trama span:nth-child(4n+1) { animation-delay: .05s; }
+  .trama span:nth-child(4n+3) { animation-delay: .12s; }
+}
+@keyframes subir { from { opacity: 0; transform: translateY(1.25rem); } to { opacity: 1; transform: none; } }
+@keyframes surgir { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fio { from { transform: scaleY(0); } to { transform: none; } }

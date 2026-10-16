@@ -1,0 +1,32 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Barlow:wght@400;500;600&display=swap">
+{% endblock %}
+
+{% block conteudo %}
+<header class="carta-topo">
+  <a class="carta-marca" href="../">{% for p in site.site.nome.split(" ") %}{% if p.isdigit() %}<span class="neon">{{ p }}</span>{% else %}{{ p }}{% endif %}{% if not loop.last %} {% endif %}{% endfor %}<span class="sr-only"> (voltar ao site)</span></a>
+  {{ m.cta(site, wa_numero, raiz) }}
+</header>
+
+<main class="carta">
+  <div class="carta-cabeca">
+    <h1 class="carta-titulo">Cardápio</h1>
+    {% for d in site.destaques if "happy" in d.titulo|lower %}
+    <p class="carta-happy"><strong>{{ d.titulo }}.</strong> {{ d.texto }}</p>
+    {% endfor %}
+  </div>
+  {{ m.cardapio(site, imagens, pedido="pedido" in site.site.modulos) }}
+  {{ m.carrinho(site, wa_numero) }}
+</main>
+
+<div class="carta-pe">
+  {{ m.horarios(site) }}
+  <p><a href="../#agenda">Agenda de shows</a> &middot; <a href="../#contato">Como chegar</a></p>
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
+{% endblock %}
+{% block conteudo %}
+{% set nome = site.site.nome %}
+{% set palavras = nome.split(" ") %}
+{% set marca = palavras[1] if palavras|length > 1 and palavras[0]|lower in ["hamburgueria", "o", "a", "os", "as"] else palavras[0] %}
+{% set pedido = "pedido" in site.site.modulos %}
+<header class="balcao" style="--letras: {{ marca|length }}">
+  <a class="balcao-voltar" href="../">← {{ nome }}</a>
+  <h1 class="balcao-nome"><span class="monumento" aria-hidden="true">{{ marca }}</span><span class="sr-only">{{ nome }}</span> <span class="balcao-sub">Cardápio{% if pedido %} e pedido{% endif %}</span></h1>
+  {% if pedido %}
+  <ol class="balcao-passos">
+    <li><span>Toque em <strong>Adicionar</strong> nos itens.</span></li>
+    <li><span>Confira tudo em <strong>Ver pedido</strong> e escreva a observação.</span></li>
+    <li><span>Envie pelo WhatsApp. A gente confirma e acende a chapa.</span></li>
+  </ol>
+  {% endif %}
+  {{ m.horarios(site) }}
+</header>
+
+<main class="{% if pedido %}com-pedido{% endif %}">
+  {{ m.cardapio(site, imagens, pedido=pedido) }}
+</main>
+
+{{ m.carrinho(site, wa_numero) }}
+{{ m.rodape(site, config) }}
+{% endblock %}
+{% block scripts %}
+{% if "pedido" in site.site.modulos %}
+<script type="module">
+  // Mostra quantidade e total no botão fixo "Ver pedido" (o carrinho.js atualiza os campos do diálogo).
+  const botao = document.querySelector("[data-carrinho-abrir]");
+  const qtd = document.querySelector("[data-carrinho-qtd]");
+  const total = document.querySelector("[data-carrinho-total]");
+  if (botao && qtd && total) {
+    const resumo = document.createElement("span");
+    resumo.className = "carrinho-resumo";
+    botao.append(resumo);
+    const atualizar = () => {
+      const n = Number(qtd.textContent) || 0;
+      resumo.textContent = n ? `${n} ${n === 1 ? "item" : "itens"} · ${total.textContent}` : "vazio";
+      botao.classList.toggle("tem-itens", n > 0);
+    };
+    new MutationObserver(atualizar).observe(qtd, { childList: true, characterData: true, subtree: true });
+    atualizar();
+  }
+</script>
+{% endif %}
+{% endblock %}

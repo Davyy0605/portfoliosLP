@@ -1,0 +1,337 @@
+galeria = ["chapa.jpg", "grelha.jpg", "burger-duplo.jpg", "burger-fries.jpg", "bandeja.jpg", "aneis.jpg", "fritas-cheddar.jpg", "shake-morango.jpg"]
+
+[site]
+slug = "hamburgueria"
+tema = "hamburgueria"
+nome = "Fornalha Burger"
+segmento = "Hamburgueria"
+ordem = 3
+slogan = "Blend na chapa, fogo alto e fome resolvida."
+descricao = "Fornalha Burger, hamburgueria artesanal na Savassi, Belo Horizonte. Monte seu pedido no cardápio e envie direto pelo WhatsApp."
+modulos = ["pedido"]
+cor = "#E11D2E"
+
+[contato]
+whatsapp = ""
+telefone = "(31) 4000-1717"
+instagram = "@fornalhaburger"
+endereco = "Rua das Fornalhas, 17 — Savassi, Belo Horizonte/MG"
+mapa_url = "https://www.google.com/maps?q=Savassi,+Belo+Horizonte&output=embed"
+
+[[horarios]]
+dias = "Seg a Qui"
+horas = "18h às 23h"
+
+[[horarios]]
+dias = "Sex e Sáb"
+horas = "12h às 00h"
+
+[[horarios]]
+dias = "Dom"
+horas = "12h às 22h"
+
+[capa]
+titulo = "Fome grande pede burger maior."
+subtitulo = "Blend de 160 g batido na casa, pão de batata macio e chapa sempre quente. Monte o pedido aqui e chame no WhatsApp."
+imagem = "capa.jpg"
+cta = "pedir"
+
+[sobre]
+titulo = "Nada de segredo: carne boa, chapa quente, mão pesada."
+texto = "A Fornalha começou como um food truck de esquina e hoje tem casa na Savassi. A receita é a mesma desde o primeiro dia: blend de acém e peito moído na hora, prensado na chapa para criar crosta, pão de batata tostado na manteiga e molhos feitos aqui. Sem fila de espera de três horas, sem frescura."
+imagens = ["chapa.jpg", "grelha.jpg"]
+
+[[destaques]]
+titulo = "Blend da casa"
+texto = "Acém e peito moídos na hora, 160 g por burger, prensados na chapa até formar crosta. Pedido em dobro? É só pedir o Duplo."
+imagem = "burger-duplo.jpg"
+
+[[destaques]]
+titulo = "Combos que fecham a conta"
+texto = "Burger, fritas e bebida num preço só, com até R$ 12 de economia. Peça o Combo Fornalha e leve o adicional de bacon na casa às segundas."
+imagem = "bandeja.jpg"
+
+[[destaques]]
+titulo = "Peça sem sair do sofá"
+texto = "Escolha os itens, escreva a observação e envie o pedido pronto para o nosso WhatsApp. A gente confirma e já acende a chapa."
+imagem = "burger-fries.jpg"
+
+[[cardapio.categorias]]
+id = "combos"
+nome = "Combos"
+descricao = "Burger + fritas + refrigerante lata."
+
+  [[cardapio.categorias.itens]]
+  nome = "Combo Fornalha"
+  descricao = "Fornalha Clássico, fritas médias e refrigerante lata."
+  preco = 52.9
+  imagem = "bandeja.jpg"
+  selos = ["chef"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Combo Duplo Cheddar"
+  descricao = "Duplo Cheddar, fritas médias com cheddar e refrigerante lata."
+  preco = 64.9
+  imagem = "fritas-cheddar.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Combo Frango Crocante"
+  descricao = "Frango Crocante, anéis de cebola e refrigerante lata."
+  preco = 49.9
+
+  [[cardapio.categorias.itens]]
+  nome = "Combo Veggie"
+  descricao = "Burger de grão-de-bico, fritas médias e refrigerante lata."
+  preco = 47.9
+  selos = ["vegetariano"]
+
+[[cardapio.categorias]]
+id = "burgers"
+nome = "Burgers"
+descricao = "Todos com blend de 160 g (exceto os duplos), pão de batata e fritas à parte."
+
+  [[cardapio.categorias.itens]]
+  nome = "Fornalha Clássico"
+  descricao = "Blend 160 g, queijo prato, alface, tomate, picles e molho da casa."
+  preco = 32.9
+  imagem = "burger-classico.jpg"
+  adicionais = [{ nome = "Bacon crocante", preco = 6.0 }, { nome = "Ovo", preco = 4.0 }, { nome = "Queijo extra", preco = 4.5 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Duplo Cheddar"
+  descricao = "Dois blends de 160 g, cheddar cremoso, cebola caramelizada e maionese defumada."
+  preco = 44.9
+  imagem = "burger-duplo.jpg"
+  selos = ["chef"]
+  adicionais = [{ nome = "Bacon crocante", preco = 6.0 }, { nome = "Cheddar extra", preco = 5.0 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Bacon Brasa"
+  descricao = "Blend 160 g, bacon em fatias grossas, queijo prato e molho barbecue artesanal."
+  preco = 38.9
+  imagem = "burger-bacon.jpg"
+  adicionais = [{ nome = "Bacon crocante", preco = 6.0 }, { nome = "Anéis de cebola (2 un.)", preco = 4.0 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Mineiro"
+  descricao = "Blend 160 g, queijo minas frito, geleia de pimenta e couve crocante."
+  preco = 39.9
+  imagem = "burger-mineiro.jpg"
+  selos = ["novo", "picante"]
+  adicionais = [{ nome = "Bacon crocante", preco = 6.0 }, { nome = "Queijo minas extra", preco = 5.0 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Chapa Dupla"
+  descricao = "Dois blends de 120 g smash, queijo prato duplo, cebola na chapa e picles."
+  preco = 42.9
+  adicionais = [{ nome = "Ovo", preco = 4.0 }, { nome = "Queijo extra", preco = 4.5 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Picanha Burger"
+  descricao = "Blend de picanha 180 g, queijo provolone maçaricado, rúcula e maionese de alho."
+  preco = 49.9
+  imagem = "burger-picanha.jpg"
+  adicionais = [{ nome = "Bacon crocante", preco = 6.0 }, { nome = "Cogumelos salteados", preco = 5.5 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Frango Crocante"
+  descricao = "Sobrecoxa empanada e frita na hora, alface, tomate e maionese de ervas."
+  preco = 34.9
+  adicionais = [{ nome = "Bacon crocante", preco = 6.0 }, { nome = "Queijo extra", preco = 4.5 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Veggie de Grão-de-Bico"
+  descricao = "Hambúrguer de grão-de-bico e cogumelos, queijo vegano, rúcula e molho de tahine."
+  preco = 36.9
+  selos = ["vegano"]
+  adicionais = [{ nome = "Cogumelos salteados", preco = 5.5 }, { nome = "Cebola caramelizada", preco = 3.5 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Burger Kids"
+  descricao = "Blend 90 g, queijo prato e pão de batata, com fritas pequenas. Para quem tem até 10 anos."
+  preco = 27.9
+  adicionais = [{ nome = "Suco de uva integral", preco = 6.0 }]
+
+[[cardapio.categorias]]
+id = "porcoes"
+nome = "Porções"
+descricao = "Para dividir (ou não)."
+
+  [[cardapio.categorias.itens]]
+  nome = "Fritas Rústicas"
+  descricao = "Batata com casca, alho e alecrim. Porção de 300 g."
+  preco = 24.9
+  imagem = "burger-fries.jpg"
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Fritas com Cheddar e Bacon"
+  descricao = "Porção de 300 g coberta de cheddar cremoso e farofa de bacon."
+  preco = 34.9
+  imagem = "fritas.jpg"
+
+  [[cardapio.categorias.itens]]
+  nome = "Anéis de Cebola"
+  descricao = "Dez anéis empanados, com molho barbecue."
+  preco = 26.9
+  imagem = "aneis.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Mandioca Frita"
+  descricao = "Cozida e frita na hora, com maionese de ervas."
+  preco = 25.9
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Nuggets Crocantes (8 un.)"
+  descricao = "Peito de frango empanado, com molho mostarda e mel."
+  preco = 28.9
+
+[[cardapio.categorias]]
+id = "bebidas"
+nome = "Bebidas"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Milkshake de Morango"
+  descricao = "Sorvete de creme, morango de verdade e chantilly. 400 ml."
+  preco = 24.9
+  imagem = "shake-morango.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Milkshake de Chocolate"
+  descricao = "Sorvete de creme, chocolate belga e calda. 400 ml."
+  preco = 24.9
+  imagem = "shake-chocolate.jpg"
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Refrigerante Lata"
+  descricao = "Cola, guaraná ou versão zero. 350 ml."
+  preco = 7.0
+
+  [[cardapio.categorias.itens]]
+  nome = "Limonada da Casa"
+  descricao = "Limão-taiti, hortelã e gelo. Jarra individual de 500 ml."
+  preco = 12.0
+  selos = ["vegano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Chope Pilsen 300 ml"
+  descricao = "Cervejaria mineira, tirado na pressão."
+  preco = 14.0
+
+[[cardapio.categorias]]
+id = "sobremesas"
+nome = "Sobremesas"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Brownie com Sorvete"
+  descricao = "Brownie quente de chocolate meio amargo com sorvete de creme."
+  preco = 22.9
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Pudim de Leite no Copo"
+  descricao = "Receita da vovó, com calda de caramelo."
+  preco = 16.9
+  selos = ["vegetariano"]
+
+  [[cardapio.categorias.itens]]
+  nome = "Churros Recheado (3 un.)"
+  descricao = "Doce de leite mineiro, açúcar e canela."
+  preco = 19.9
+  selos = ["vegetariano"]
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1607013251379-e6eecfffe234"
+autor = "Eiliv Aceron"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "burger-classico.jpg"
+url = "https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
+autor = "amirali mirhashemian"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "burger-duplo.jpg"
+url = "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9"
+autor = "amirali mirhashemian"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "burger-bacon.jpg"
+url = "https://images.unsplash.com/photo-1571091718767-18b5b1457add"
+autor = "Ilya Mashkov"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "burger-mineiro.jpg"
+url = "https://images.unsplash.com/photo-1586190848861-99aa4a171e90"
+autor = "David Foodphototasty"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "burger-picanha.jpg"
+url = "https://images.unsplash.com/photo-1603064752734-4c48eff53d05"
+autor = "David Foodphototasty"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "burger-fries.jpg"
+url = "https://images.unsplash.com/photo-1736826201175-c6023019ab75"
+autor = "Jay"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "aneis.jpg"
+url = "https://images.unsplash.com/photo-1639024471283-03518883512d"
+autor = "Esperanza Doronila"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "fritas.jpg"
+url = "https://images.unsplash.com/photo-1568226189293-77924f3f10c6"
+autor = "Brad"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "fritas-cheddar.jpg"
+url = "https://images.unsplash.com/photo-1639744210631-209fce3e256c"
+autor = "Jay Gajjar"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "shake-morango.jpg"
+url = "https://images.unsplash.com/photo-1579954115545-a95591f28bfc"
+autor = "Sebastian Coman Photography"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "shake-chocolate.jpg"
+url = "https://images.unsplash.com/photo-1572490122747-3968b75cc699"
+autor = "Victor Rutka"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "chapa.jpg"
+url = "https://images.unsplash.com/photo-1554306297-0c86e837d24b"
+autor = "Joshua Kantarges"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "grelha.jpg"
+url = "https://images.unsplash.com/photo-1685161456862-bb980e5a8200"
+autor = "Caleb Woods"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "bandeja.jpg"
+url = "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5"
+autor = "Colaborador Unsplash"
+fonte = "Unsplash"

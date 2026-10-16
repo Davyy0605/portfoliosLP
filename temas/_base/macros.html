@@ -1,0 +1,151 @@
+{# Macros compartilhadas. Importar com: {% import "_base/macros.html" as m with context %} #}
+
+{% macro imagem(imagens, nome, alt, sizes="100vw", classe="", prioridade=False) %}
+{% if nome and nome in imagens %}
+{% set im = imagens[nome] %}
+<img src="{{ im.src }}" srcset="{{ im.srcset }}" sizes="{{ sizes }}" width="{{ im.largura }}" height="{{ im.altura }}" alt="{{ alt }}" decoding="async"{% if prioridade %} fetchpriority="high"{% else %} loading="lazy"{% endif %}{% if classe %} class="{{ classe }}"{% endif %}>
+{% endif %}
+{% endmacro %}
+
+{% macro cardapio(site, imagens, pedido=False) %}
+{% set rotulos = {"vegano": "Vegano", "vegetariano": "Vegetariano", "sem-gluten": "Sem glúten", "picante": "Picante", "novo": "Novo", "chef": "Sugestão do chef"} %}
+{% set categorias = site.cardapio.categorias|selectattr("itens")|list %}
+<div class="cardapio" id="pedido">
+  <div class="cardapio-busca">
+    <label class="sr-only" for="busca">Buscar no cardápio</label>
+    <input type="search" id="busca" data-busca placeholder="Buscar no cardápio" autocomplete="off">
+  </div>
+  <nav class="cardapio-abas" data-abas aria-label="Categorias do cardápio">
+    {% for c in categorias %}
+    <a href="#{{ c.id }}">{{ c.nome }}</a>
+    {% endfor %}
+  </nav>
+  {% for c in categorias %}
+  <section class="categoria" id="{{ c.id }}" data-categoria aria-labelledby="{{ c.id }}-titulo">
+    <h2 id="{{ c.id }}-titulo">{{ c.nome }}</h2>
+    {% if c.descricao %}<p class="categoria-descricao">{{ c.descricao }}</p>{% endif %}
+    <ul class="itens">
+      {% for item in c['itens'] %}
+      <li class="item" data-item data-nome="{{ item.nome }}" data-descricao="{{ item.descricao }}">
+        {{ imagem(imagens, item.imagem, item.nome, "(min-width: 700px) 200px, 30vw", "item-foto") }}
+        <div class="item-texto">
+          <h3 class="item-nome">{{ item.nome }}</h3>
+          {% if item.descricao %}<p class="item-descricao">{{ item.descricao }}</p>{% endif %}
+          {% if item.selos %}
+          <ul class="selos">
+            {% for s in item.selos %}
+            <li class="selo selo-{{ s }}" aria-label="{{ rotulos[s] }}">{{ rotulos[s] }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% if item.adicionais %}
+          <p class="item-adicionais">Adicionais:
+            {% for a in item.adicionais %}{{ a.nome }} (+{{ a.preco|brl }}){% if not loop.last %}, {% endif %}{% endfor %}
+          </p>
+          {% endif %}
+        </div>
+        <div class="item-compra">
+          <span class="item-preco">{{ item.preco|brl }}</span>
+          {% if pedido %}
+          <button type="button" class="item-adicionar" data-adicionar data-id="{{ c.id }}-{{ loop.index }}" data-nome="{{ item.nome }}" data-centavos="{{ item.preco|centavos }}" aria-label="Adicionar {{ item.nome }} ao pedido">Adicionar</button>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+  <p class="sem-resultado" data-sem-resultado role="status" hidden>Nenhum item encontrado.</p>
+</div>
+<script type="module" src="{{ raiz }}static/js/cardapio.js"></script>
+{% endmacro %}
+
+{% macro eventos(site, imagens, wa_numero) %}
+{% set lista = site.eventos.lista %}
+<div class="eventos">
+  <ul class="eventos-lista">
+    {% for e in lista %}
+    <li class="evento" data-evento{% if e.data is defined %} data-data="{{ e.data }}"{% else %} data-em-dias="{{ e.em_dias }}"{% endif %}>
+      {{ imagem(imagens, e.imagem, e.titulo, "(min-width: 700px) 320px, 90vw", "evento-foto") }}
+      <div class="evento-texto">
+        <p class="evento-data"><span data-evento-data>{% if e.data is defined %}{{ e.data[8:10] }}/{{ e.data[5:7] }}/{{ e.data[0:4] }}{% else %}Em breve{% endif %}</span>{% if e.hora %} · {{ e.hora }}{% endif %}</p>
+        <h3 class="evento-titulo">{{ e.titulo }}</h3>
+        {% if e.atracao %}<p class="evento-atracao">{{ e.atracao }}</p>{% endif %}
+        {% if e.descricao %}<p class="evento-descricao">{{ e.descricao }}</p>{% endif %}
+        {% if e.valor %}<p class="evento-valor">{{ e.valor }}</p>{% endif %}
+        <a class="evento-reservar" href="{{ wa_numero|wa('Olá! Quero reservar para ' ~ e.titulo ~ (' (' ~ e.atracao ~ ').' if e.atracao else '.')) }}">Reservar</a>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="eventos-vazio" data-eventos-vazio role="status"{% if lista %} hidden{% endif %}>{{ site.eventos.vazio_mensagem }}</p>
+</div>
+<script type="module" src="{{ raiz }}static/js/eventos.js"></script>
+{% endmacro %}
+
+{% macro carrinho(site, wa_numero) %}
+{% if "pedido" in site.site.modulos %}
+<button type="button" class="carrinho-abrir" data-carrinho-abrir>Ver pedido</button>
+<dialog data-carrinho class="carrinho" data-whatsapp="{{ wa_numero }}" data-loja="{{ site.site.nome }}" aria-labelledby="carrinho-titulo">
+  <h2 id="carrinho-titulo">Seu pedido (<span data-carrinho-qtd>0</span>)</h2>
+  <ul class="carrinho-lista" data-carrinho-lista></ul>
+  <label for="carrinho-obs">Observações</label>
+  <textarea id="carrinho-obs" data-carrinho-obs rows="3"></textarea>
+  <p class="carrinho-total">Total: <strong data-carrinho-total>R$ 0,00</strong></p>
+  <div class="carrinho-acoes">
+    <a class="carrinho-enviar" data-carrinho-enviar aria-disabled="true" target="_blank" rel="noopener">Enviar pelo WhatsApp</a>
+    <form method="dialog"><button class="carrinho-fechar">Fechar</button></form>
+  </div>
+</dialog>
+<script type="module" src="{{ raiz }}static/js/carrinho.js"></script>
+{% endif %}
+{% endmacro %}
+
+{% macro horarios(site) %}
+{% if site.horarios %}
+<dl class="horarios">
+  {% for h in site.horarios %}
+  <div><dt>{{ h.dias }}</dt><dd>{{ h.horas }}</dd></div>
+  {% endfor %}
+</dl>
+{% endif %}
+{% endmacro %}
+
+{% macro contato(site, wa_numero) %}
+{% set c = site.contato %}
+<address class="contato">
+  {% if c.endereco %}<p class="contato-endereco">{{ c.endereco }}</p>{% endif %}
+  {% if c.telefone %}<p><a href="tel:{{ c.telefone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ c.telefone }}</a></p>{% endif %}
+  {% if c.instagram %}<p><a href="https://instagram.com/{{ c.instagram }}" rel="noopener">@{{ c.instagram }}</a></p>{% endif %}
+  <p><a href="{{ wa_numero|wa('Olá! Vim pelo site.') }}" rel="noopener">WhatsApp</a></p>
+</address>
+{% if c.mapa_url %}<iframe class="contato-mapa" src="{{ c.mapa_url }}" title="Mapa: {{ site.site.nome }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>{% endif %}
+{% endmacro %}
+
+{% macro rodape(site, config) %}
+<footer class="rodape">
+  <p>&copy; {{ site.site.nome }}</p>
+  {% if site._pasta.parent.name == "sites" %}<p>Site de demonstração por {{ config.marca.nome }}</p>{% endif %}
+  {% if site.fotos %}
+  {% set ns = namespace(partes=[]) %}
+  {% for g in site.fotos|groupby('fonte', default='') %}
+    {% set anon = 'Colaborador ' ~ g.grouper %}
+    {% set nomes = g.list|selectattr('autor')|map(attribute='autor')|unique|reject('equalto', anon)|list %}
+    {% if anon in g.list|map(attribute='autor')|list %}{% set nomes = nomes + ['colaboradores da ' ~ g.grouper] %}{% endif %}
+    {% if nomes %}{% set ns.partes = ns.partes + [(g.grouper ~ ': ' if g.grouper else '') ~ nomes|join(', ')] %}{% endif %}
+  {% endfor %}
+  {% if ns.partes %}<p class="rodape-creditos">Fotos: {{ ns.partes|join(' · ') }}</p>{% endif %}
+  {% endif %}
+</footer>
+{% endmacro %}
+
+{% macro cta(site, wa_numero, raiz) %}
+{% set tipo = site.capa.cta %}
+{% if tipo == "reservar" %}
+<a class="cta" href="{{ wa_numero|wa('Olá! Gostaria de fazer uma reserva.') }}">Reservar mesa</a>
+{% elif tipo == "pedir" %}
+<a class="cta" href="cardapio/#pedido">Fazer pedido</a>
+{% else %}
+<a class="cta" href="cardapio/">Ver cardápio</a>
+{% endif %}
+{% endmacro %}

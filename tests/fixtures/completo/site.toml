@@ -1,0 +1,91 @@
+[site]
+slug = "completo"
+tema = "teste"
+nome = "Casa Completa"
+segmento = "Bar"
+slogan = "Tudo ligado"
+descricao = "Site de teste"
+modulos = ["eventos", "pedido"]
+cor = "#112233"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-0000"
+instagram = "@completo"
+endereco = "Rua A, 1"
+mapa_url = "https://www.google.com/maps/embed?pb=x"
+
+[[horarios]]
+dias = "Ter a Qui"
+horas = "18h às 00h"
+
+[capa]
+titulo = "Bem-vindo"
+subtitulo = "Sub"
+imagem = "capa.jpg"
+cta = "cardapio"
+
+[sobre]
+titulo = "Sobre"
+texto = "Texto"
+imagens = ["a.jpg"]
+
+[[destaques]]
+titulo = "Destaque"
+texto = "Texto"
+imagem = "a.jpg"
+
+[[destaques]]
+titulo = "Sem foto"
+texto = "Texto"
+
+[[cardapio.categorias]]
+id = "drinks"
+nome = "Drinks"
+descricao = ""
+
+  [[cardapio.categorias.itens]]
+  nome = "Gin"
+  descricao = "Tônica"
+  preco = 32.0
+  imagem = "a.jpg"
+  selos = ["vegano", "novo"]
+  adicionais = [{ nome = "Limão", preco = 2.0 }]
+
+  [[cardapio.categorias.itens]]
+  nome = "Água"
+  preco = 5
+
+[[cardapio.categorias]]
+id = "vazia"
+nome = "Vazia"
+
+[[cardapio.categorias]]
+id = "porcoes"
+nome = "Porções"
+
+  [[cardapio.categorias.itens]]
+  nome = "Batata"
+  descricao = "Frita"
+  preco = 18.5
+
+[eventos]
+vazio_mensagem = "Novas atrações em breve."
+
+  [[eventos.lista]]
+  titulo = "Samba"
+  em_dias = 3
+  hora = "21h"
+  atracao = "Trio"
+  valor = "Couvert R$ 20"
+
+  [[eventos.lista]]
+  titulo = "Jazz"
+  data = 2030-01-05
+  imagem = "a.jpg"
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/x"
+autor = "Fulano"
+fonte = "Unsplash"

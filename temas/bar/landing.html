@@ -1,0 +1,161 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Barlow:wght@400;500;600&display=swap">
+{% endblock %}
+
+{% macro nome_letreiro(nome) -%}
+{#- O número da porta vira o neon: palavras só com dígitos ganham a cor âmbar. -#}
+{%- for p in nome.split(" ") -%}
+{%- if p.isdigit() %}<span class="neon">{{ p }}</span>{% else %}{{ p }}{% endif %}{% if not loop.last %} {% endif -%}
+{%- endfor -%}
+{%- endmacro %}
+
+{% block conteudo %}
+{% set hh = [] %}{% set outros = [] %}
+{% for d in site.destaques %}{% if "happy" in d.titulo|lower %}{% set _ = hh.append(d) %}{% else %}{% set _ = outros.append(d) %}{% endif %}{% endfor %}
+{% set autorais = (site.cardapio.categorias|selectattr("itens")|first) %}
+{% set end = site.contato.endereco.split(" — ") %}
+
+<header class="capa" id="topo">
+  <div class="capa-letreiro" style="--letras: {{ site.site.nome|length }}">
+    <h1 class="letreiro">{{ nome_letreiro(site.site.nome) }}</h1>
+  </div>
+  <nav class="capa-links" aria-label="Seções">
+    <a href="cardapio/">Cardápio</a>
+    {% if site.eventos.lista %}<a href="#agenda">Agenda de shows</a>{% endif %}
+    {% if hh %}<a href="#happy-hour">Happy hour</a>{% endif %}
+    <a href="#contato">Endereço</a>
+  </nav>
+  <div class="capa-grade">
+    <div class="capa-trilho">
+      {% if site.sobre.imagens|length > 1 %}<div class="capa-retrato">{{ m.imagem(imagens, site.sobre.imagens[1], "Detalhe do " ~ site.site.nome, "(min-width: 900px) 17vw, 50vw") }}</div>{% endif %}
+      <div class="capa-fatos">
+        <p>{{ site.site.slogan }}</p>
+        {% if end|length > 1 %}<p>{{ end[1] }}</p>{% endif %}
+      </div>
+    </div>
+    <figure class="capa-foto">
+      {{ m.imagem(imagens, site.capa.imagem, "Ambiente do " ~ site.site.nome, "(min-width: 900px) 66vw, 100vw", prioridade=True) }}
+      <figcaption class="capa-frase">
+        <p class="frase">{{ site.capa.titulo }}</p>
+        <p>{{ site.capa.subtitulo }}</p>
+      </figcaption>
+    </figure>
+    <div class="capa-horas">
+      {% for h in site.horarios %}
+      <p class="tom-{{ loop.index }}"><strong>{{ h.dias }}</strong> {{ h.horas }}</p>
+      {% endfor %}
+      <div class="capa-acao">{{ m.cta(site, wa_numero, raiz) }}</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="sobre" aria-labelledby="sobre-titulo">
+    <h2 id="sobre-titulo" class="titulo-secao">{{ site.sobre.titulo }}</h2>
+    <div class="sobre-corpo">
+      <p class="sobre-texto">{% if site.sobre.imagens %}{{ m.imagem(imagens, site.sobre.imagens[0], "Detalhe do balcão do " ~ site.site.nome, "160px", "sobre-foto") }}{% endif %}{{ site.sobre.texto }}</p>
+      <ul class="sobre-fatos">
+        {% if end %}<li><strong>Onde</strong> {{ site.contato.endereco }}</li>{% endif %}
+        {% if site.contato.telefone %}<li><strong>Reservas</strong> {{ site.contato.telefone }}</li>{% endif %}
+        {% if site.contato.instagram %}<li><strong>Instagram</strong> @{{ site.contato.instagram }}</li>{% endif %}
+      </ul>
+    </div>
+  </section>
+
+  {% for d in hh %}
+  <section class="happy" id="happy-hour" aria-labelledby="happy-titulo">
+    <div class="letreiro-corrido" aria-hidden="true">
+      <div class="corrido-trilha">
+        {% for _ in range(2) %}<span>{% for _ in range(4) %}{{ d.titulo }} &middot; {% endfor %}</span>{% endfor %}
+      </div>
+    </div>
+    <div class="happy-corpo">
+      <h2 id="happy-titulo" class="sr-only">{{ d.titulo }}</h2>
+      {% set partes = d.texto.split(": ", 1) %}
+      <div class="happy-texto">
+        {% if partes|length == 2 %}
+        <p class="happy-hora">{{ partes[0] }}</p>
+        <p class="happy-oferta">{{ partes[1][:1]|upper }}{{ partes[1][1:] }}</p>
+        {% else %}
+        <p class="happy-oferta">{{ d.texto }}</p>
+        {% endif %}
+        <a class="link-seta" href="cardapio/">Ver os preços no cardápio</a>
+      </div>
+      {% if d.imagem %}{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 34vw, 100vw", "happy-foto") }}{% endif %}
+    </div>
+  </section>
+  {% endfor %}
+
+  {% if autorais %}
+  {% set com_foto = autorais['itens']|selectattr("imagem")|list %}
+  <section class="drinks" aria-labelledby="drinks-titulo">
+    <div class="drinks-cabeca">
+      <h2 id="drinks-titulo" class="titulo-secao">{{ autorais.nome }}</h2>
+      {% for d in outros[:1] %}<p>{{ d.texto }}</p>{% endfor %}
+    </div>
+    <ul class="faixa">
+      {% for it in com_foto[:4] %}
+      <li class="painel">
+        {{ m.imagem(imagens, it.imagem, it.nome, "(min-width: 900px) 45vw, 64vw") }}
+        <p class="painel-legenda"><span class="painel-nome">{{ it.nome }}</span> <span class="painel-preco">{{ it.preco|brl }}</span></p>
+      </li>
+      {% endfor %}
+    </ul>
+    <ul class="drinks-lista">
+      {% for it in autorais['itens'] if not it.imagem %}
+      <li><span>{{ it.nome }}</span> <span class="preco">{{ it.preco|brl }}</span><small>{{ it.descricao }}</small></li>
+      {% endfor %}
+    </ul>
+    <a class="link-seta" href="cardapio/">Carta completa de drinks e petiscos</a>
+  </section>
+  {% endif %}
+
+  {% if "eventos" in site.site.modulos %}
+  <section class="agenda" id="agenda" aria-labelledby="agenda-titulo">
+    <h2 id="agenda-titulo" class="titulo-secao">Agenda de shows</h2>
+    {{ m.eventos(site, imagens, wa_numero) }}
+  </section>
+  {% endif %}
+
+  {% if site.galeria %}
+  {% set palco = outros[1] if outros|length > 1 else none %}
+  <section class="palco" aria-labelledby="palco-titulo">
+    <h2 id="palco-titulo" class="palco-titulo">{{ palco.titulo if palco else "Noites no Âmbar" }}</h2>
+    <ul class="copias">
+      {% for g in site.galeria[:4] %}
+      <li class="copia copia-{{ loop.index }}">{{ m.imagem(imagens, g, "Noite no " ~ site.site.nome ~ ", foto " ~ loop.index, "(min-width: 900px) 26vw, 52vw") }}</li>
+      {% endfor %}
+    </ul>
+    {% if palco %}<p class="palco-texto">{{ palco.texto }}</p>{% endif %}
+  </section>
+  {% endif %}
+
+  <section class="contato-bloco" id="contato" aria-labelledby="contato-titulo">
+    <h2 id="contato-titulo" class="sr-only">Endereço e contato</h2>
+    <ul class="linhas">
+      <li>{{ site.site.nome }}</li>
+      {% for parte in end %}<li>{{ parte }}</li>{% endfor %}
+      {% for h in site.horarios %}<li class="linha-hora"><span>{{ h.dias }}</span> <span>{{ h.horas }}</span></li>{% endfor %}
+      {% if site.contato.telefone %}<li><a href="tel:{{ site.contato.telefone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ site.contato.telefone }}</a></li>{% endif %}
+      {% if site.contato.instagram %}<li><a href="https://instagram.com/{{ site.contato.instagram }}" rel="noopener">@{{ site.contato.instagram }}</a></li>{% endif %}
+      <li class="linha-convite"><span>Até mais tarde</span> {{ m.cta(site, wa_numero, raiz) }}</li>
+    </ul>
+    {% if site.contato.mapa_url %}<iframe class="contato-mapa" src="{{ site.contato.mapa_url }}" title="Mapa: {{ site.site.nome }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>{% endif %}
+  </section>
+</main>
+
+<div class="fecho">
+  <div class="fecho-colunas">
+    <div><p><strong>Endereço</strong></p><p>{{ site.contato.endereco }}</p></div>
+    <div><p><strong>Na casa</strong></p><p><a href="cardapio/">Cardápio</a></p>{% if site.eventos.lista %}<p><a href="#agenda">Agenda</a></p>{% endif %}<p><a href="{{ wa_numero|wa('Olá! Vim pelo site.') }}" rel="noopener">WhatsApp</a></p></div>
+    <div><p><strong>Horários</strong></p>{{ m.horarios(site) }}</div>
+  </div>
+  <p class="fecho-nome" style="--letras: {{ site.site.nome|length }}" aria-hidden="true">{{ nome_letreiro(site.site.nome) }}</p>
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+{% endblock %}
+{% block conteudo %}
+{% set exec = site.cardapio.categorias|selectattr("id", "equalto", "prato-do-dia")|list|first %}
+<header class="menu-topo">
+  <a class="menu-voltar" href="../">{{ site.site.nome }}</a>
+  {{ m.cta(site, wa_numero, raiz) }}
+</header>
+<main class="menu">
+  <div class="menu-abertura">
+    <h1>Cardápio</h1>
+    {% if exec %}
+    <p class="hoje" data-hoje hidden aria-live="polite"></p>
+    <a class="link-seta" href="#{{ exec.id }}">{{ exec.nome }}</a>
+    {% endif %}
+  </div>
+  {{ m.cardapio(site, imagens, pedido="pedido" in site.site.modulos) }}
+  {{ m.carrinho(site, wa_numero) }}
+  <section class="menu-fim" aria-labelledby="menu-fim-titulo">
+    <h2 id="menu-fim-titulo">Horários</h2>
+    {{ m.horarios(site) }}
+    <a class="botao-secundario" href="../#contato">Endereço e reservas</a>
+  </section>
+</main>
+{{ m.rodape(site, config) }}
+{% endblock %}
+{% block scripts %}
+{% include "restaurante/_hoje.html" %}
+{% endblock %}

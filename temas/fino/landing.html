@@ -1,0 +1,140 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&family=Imbue:opsz,wght@10..100,300..500&display=swap">
+{% endblock %}
+{% block conteudo %}
+{% set categorias = site.cardapio.categorias|selectattr("itens")|list %}
+{# o menu impresso usa a categoria "degustacao"; sem ela, a primeira categoria do cardápio #}
+{% set menu = (categorias|selectattr("id", "equalto", "degustacao")|first) or categorias|first %}
+{% set com_foto = site.destaques|selectattr("imagem")|list %}
+{% set sem_foto = site.destaques|rejectattr("imagem")|list %}
+
+<header class="topo">
+  <a class="topo-marca" href="#capa">{{ site.site.nome }}</a>
+  <nav class="topo-links" aria-label="Seções">
+    {% if menu %}<a href="#menu">Menu</a>{% endif %}
+    {% if "eventos" in site.site.modulos %}<a href="#agenda">Agenda</a>{% endif %}
+    <a href="#contato">Visite</a>
+    <a href="cardapio/">Cardápio</a>
+  </nav>
+</header>
+
+<main>
+  <section class="capa" id="capa">
+    <div class="capa-foto">
+      {{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, "(min-width: 900px) 50vw, 100vw", prioridade=True) }}
+    </div>
+    <div class="capa-cartao folha">
+      <div class="trama" aria-hidden="true">{% for _ in range(23) %}<span></span>{% endfor %}</div>
+      <p class="capa-marca">{{ site.site.nome }}</p>
+      <h1>{{ site.capa.titulo }}</h1>
+      {% if site.capa.subtitulo %}<p class="capa-sub">{{ site.capa.subtitulo }}</p>{% endif %}
+      {{ m.cta(site, wa_numero, raiz) }}
+      {% if site.site.slogan %}<p class="capa-slogan">{{ site.site.slogan }}</p>{% endif %}
+    </div>
+  </section>
+
+  {% if site.sobre.texto %}
+  <section class="carta" id="sobre" aria-labelledby="sobre-titulo">
+    <div class="carta-folha folha">
+      <h2 id="sobre-titulo">{{ site.sobre.titulo or site.site.nome }}</h2>
+      <p class="carta-texto">{{ site.sobre.texto }}</p>
+      <p class="carta-assinatura">{{ site.site.nome }}</p>
+    </div>
+    {% if site.sobre.imagens %}
+    <div class="carta-fotos">
+      {% for f in (site.sobre.imagens[:-1] if site.sobre.imagens|length > 1 else site.sobre.imagens) %}{{ m.imagem(imagens, f, site.site.nome ~ ": ambiente", "(min-width: 900px) 30vw, 90vw") }}{% endfor %}
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  {% if menu %}
+  <section class="menu" id="menu" aria-labelledby="menu-titulo">
+    <div class="menu-folha folha">
+      <div class="trama" aria-hidden="true">{% for _ in range(23) %}<span></span>{% endfor %}</div>
+      <h2 id="menu-titulo">{{ menu.nome }}</h2>
+      {% if menu.descricao %}<p class="menu-nota">{{ menu.descricao }}</p>{% endif %}
+      <div class="menu-colunas">
+        {% for item in menu['itens'] %}
+        <div class="menu-grupo">
+          <h3><span>{{ item.nome }}</span> <span class="menu-preco">{{ item.preco|brl }}</span></h3>
+          {# passos separados por "·" no site.toml ("I. Ostra · II. Ovo"); sem separador, vira uma linha só #}
+          <ol class="passos">
+            {% for bruto in (item.descricao or "").split("·") if bruto|trim %}
+            {% set passo = bruto|trim %}
+            {% set partes = passo.split(".", 1) %}
+            <li>{% if partes|length == 2 and partes[0]|trim in ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"] %}<span class="passo-num">{{ partes[0] }}</span> {{ partes[1]|trim }}{% else %}{{ passo }}{% endif %}</li>
+            {% endfor %}
+          </ol>
+        </div>
+        {% endfor %}
+      </div>
+      <p class="menu-fim"><a class="link-forte" href="cardapio/">Ver o cardápio completo, à la carte e adega</a></p>
+    </div>
+  </section>
+  {% endif %}
+
+  {% for d in com_foto %}
+  <section class="prato{% if loop.index is even %} prato-inverso{% endif %}" aria-labelledby="destaque-{{ loop.index }}">
+    <div class="prato-foto">{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 45vw, 100vw") }}</div>
+    <div class="prato-texto">
+      <h2 id="destaque-{{ loop.index }}">{{ d.titulo }}</h2>
+      <p>{{ d.texto }}</p>
+    </div>
+  </section>
+  {% endfor %}
+
+  {% if sem_foto %}
+  <section class="convite" aria-label="Antes de vir">
+    <div class="convite-folha folha">
+      {% for d in sem_foto %}
+      <div class="convite-nota">
+        <h2>{{ d.titulo }}</h2>
+        <p>{{ d.texto }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="convite-canhoto folha">
+      <p>Reserve com o nosso time pelo WhatsApp.</p>
+      {{ m.cta(site, wa_numero, raiz) }}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if "eventos" in site.site.modulos %}
+  <section class="agenda" id="agenda" aria-labelledby="agenda-titulo">
+    <h2 id="agenda-titulo">Agenda da casa</h2>
+    <p class="agenda-nota">Jantares harmonizados e música ao vivo, com lugares contados.</p>
+    {{ m.eventos(site, imagens, wa_numero) }}
+  </section>
+  {% endif %}
+
+  {% if site.galeria %}
+  <section class="galeria" aria-label="Galeria">
+    {% for f in site.galeria[:6] %}
+    <figure class="galeria-{{ loop.index }}">{{ m.imagem(imagens, f, site.site.nome ~ ": galeria", "(min-width: 900px) 40vw, 50vw") }}</figure>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  <section class="visita" id="contato" aria-labelledby="contato-titulo">
+    {% set foto_visita = site.sobre.imagens[-1] if site.sobre.imagens else site.capa.imagem %}
+    <div class="visita-foto">{{ m.imagem(imagens, foto_visita, site.site.nome ~ ": salão", "100vw") }}</div>
+    <div class="visita-cartao folha">
+      <h2 id="contato-titulo">Visite</h2>
+      {{ m.horarios(site) }}
+      {{ m.contato(site, wa_numero) }}
+      {{ m.cta(site, wa_numero, raiz) }}
+    </div>
+  </section>
+</main>
+
+<div class="fecho">
+  <p class="fecho-nome" aria-hidden="true">{{ site.site.nome }}</p>
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}
