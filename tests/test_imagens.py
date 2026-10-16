@@ -59,15 +59,15 @@ def test_nao_regera(tmp_path):
 
 def test_url_unsplash_ganha_query():
     u = "https://images.unsplash.com/photo-1"
-    assert url_final(u) == u + "?w=2000&q=85&fm=jpg"
+    assert url_final(u) == u + "?w=1600&q=85&fm=jpg"
     com = u + "?w=500"
     assert url_final(com) == com
-    assert url_final("https://pexels.com/x.jpg") == "https://pexels.com/x.jpg"
+    assert url_final("https://pexels.com/x.jpg") == "https://pexels.com/x.jpg?auto=compress&w=1600"
 
 
 def test_host_unsplash_exato():
     assert url_final("https://notunsplash.com/a").endswith("/a")
-    assert "w=2000" in url_final("https://unsplash.com/a")
+    assert "w=1600" in url_final("https://unsplash.com/a")
 
 
 class _Resp:

@@ -11,8 +11,12 @@ UA = "Mozilla/5.0 (compatible; cardapios-baixar-fotos/1.0)"
 def url_final(url: str) -> str:
     p = urlparse(url)
     host = p.hostname or ""
-    if (host == "unsplash.com" or host.endswith(".unsplash.com")) and not p.query:
-        return url + "?w=2000&q=85&fm=jpg"
+    if p.query:
+        return url
+    if host == "unsplash.com" or host.endswith(".unsplash.com"):
+        return url + "?w=1600&q=85&fm=jpg"
+    if host == "pexels.com" or host.endswith(".pexels.com"):
+        return url + "?auto=compress&w=1600"
     return url
 
 

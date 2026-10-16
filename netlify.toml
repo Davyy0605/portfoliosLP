@@ -1,0 +1,22 @@
+[build]
+  command = "pip install -r requirements.txt && python build.py"
+  publish = "dist"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
+
+# Nomes sem hash: CSS e JS com cache de 1 dia; imagens 30 dias.
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/*/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
