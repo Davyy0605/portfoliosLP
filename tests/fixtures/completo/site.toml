@@ -60,6 +60,15 @@ descricao = ""
 id = "vazia"
 nome = "Vazia"
 
+[[cardapio.categorias]]
+id = "porcoes"
+nome = "Porções"
+
+  [[cardapio.categorias.itens]]
+  nome = "Batata"
+  descricao = "Frita"
+  preco = 18.5
+
 [eventos]
 vazio_mensagem = "Novas atrações em breve."
 

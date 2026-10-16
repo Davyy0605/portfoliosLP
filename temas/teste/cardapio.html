@@ -1,4 +1,6 @@
 {% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
 {% block conteudo %}<h1>{{ site.site.nome }}</h1>
-{% for c in site.cardapio.categorias %}{% for i in c['itens'] %}<p>{{ i.nome }} {{ i.preco|brl }}</p>
-{% endfor %}{% endfor %}{% endblock %}
+{{ m.cardapio(site, imagens, pedido="pedido" in site.site.modulos) }}
+{{ m.carrinho(site, wa_numero) }}
+{{ m.rodape(site, config) }}{% endblock %}

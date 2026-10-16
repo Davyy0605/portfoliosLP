@@ -1,2 +1,9 @@
 {% extends "_base/pagina.html" %}
-{% block conteudo %}<h1>{{ site.site.nome }}</h1><a href="cardapio/">Cardápio</a>{% endblock %}
+{% import "_base/macros.html" as m with context %}
+{% block conteudo %}<h1>{{ site.site.nome }}</h1>
+{{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, prioridade=True) }}
+{{ m.cta(site, wa_numero, raiz) }}
+{{ m.eventos(site, imagens, wa_numero) }}
+{{ m.horarios(site) }}
+{{ m.contato(site, wa_numero) }}
+{{ m.rodape(site, config) }}{% endblock %}
