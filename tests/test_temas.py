@@ -69,3 +69,28 @@ def test_hub(dist):
         assert s["site"]["nome"] in card
         assert "<svg" in card
     assert (dist / "hub.css").is_file()
+
+
+@pytest.mark.parametrize("largura,altura", [(390, 844), (720, 360), (844, 390), (1024, 768), (1440, 900)])
+def test_sem_rolagem_lateral(dist, largura, altura):
+    """Celular em pé, deitado, tablet e desktop: nenhuma página pode ficar mais larga que a tela."""
+    sync_api = pytest.importorskip("playwright.sync_api")
+    import sys
+    sys.path.insert(0, str(RAIZ / "ferramentas"))
+    from capturar import servir
+
+    largas = []
+    with servir(dist) as base, sync_api.sync_playwright() as p:
+        try:
+            nav = p.chromium.launch()
+        except Exception as e:  # chromium não instalado
+            pytest.skip(f"chromium do Playwright indisponível: {e}")
+        pagina = nav.new_page(viewport={"width": largura, "height": altura}, reduced_motion="reduce")
+        for s in SITES:
+            for sub in ("", "cardapio/"):
+                pagina.goto(f"{base}{s['site']['slug']}/{sub}", wait_until="load")
+                pagina.evaluate("document.fonts.ready")
+                if pagina.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"):
+                    largas.append(s["site"]["slug"] + "/" + sub)
+        nav.close()
+    assert not largas

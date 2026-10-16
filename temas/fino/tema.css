@@ -74,7 +74,7 @@ img { border-radius: var(--raio); }
 .capa-sub { max-width: 36ch; color: var(--cor-suave); }
 .capa-slogan { font-size: var(--passo-pequeno); color: var(--cor-suave); }
 
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .capa { grid-template-columns: 1fr 1fr; align-items: start; min-height: calc(100svh - 4.5rem); }
   .capa-foto { order: 2; position: sticky; top: .75rem; }
   .capa-foto img { height: calc(100svh - 5.25rem); }
@@ -82,6 +82,8 @@ img { border-radius: var(--raio); }
   .capa-cartao .trama { margin: 0 -3rem auto; height: 3.5rem; }
   .capa-slogan { margin-top: auto; }
 }
+/* celular deitado/tablet: o cartão tem meia tela, o nome precisa caber numa linha */
+@media (min-width: 700px) and (max-width: 1199px) { .capa-marca { font-size: min(var(--passo-gigante), 7.5vw); } }
 
 /* seções: respiro largo entre elas */
 main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
@@ -94,7 +96,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 .carta-assinatura { margin-top: 2rem; font-size: var(--passo-pequeno); color: var(--cor-suave); }
 .carta-fotos { display: grid; gap: .75rem; }
 .carta-fotos img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .carta { grid-template-columns: 7fr 5fr; padding: 0 var(--margem); align-items: end; }
   .carta-folha { justify-self: end; }
 }
@@ -113,7 +115,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 .passo-num { font-family: var(--fonte-titulo); color: var(--cor-destaque); font-size: 1.375rem; line-height: 1.1; }
 .menu-fim { margin-top: clamp(3rem, 6vw, 4.5rem); }
 .menu-fim a { display: inline-flex; min-height: 44px; align-items: center; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .menu-folha { padding: 0 4rem 4.5rem; }
   .menu-folha .trama { margin: 0 -4rem 4rem; }
   .menu-colunas { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 3.5rem; }
@@ -124,7 +126,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 .prato-foto img { width: 100%; aspect-ratio: 1; object-fit: cover; }
 .prato h2 { font-size: var(--passo-titulo); max-width: 12ch; margin-bottom: 1.5rem; }
 .prato-texto p { max-width: 38ch; font-size: var(--passo-lead); line-height: 1.45; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .prato { grid-template-columns: 1fr 1fr; gap: 5vw; align-items: center; }
   .prato-foto img { max-height: 80svh; }
   .prato-inverso .prato-foto { order: 2; }
@@ -142,7 +144,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
   border-top: 5px dotted #c4bfb6; /* picote do canhoto */
 }
 .convite-canhoto .cta { width: 100%; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .convite { grid-template-columns: 1fr 20rem; }
   .convite-folha { grid-template-columns: 1fr 1fr; gap: 4rem; }
   .convite-canhoto { border-top: 0; border-left: 5px dotted #c4bfb6; justify-content: flex-end; padding: 4.5rem 2.5rem; }
@@ -169,7 +171,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 }
 .evento-reservar:hover { background: var(--cor-destaque); }
 .eventos-vazio { padding: 2rem; background: var(--cor-papel); }
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   .evento { grid-template-columns: 22rem 1fr; }
   .evento-foto { height: 100%; aspect-ratio: auto; min-height: 16rem; }
   .evento-texto { padding: 2.5rem 3rem; display: grid; grid-template-columns: 12rem 1fr; gap: .5rem 3rem; align-content: center; }
@@ -183,7 +185,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 .galeria img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; }
 .galeria-1, .galeria-5 { grid-column: span 2; }
 .galeria-1 img, .galeria-5 img { aspect-ratio: 3 / 2; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .galeria { grid-template-columns: repeat(12, 1fr); padding: 0 var(--margem); align-items: start; }
   .galeria figure { grid-column: span 4; }
   .galeria-1 { grid-column: 1 / span 7; }
@@ -211,7 +213,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 .contato { font-style: normal; }
 .contato-mapa { min-height: 12rem; filter: grayscale(1) contrast(.9); }
 .visita-cartao .cta { margin: 0 -1.5rem; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .visita-foto img { height: 100svh; }
   .visita-cartao { position: absolute; top: 3.75rem; right: 3.75rem; width: 25rem; margin: 0; padding: 2.5rem 2rem 0; }
   .visita-cartao .cta { margin: 0 -2rem; }

@@ -127,17 +127,17 @@ a { color: inherit; text-underline-offset: .2em; }
 .capa-acao { grid-column: 1 / -1; }
 .capa-acao .cta { width: 100%; min-height: 64px; font-size: 1.625rem; }
 
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .capa { min-height: 100svh; grid-template-rows: auto auto 1fr; gap: 8px; padding: 8px; }
   .capa-links { grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .capa-links a { min-height: 64px; }
-  .capa-grade { grid-template-columns: repeat(12, 1fr); gap: 8px; min-height: 0; }
+  .capa-grade { min-width: 0; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 8px; min-height: 0; }
   .capa-trilho { grid-column: 1 / 3; grid-row: 1; grid-template-columns: 1fr; grid-template-rows: 1fr auto; gap: 8px; }
   .capa-retrato img { aspect-ratio: auto; }
   .capa-foto { grid-column: 3 / 11; grid-row: 1; position: relative; overflow: hidden; min-height: 26rem; }
   .capa-foto img { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; object-position: 50% 30%; }
   .capa-frase { position: absolute; left: 0; bottom: 0; width: min(36rem, 72%); background: var(--cor-fundo); padding: 1.5rem; }
-  .capa-horas { grid-column: 11 / 13; grid-row: 1; grid-template-columns: 1fr; grid-auto-rows: 1fr; gap: 8px; }
+  .capa-horas { grid-column: 11 / 13; grid-row: 1; grid-template-columns: minmax(0, 1fr); grid-auto-rows: 1fr; gap: 8px; }
   .capa-horas p { padding: 1rem; }
   .capa-acao .cta { height: 100%; align-items: flex-end; justify-content: flex-start; padding: 1rem; font-size: 1.75rem; }
 }
@@ -149,7 +149,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .sobre-foto { float: left; width: 3.9em; height: 3.9em; object-fit: cover; margin: .25em .55em .1em 0; }
 .sobre-fatos { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem 1.5rem; font-size: .9375rem; color: var(--suave); }
 .sobre-fatos strong { display: block; color: var(--cor-texto); font-weight: 600; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .sobre { grid-template-columns: repeat(12, 1fr); column-gap: 2rem; }
   .sobre > h2 { grid-column: 3 / 12; }
   .sobre-corpo { grid-column: 1 / -1; grid-template-columns: subgrid; }
@@ -173,7 +173,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .happy-oferta { font-size: var(--passo-frase); line-height: 1.3; font-weight: 500; max-width: 30ch; }
 .happy .link-seta { margin-top: .5rem; }
 .happy-foto { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .happy-corpo { grid-template-columns: repeat(12, 1fr); column-gap: 2rem; align-items: end; }
   .happy-texto { grid-column: 1 / 8; }
   .happy-foto { grid-column: 8 / 13; aspect-ratio: 4 / 5; }
@@ -201,7 +201,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .drinks-lista .preco { font: 700 1.5rem/1 var(--fonte-titulo); color: var(--cor-destaque); font-variant-numeric: tabular-nums; }
 .drinks-lista small { grid-column: 1 / -1; font-size: 1rem; color: var(--suave); }
 .drinks > .link-seta { margin: 0 var(--margem); }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .drinks-cabeca { grid-template-columns: repeat(12, 1fr); column-gap: 2rem; align-items: end; }
   .drinks-cabeca h2 { grid-column: 3 / 9; }
   .drinks-cabeca p { grid-column: 9 / 13; }
@@ -234,7 +234,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .evento-valor { grid-column: 1; align-self: center; font-weight: 500; }
 .evento-reservar { grid-column: 2; min-height: 44px; font-size: 1.125rem; padding: .5rem 1rem; }
 .eventos-vazio { font-size: var(--passo-frase); max-width: 30ch; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .evento { padding: 1.75rem 0; }
   .evento-texto { grid-template-columns: 16rem minmax(0, 1fr) 12rem auto; column-gap: 2rem; padding: 0 1.5rem; }
   .evento-data { grid-column: 1; grid-row: 1 / span 3; font-size: 1.625rem; padding-top: .35rem; }
@@ -269,7 +269,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .copia-3, .copia-4 { display: none; }
 .copia:hover { transform: rotate(0) scale(1.02); z-index: 3; }
 .palco-texto { position: relative; margin: 1.5rem 0 0; max-width: 40ch; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .palco { min-height: 100svh; display: grid; place-items: center; padding: 4rem var(--margem) 6rem; }
   .palco-titulo { font-size: clamp(9rem, 19vw, 21rem); width: min-content; }
   .copias { position: absolute; inset: 0; height: auto; margin: 0; pointer-events: none; }
@@ -302,7 +302,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .contato-mapa { min-height: 22rem; filter: invert(.92) hue-rotate(180deg) saturate(.4) brightness(.9); }
 
 /* ---------- Fecho: cores invertidas, nome de ponta a ponta ---------- */
-.fecho {
+.fecho { overflow-x: clip; /* antes da fonte carregar, o nome gigante sai da tela */
   background: var(--cor-destaque); color: var(--tinta-escura);
   min-height: 92svh; display: grid; grid-template-rows: auto 1fr auto auto;
   padding: 2.5rem var(--margem) 1.25rem; overflow: hidden;
@@ -321,7 +321,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .rodape { font-size: var(--passo-pequeno); padding-top: 1.25rem; }
 .rodape p { margin: 0 0 .35rem; }
 .fecho .rodape { grid-row: 4; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .fecho-colunas { grid-template-columns: repeat(4, 1fr); }
   .fecho-colunas > div:first-child { grid-column: 1 / 3; max-width: 22rem; }
   .fecho-nome { font-size: min(25vw, calc((100vw - 1rem) / (var(--letras, 8) * .5))); }
@@ -397,7 +397,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .selo { font-size: .8125rem; font-weight: 500; padding: .2rem .55rem; background: var(--superficie-2); color: var(--cor-texto); }
 .selo-chef, .selo-novo { background: #4a2a08; color: #ffd27a; }
 .sem-resultado { padding: 2rem var(--margem); font-size: var(--passo-frase); }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .carta { max-width: 80rem; margin: 0 auto; }
   .carta-topo, .carta-pe { padding-inline: max(var(--margem), (100% - 80rem) / 2 + var(--margem)); }
   .categoria .itens { grid-template-columns: 1fr 1fr; }

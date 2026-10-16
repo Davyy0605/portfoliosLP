@@ -31,9 +31,9 @@
       <span class="linha linha-2"><span>{{ palavras[corte:]|join(" ") }}</span></span>
     </h1>
     {% if galeria %}
-    <div class="capa-pequena">{{ m.imagem(imagens, galeria[0], "Mesa posta com pratos para dividir", "(min-width: 900px) 24vw, 46vw") }}</div>
+    <div class="capa-pequena">{{ m.imagem(imagens, galeria[0], "Mesa posta com pratos para dividir", "(min-width: 700px) 24vw, 46vw") }}</div>
     {% endif %}
-    <div class="capa-grande">{{ m.imagem(imagens, site.capa.imagem, "Salão da " ~ site.site.nome, "(min-width: 900px) 30vw, 72vw", prioridade=True) }}</div>
+    <div class="capa-grande">{{ m.imagem(imagens, site.capa.imagem, "Salão da " ~ site.site.nome, "(min-width: 700px) 30vw, 72vw", prioridade=True) }}</div>
     <div class="capa-texto">
       <p>{{ site.capa.subtitulo }}</p>
       <div class="acoes">
@@ -51,7 +51,7 @@
       {% set foto_exec = exec['itens']|selectattr("imagem")|list|first %}
       {% if foto_exec %}
       <figure class="executivo-foto">
-        {{ m.imagem(imagens, foto_exec.imagem, foto_exec.nome, "(min-width: 900px) 24vw, 60vw") }}
+        {{ m.imagem(imagens, foto_exec.imagem, foto_exec.nome, "(min-width: 700px) 24vw, 60vw") }}
       </figure>
       {% endif %}
       <div class="executivo-tabela">
@@ -90,7 +90,7 @@
     <ul class="pratos-fila">
       {% for p in pratos[:8] %}
       <li class="quadro{% if p is sameas elevado %} quadro-elevado{% endif %}">
-        {{ m.imagem(imagens, p.imagem, p.nome, "(min-width: 900px) 40vw, 80vw" if p is sameas elevado else "(min-width: 900px) 22vw, 45vw") }}
+        {{ m.imagem(imagens, p.imagem, p.nome, "(min-width: 700px) 40vw, 80vw" if p is sameas elevado else "(min-width: 700px) 22vw, 45vw") }}
         <p class="quadro-legenda"><span>{{ p.nome }}</span><span class="quadro-preco">{{ p.preco|brl }}</span></p>
       </li>
       {% endfor %}
@@ -103,13 +103,13 @@
       <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
       <p>{{ site.sobre.texto }}</p>
       {% if site.sobre.imagens %}
-      {{ m.imagem(imagens, site.sobre.imagens[0], "Interior da " ~ site.site.nome, "(min-width: 900px) 26vw, 70vw", "casa-foto") }}
+      {{ m.imagem(imagens, site.sobre.imagens[0], "Interior da " ~ site.site.nome, "(min-width: 700px) 26vw, 70vw", "casa-foto") }}
       {% endif %}
     </div>
     <div class="casa-passa">
       {% for d in site.destaques %}
       <article class="destaque">
-        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 28vw, 72vw") }}
+        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 700px) 28vw, 72vw") }}
         <h3>{{ d.titulo }}</h3>
         <p>{{ d.texto }}</p>
       </article>
@@ -120,7 +120,7 @@
   {% if galeria|length > 1 %}
   <section class="galeria" aria-label="Fotos da casa e dos pratos">
     {% for g in galeria[1:] %}
-    <figure class="galeria-foto">{{ m.imagem(imagens, g, "Foto da " ~ site.site.nome, "(min-width: 900px) 42vw, 84vw") }}</figure>
+    <figure class="galeria-foto">{{ m.imagem(imagens, g, "Foto da " ~ site.site.nome, "(min-width: 700px) 42vw, 84vw") }}</figure>
     {% endfor %}
   </section>
   {% endif %}

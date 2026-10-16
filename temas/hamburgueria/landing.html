@@ -34,7 +34,7 @@
     <section class="quadro quadro-1" aria-labelledby="titulo">
       <div class="quadro-nome"><h1 id="titulo" class="monumento"><span aria-hidden="true">{{ marca }}</span><span class="sr-only">{{ nome }}</span></h1></div>
       <figure class="quadro-foto">
-        {{ m.imagem(imagens, site.capa.imagem, "Burger artesanal da " ~ nome, "(min-width: 900px) 38vw, 92vw", prioridade=True) }}
+        {{ m.imagem(imagens, site.capa.imagem, "Burger artesanal da " ~ nome, "(min-width: 700px) 38vw, 92vw", prioridade=True) }}
       </figure>
       <div class="quadro-legenda">
         <p class="declaracao">{{ site.capa.titulo }}</p>
@@ -47,7 +47,7 @@
       <div class="quadro-nome" aria-hidden="true"><p class="monumento">{{ marca }}</p></div>
       {% if d.imagem %}
       <figure class="quadro-foto">
-        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 38vw, 92vw") }}
+        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 700px) 38vw, 92vw") }}
       </figure>
       {% endif %}
       <div class="quadro-legenda">
@@ -73,7 +73,7 @@
     </div>
     {% if site.sobre.imagens|length > 1 %}
     <figure class="sobre-foto">
-      {{ m.imagem(imagens, site.sobre.imagens[1], "Burgers na grelha", "(min-width: 900px) 30vw, 70vw") }}
+      {{ m.imagem(imagens, site.sobre.imagens[1], "Burgers na grelha", "(min-width: 700px) 30vw, 70vw") }}
     </figure>
     {% endif %}
   </section>
@@ -85,7 +85,7 @@
     <div class="ofertas-grade">
       {% if foto_combo %}
       <figure class="ofertas-foto">
-        {{ m.imagem(imagens, foto_combo.imagem, foto_combo.nome, "(min-width: 900px) 26vw, 60vw") }}
+        {{ m.imagem(imagens, foto_combo.imagem, foto_combo.nome, "(min-width: 700px) 26vw, 60vw") }}
       </figure>
       {% endif %}
       <div class="ofertas-tabelas">
@@ -117,7 +117,7 @@
     {% for grupo in galeria|batch(4) %}
     <div class="faixa-linha">
       {% for foto in grupo %}
-      <figure class="faixa-painel">{{ m.imagem(imagens, foto, "Foto da " ~ nome, "(min-width: 900px) 40vw, 50vw") }}</figure>
+      <figure class="faixa-painel">{{ m.imagem(imagens, foto, "Foto da " ~ nome, "(min-width: 700px) 40vw, 50vw") }}</figure>
       {% endfor %}
     </div>
     {% endfor %}

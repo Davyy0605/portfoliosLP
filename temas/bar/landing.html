@@ -32,14 +32,14 @@
   </nav>
   <div class="capa-grade">
     <div class="capa-trilho">
-      {% if site.sobre.imagens|length > 1 %}<div class="capa-retrato">{{ m.imagem(imagens, site.sobre.imagens[1], "Detalhe do " ~ site.site.nome, "(min-width: 900px) 17vw, 50vw") }}</div>{% endif %}
+      {% if site.sobre.imagens|length > 1 %}<div class="capa-retrato">{{ m.imagem(imagens, site.sobre.imagens[1], "Detalhe do " ~ site.site.nome, "(min-width: 700px) 17vw, 50vw") }}</div>{% endif %}
       <div class="capa-fatos">
         <p>{{ site.site.slogan }}</p>
         {% if end|length > 1 %}<p>{{ end[1] }}</p>{% endif %}
       </div>
     </div>
     <figure class="capa-foto">
-      {{ m.imagem(imagens, site.capa.imagem, "Ambiente do " ~ site.site.nome, "(min-width: 900px) 66vw, 100vw", prioridade=True) }}
+      {{ m.imagem(imagens, site.capa.imagem, "Ambiente do " ~ site.site.nome, "(min-width: 700px) 66vw, 100vw", prioridade=True) }}
       <figcaption class="capa-frase">
         <p class="frase">{{ site.capa.titulo }}</p>
         <p>{{ site.capa.subtitulo }}</p>
@@ -86,7 +86,7 @@
         {% endif %}
         <a class="link-seta" href="cardapio/">Ver os preços no cardápio</a>
       </div>
-      {% if d.imagem %}{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 34vw, 100vw", "happy-foto") }}{% endif %}
+      {% if d.imagem %}{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 700px) 34vw, 100vw", "happy-foto") }}{% endif %}
     </div>
   </section>
   {% endfor %}
@@ -101,7 +101,7 @@
     <ul class="faixa">
       {% for it in com_foto[:4] %}
       <li class="painel">
-        {{ m.imagem(imagens, it.imagem, it.nome, "(min-width: 900px) 45vw, 64vw") }}
+        {{ m.imagem(imagens, it.imagem, it.nome, "(min-width: 700px) 45vw, 64vw") }}
         <p class="painel-legenda"><span class="painel-nome">{{ it.nome }}</span> <span class="painel-preco">{{ it.preco|brl }}</span></p>
       </li>
       {% endfor %}
@@ -128,7 +128,7 @@
     <h2 id="palco-titulo" class="palco-titulo">{{ palco.titulo if palco else "Noites no Âmbar" }}</h2>
     <ul class="copias">
       {% for g in site.galeria[:4] %}
-      <li class="copia copia-{{ loop.index }}">{{ m.imagem(imagens, g, "Noite no " ~ site.site.nome ~ ", foto " ~ loop.index, "(min-width: 900px) 26vw, 52vw") }}</li>
+      <li class="copia copia-{{ loop.index }}">{{ m.imagem(imagens, g, "Noite no " ~ site.site.nome ~ ", foto " ~ loop.index, "(min-width: 700px) 26vw, 52vw") }}</li>
       {% endfor %}
     </ul>
     {% if palco %}<p class="palco-texto">{{ palco.texto }}</p>{% endif %}

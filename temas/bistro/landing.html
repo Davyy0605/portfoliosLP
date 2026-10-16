@@ -48,7 +48,7 @@
       </div>
     </div>
     <figure class="capa-foto">
-      {{ m.imagem(imagens, site.capa.imagem, "Mesa à luz de velas no salão do " ~ site.site.nome, "(min-width: 960px) 44vw, 100vw", prioridade=True) }}
+      {{ m.imagem(imagens, site.capa.imagem, "Mesa à luz de velas no salão do " ~ site.site.nome, "(min-width: 700px) 44vw, 100vw", prioridade=True) }}
       <figcaption>{{ site.capa.subtitulo }}</figcaption>
     </figure>
   </section>
@@ -60,7 +60,7 @@
     </div>
     {% for f in site.sobre.imagens[:2] %}
     <figure class="casa-foto casa-foto-{{ loop.index }}">
-      {{ m.imagem(imagens, f, "Salão do " ~ site.site.nome if loop.first else "Clientes à mesa no " ~ site.site.nome, "(min-width: 960px) 30vw, 80vw") }}
+      {{ m.imagem(imagens, f, "Salão do " ~ site.site.nome if loop.first else "Clientes à mesa no " ~ site.site.nome, "(min-width: 700px) 30vw, 80vw") }}
     </figure>
     {% endfor %}
   </section>
@@ -73,7 +73,7 @@
     </div>
     {% set foto_vinho = vinhos['itens']|selectattr("imagem")|list|first %}
     {% if foto_vinho %}
-    <figure class="adega-foto">{{ m.imagem(imagens, foto_vinho.imagem, "Vinho tinto sendo servido na taça", "(min-width: 960px) 34vw, 100vw") }}</figure>
+    <figure class="adega-foto">{{ m.imagem(imagens, foto_vinho.imagem, "Vinho tinto sendo servido na taça", "(min-width: 700px) 34vw, 100vw") }}</figure>
     {% endif %}
     <ul class="adega-lista">
       {% for v in vinhos['itens'] %}
@@ -93,7 +93,7 @@
     <div class="notas-lista">
       {% for d in site.destaques %}
       <article class="nota">
-        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 960px) 28vw, 86vw", "nota-foto") }}
+        {{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 700px) 28vw, 86vw", "nota-foto") }}
         <h3>{{ d.titulo }}</h3>
         <p>{{ d.texto }}</p>
       </article>
@@ -115,7 +115,7 @@
   {% if galeria %}
   <section class="galeria" aria-label="Fotos do {{ site.site.nome }}">
     {% for g in galeria[:6] %}
-    <figure class="galeria-foto">{{ m.imagem(imagens, g, "Foto do " ~ site.site.nome, "(min-width: 960px) 33vw, 50vw") }}</figure>
+    <figure class="galeria-foto">{{ m.imagem(imagens, g, "Foto do " ~ site.site.nome, "(min-width: 700px) 33vw, 50vw") }}</figure>
     {% endfor %}
   </section>
   {% endif %}

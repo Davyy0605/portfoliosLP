@@ -25,7 +25,7 @@
 <main>
   <section class="capa" id="capa">
     <div class="capa-foto">
-      {{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, "(min-width: 900px) 50vw, 100vw", prioridade=True) }}
+      {{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, "(min-width: 700px) 50vw, 100vw", prioridade=True) }}
     </div>
     <div class="capa-cartao folha">
       <div class="trama" aria-hidden="true">{% for _ in range(23) %}<span></span>{% endfor %}</div>
@@ -46,7 +46,7 @@
     </div>
     {% if site.sobre.imagens %}
     <div class="carta-fotos">
-      {% for f in (site.sobre.imagens[:-1] if site.sobre.imagens|length > 1 else site.sobre.imagens) %}{{ m.imagem(imagens, f, site.site.nome ~ ": ambiente", "(min-width: 900px) 30vw, 90vw") }}{% endfor %}
+      {% for f in (site.sobre.imagens[:-1] if site.sobre.imagens|length > 1 else site.sobre.imagens) %}{{ m.imagem(imagens, f, site.site.nome ~ ": ambiente", "(min-width: 700px) 30vw, 90vw") }}{% endfor %}
     </div>
     {% endif %}
   </section>
@@ -80,7 +80,7 @@
 
   {% for d in com_foto %}
   <section class="prato{% if loop.index is even %} prato-inverso{% endif %}" aria-labelledby="destaque-{{ loop.index }}">
-    <div class="prato-foto">{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 45vw, 100vw") }}</div>
+    <div class="prato-foto">{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 700px) 45vw, 100vw") }}</div>
     <div class="prato-texto">
       <h2 id="destaque-{{ loop.index }}">{{ d.titulo }}</h2>
       <p>{{ d.texto }}</p>
@@ -116,7 +116,7 @@
   {% if site.galeria %}
   <section class="galeria" aria-label="Galeria">
     {% for f in site.galeria[:6] %}
-    <figure class="galeria-{{ loop.index }}">{{ m.imagem(imagens, f, site.site.nome ~ ": galeria", "(min-width: 900px) 40vw, 50vw") }}</figure>
+    <figure class="galeria-{{ loop.index }}">{{ m.imagem(imagens, f, site.site.nome ~ ": galeria", "(min-width: 700px) 40vw, 50vw") }}</figure>
     {% endfor %}
   </section>
   {% endif %}

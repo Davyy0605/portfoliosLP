@@ -35,7 +35,7 @@
       <p class="aberto" data-aberto hidden><span class="aberto-ponto" aria-hidden="true"></span><span data-aberto-texto></span></p>
     </div>
     <div class="capa-fruto">
-      {{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, "(min-width: 900px) 60vw, 120vw", "capa-foto", prioridade=True) }}
+      {{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, "(min-width: 700px) 60vw, 120vw", "capa-foto", prioridade=True) }}
     </div>
   </section>
 
@@ -71,7 +71,7 @@
         {% if insta and 'instagram' in d.titulo|lower %}
         <a class="botao botao-claro" href="https://instagram.com/{{ insta }}" rel="noopener">Seguir @{{ c.instagram }}</a>
         {% endif %}
-        {% if d.imagem %}<div class="pasta-fruto">{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 900px) 34vw, 70vw", "pasta-foto") }}</div>{% endif %}
+        {% if d.imagem %}<div class="pasta-fruto">{{ m.imagem(imagens, d.imagem, d.titulo, "(min-width: 700px) 34vw, 70vw", "pasta-foto") }}</div>{% endif %}
       </div>
     </article>
     {% endfor %}
@@ -86,7 +86,7 @@
         <p>{{ site.sobre.texto }}</p>
         <a class="botao botao-claro" href="cardapio/">Ver cardápio</a>
       </div>
-      {% if site.sobre.imagens %}<div class="sobre-fruto">{{ m.imagem(imagens, site.sobre.imagens[0], site.sobre.titulo, "(min-width: 900px) 38vw, 86vw", "sobre-foto") }}</div>{% endif %}
+      {% if site.sobre.imagens %}<div class="sobre-fruto">{{ m.imagem(imagens, site.sobre.imagens[0], site.sobre.titulo, "(min-width: 700px) 38vw, 86vw", "sobre-foto") }}</div>{% endif %}
     </div>
   </section>
   {% endif %}
@@ -108,7 +108,7 @@
     {% endif %}
     <button type="button" class="galeria-fruto" data-galeria aria-label="Próxima foto"{% if n < 2 %} disabled{% endif %}>
       {% for g in site.galeria %}
-      <span class="galeria-quadro" style="--i: {{ loop.index0 }}">{{ m.imagem(imagens, g, "Foto " ~ loop.index ~ " de " ~ site.site.nome, "(min-width: 900px) 36vw, 72vw", "galeria-foto") }}</span>
+      <span class="galeria-quadro" style="--i: {{ loop.index0 }}">{{ m.imagem(imagens, g, "Foto " ~ loop.index ~ " de " ~ site.site.nome, "(min-width: 700px) 36vw, 72vw", "galeria-foto") }}</span>
       {% endfor %}
     </button>
   </section>

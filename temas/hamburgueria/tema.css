@@ -168,10 +168,14 @@ a { color: inherit; }
 .quadro:nth-child(even) .quadro-legenda { grid-column: 9 / -1; }
 .quadro:nth-child(4n) .quadro-foto { grid-column: 5 / 11; }
 .quadro:nth-child(4n) .quadro-legenda { grid-column: 1 / 5; }
+/* tela média: a legenda é estreita e alta; começa abaixo do nome gigante */
+@media (min-width: 700px) and (max-width: 1099px) { .quadro-legenda { padding-top: calc(var(--passo-monumento) * .85); } }
+/* tela baixa (celular deitado): legenda presa ao rodapé subiria por cima do nome */
+@media (max-height: 599px) { .quadro-1 .quadro-legenda, .quadro-acao { position: relative; bottom: auto; } }
 .quadro-1 .quadro-foto img { animation: assar 1.6s cubic-bezier(.2,.7,.2,1) both; }
 .quadro-1 .monumento { animation: subir .9s cubic-bezier(.2,.8,.2,1) both; }
 
-@media (max-width: 899px) {
+@media (max-width: 699px) {
   .quadro { padding-bottom: 72px; row-gap: 20px; }
   .quadro-foto, .quadro:nth-child(n) .quadro-foto { grid-column: 1 / -1; margin-top: calc(var(--passo-monumento) * .5); }
   .quadro-legenda, .quadro:nth-child(n) .quadro-legenda { grid-column: 1 / -1; grid-row: 2; position: static; }
@@ -197,7 +201,7 @@ a { color: inherit; }
 .sobre-capitular { float: left; width: 3.66em; height: 3.66em; object-fit: cover; margin: .2em .5em 0 0; }
 .sobre-foto { grid-column: 8 / -1; margin: clamp(48px, 6vw, 96px) 0 0; }
 .sobre-foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-@media (max-width: 899px) {
+@media (max-width: 699px) {
   .sobre-corpo, .sobre-fatos { grid-column: 1 / -1; }
   .sobre-fatos { grid-row: 2; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; margin-top: 2rem; font-size: .8125rem; }
   .sobre-capitular { width: 4.4em; height: 4.4em; }
@@ -229,7 +233,7 @@ a { color: inherit; }
 .tabela-item { font-weight: 800; font-variation-settings: "wdth" 110; font-size: 1.125rem; }
 .tabela-preco { font-weight: 900; font-variation-settings: "wdth" 118; color: var(--mostarda); font-size: 1.125rem; font-variant-numeric: tabular-nums; }
 .tabela-desc { grid-column: 1 / -1; color: #d9cfc7; font-size: .9375rem; max-width: 52ch; }
-@media (max-width: 899px) {
+@media (max-width: 699px) {
   .ofertas .titulo-grande, .ofertas-lead { padding-left: 0; }
   .ofertas-foto { grid-column: 5 / -1; grid-row: 2; position: static; margin-top: 56px; }
   .ofertas-tabelas { grid-column: 1 / -1; }
@@ -246,10 +250,10 @@ a { color: inherit; }
 .faixa-linha:nth-child(odd) .faixa-painel:nth-child(1) { flex-grow: 2; }
 .faixa-linha:nth-child(odd) .faixa-painel:nth-child(2) { flex-grow: 5; }
 .faixa-painel img { width: 100%; height: 100%; object-fit: cover; }
-@media (hover: hover) and (min-width: 900px) {
+@media (hover: hover) and (min-width: 700px) {
   .faixa-linha .faixa-painel:hover { flex-grow: 6; }
 }
-@media (max-width: 899px) {
+@media (max-width: 699px) {
   .faixa .titulo-secao { padding-left: var(--margem); padding-bottom: 40px; }
   .faixa-linha { flex-wrap: wrap; height: auto; min-height: 0; }
   .faixa-painel, .faixa-linha:nth-child(n) .faixa-painel:nth-child(n) { flex: 0 0 36%; height: 42svh; }
@@ -325,7 +329,7 @@ a { color: inherit; }
 .balcao .horarios > div { display: flex; gap: .4em; }
 .balcao .horarios dt { font-weight: 800; }
 .balcao .horarios dd { margin: 0; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .balcao-passos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--margem); }
 }
 
@@ -363,7 +367,7 @@ a { color: inherit; }
 }
 .categoria-descricao { margin: .9rem 0 0; font-weight: 600; font-size: var(--passo-texto); max-width: 50ch; }
 .itens { margin-top: clamp(24px, 3vw, 40px); gap: 12px; }
-@media (min-width: 900px) { .itens { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--margem); } }
+@media (min-width: 700px) { .itens { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--margem); } }
 
 .item {
   flex-wrap: wrap; gap: 14px 16px; padding: 16px;
@@ -398,7 +402,7 @@ a { color: inherit; }
 
 /* primeira categoria (combos): vitrine com foto grande e chão de mostarda */
 .categoria:first-of-type .itens { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
-@media (min-width: 900px) { .categoria:first-of-type .itens { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 700px) { .categoria:first-of-type .itens { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .categoria:first-of-type .itens { align-items: start; }
 .categoria:first-of-type .item { background: var(--mostarda); flex-direction: column; align-items: stretch; }
 .categoria:first-of-type .item-foto { width: calc(100% + 32px); max-width: none; height: auto; aspect-ratio: 4 / 3; margin: -16px -16px 0; }
