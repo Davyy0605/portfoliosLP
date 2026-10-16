@@ -1,0 +1,321 @@
+/* Bistrô: lousa de giz e papel de caderno. Caveat (giz) + Newsreader (texto). */
+:root {
+  --cor-fundo: #F2ECE0;
+  --cor-texto: #1F1E1B;
+  --cor-destaque: #7E2433;
+  --fonte-titulo: "Caveat", "Segoe Print", cursive;
+  --fonte-texto: "Newsreader", Georgia, serif;
+  --raio: 2px;
+
+  --lousa: #26302B;
+  --lousa-2: #2E3934;
+  --giz: #EFECE4;
+  --giz-2: #C3CBC0;
+  --adega: #3B1A21;
+  --papel-2: #E8E0D0;
+  --tinta-2: #4A4740;
+  --margem: clamp(1rem, 4vw, 3rem);
+  --giz-textura: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --borrao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .012' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .16 -.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");
+  --papel-textura: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .28 0 0 0 0 .18 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+body {
+  background: var(--cor-fundo) var(--papel-textura);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-optical-sizing: auto;
+}
+h1, h2, h3 { margin: 0; font-weight: 700; }
+p { margin: 0; }
+a { color: inherit; }
+figure { margin: 0; }
+img { border-radius: var(--raio); }
+
+/* Superfícies de lousa */
+.topo, .capa, .agenda, .fim, .menu-topo, .categoria:first-of-type, .reserva-quadro {
+  background-color: var(--lousa);
+  background-image: var(--borrao), var(--giz-textura);
+  background-size: cover, auto;
+  color: var(--giz);
+}
+
+/* Botões e links */
+.cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 1.4rem;
+  background: var(--cor-destaque); color: #FBF6EE;
+  font-family: var(--fonte-texto); font-weight: 500; font-size: 1.0625rem;
+  text-decoration: none; border-radius: var(--raio);
+  transition: transform .18s ease, background-color .18s ease;
+}
+.cta:hover { background: #962C3D; }
+.cta:active { transform: translateY(1px) scale(.98); }
+.link-giz {
+  display: inline-flex; align-items: center; min-height: 48px;
+  font-family: var(--fonte-titulo); font-size: 1.6rem; font-weight: 700;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .3em;
+  transition: text-underline-offset .18s ease;
+}
+.link-giz:hover { text-underline-offset: .45em; }
+
+/* Topo */
+.topo, .menu-topo {
+  display: flex; align-items: center; gap: 1rem;
+  padding: .5rem var(--margem);
+}
+.marca {
+  display: inline-flex; align-items: center; min-height: 48px;
+  font-family: var(--fonte-titulo); font-weight: 700; font-size: 2.1rem; line-height: 1;
+  text-decoration: none; margin-right: auto;
+}
+.topo-links { display: none; gap: .25rem; }
+.topo-links a {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 .8rem;
+  text-decoration: none; color: var(--giz-2);
+}
+.topo-links a:hover { color: var(--giz); text-decoration: underline; text-underline-offset: .3em; }
+.topo .cta { min-height: 44px; padding: 0 1rem; font-size: 1rem; }
+@media (min-width: 820px) { .topo-links { display: flex; } }
+
+/* Capa: a lousa do dia + a foto */
+.capa { display: grid; }
+.lousa { padding: 2rem var(--margem) 2.5rem; }
+.lousa-data { color: var(--giz-2); font-size: 1rem; }
+.lousa-titulo {
+  font-family: var(--fonte-titulo); font-weight: 700;
+  font-size: clamp(3.4rem, 15vw, 7.6rem); line-height: .86; letter-spacing: -.01em;
+  margin: .6rem 0 1.6rem; max-width: 11ch;
+  text-shadow: 0 0 1px rgb(239 236 228 / .35);
+}
+.lousa-itens { display: grid; gap: 1.1rem; margin-bottom: 2rem; max-width: 34rem; }
+.lousa-itens li {
+  display: grid; grid-template-columns: 1fr auto; column-gap: 1rem; align-items: baseline;
+  font-family: var(--fonte-titulo); font-size: 1.65rem; line-height: 1.1;
+}
+.lousa-rotulo { grid-column: 1 / -1; font-family: var(--fonte-texto); font-size: .95rem; color: var(--giz-2); }
+.lousa-preco { font-weight: 700; white-space: nowrap; }
+.lousa-itens li:last-child {
+  padding-top: 1rem; font-size: 1.9rem; font-weight: 700;
+  background: linear-gradient(var(--giz-2), var(--giz-2)) top left / 3.5rem 2px no-repeat;
+}
+.capa-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; }
+.capa-foto { position: relative; background: var(--lousa-2); }
+.capa-foto img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0; }
+.capa-foto figcaption {
+  padding: 1.25rem var(--margem) 2rem; font-size: 1.125rem; line-height: 1.5; color: var(--giz);
+  font-style: italic;
+}
+@media (min-width: 960px) {
+  .capa { grid-template-columns: 1.15fr 1fr; min-height: calc(100vh - 64px); }
+  .lousa { padding: 3rem var(--margem) 3.5rem; align-self: center; }
+  .capa-foto { display: grid; grid-template-rows: 1fr auto; }
+  .capa-foto img { height: 100%; aspect-ratio: auto; min-height: 0; }
+  .capa-foto figcaption { padding: 1.5rem 2.5rem 2rem; max-width: 34rem; }
+  .lousa-itens { max-width: 40rem; gap: 1.3rem; }
+  .lousa-itens li { font-size: 2.1rem; }
+  .lousa-itens li:last-child { font-size: 2.4rem; }
+  .lousa-rotulo { font-size: 1rem; }
+}
+
+/* A casa: texto de caderno, fotos fora de esquadro */
+.casa {
+  display: grid; gap: 2rem;
+  padding: clamp(4rem, 10vw, 9rem) var(--margem);
+}
+.casa h2 {
+  font-family: var(--fonte-titulo); font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: .95;
+  max-width: 14ch; color: var(--cor-destaque);
+}
+.caderno {
+  margin-top: 1.5rem; max-width: 36rem; font-size: 1.1875rem; line-height: 2rem;
+  /* as "entrelinhas" do nome: pauta de caderno sob o texto */
+  background: repeating-linear-gradient(to bottom, transparent 0 calc(2rem - 1px), rgb(126 36 51 / .16) calc(2rem - 1px) 2rem);
+  background-position: 0 -.3rem;
+}
+.casa-foto img { width: 100%; object-fit: cover; }
+.casa-foto-1 img { aspect-ratio: 4 / 5; }
+.casa-foto-2 { width: 72%; justify-self: end; margin-top: -4rem; transform: rotate(2deg); }
+.casa-foto-2 img { aspect-ratio: 1; outline: .6rem solid #FBF7EF; }
+@media (min-width: 960px) {
+  .casa { grid-template-columns: 1.1fr .8fr .55fr; align-items: start; gap: 3rem; }
+  .casa-texto { padding-top: 2rem; }
+  .casa-foto-1 { transform: rotate(-1.2deg); }
+  .casa-foto-2 { width: 100%; margin-top: 12rem; margin-left: -5rem; }
+}
+
+/* Carta de vinhos */
+.adega {
+  display: grid; gap: 2rem;
+  padding: clamp(4rem, 9vw, 8rem) var(--margem);
+  background: var(--adega); color: #F3E9E4;
+}
+.adega-cabeca h2 { font-family: var(--fonte-titulo); font-size: clamp(3rem, 10vw, 5.5rem); line-height: .9; }
+.adega-cabeca p { margin-top: 1rem; max-width: 26rem; color: #E1CFC9; }
+.adega-foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.adega-lista { display: grid; gap: 1.4rem; }
+.adega-lista li { display: grid; grid-template-columns: 1fr auto; column-gap: 1rem; align-items: baseline; }
+.adega-nome { font-size: 1.25rem; font-weight: 500; }
+.adega-preco { font-family: var(--fonte-titulo); font-size: 1.6rem; font-weight: 700; white-space: nowrap; }
+.adega-nota { grid-column: 1 / -1; color: #E1CFC9; font-style: italic; font-size: 1rem; }
+@media (min-width: 960px) {
+  .adega { grid-template-columns: .9fr 1.3fr; column-gap: 5rem; align-items: start; }
+  .adega-cabeca { grid-column: 1; }
+  .adega-foto { grid-column: 1; grid-row: 2; }
+  .adega-lista { grid-column: 2; grid-row: 1 / span 2; column-count: 1; padding-top: .6rem; }
+}
+
+/* Notas da casa: colagem em alturas desencontradas */
+.notas { padding: clamp(4rem, 10vw, 9rem) var(--margem); }
+.notas-titulo { font-family: var(--fonte-titulo); font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: .95; max-width: 16ch; }
+.notas-lista { display: grid; gap: 3rem; margin-top: 2.5rem; }
+.nota h3 { font-family: var(--fonte-titulo); font-size: 2.2rem; line-height: 1; margin: 1.1rem 0 .5rem; color: var(--cor-destaque); }
+.nota p { max-width: 30rem; }
+.nota-foto { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+@media (min-width: 960px) {
+  .notas-lista { grid-template-columns: repeat(3, 1fr); gap: 3rem; align-items: start; }
+  .nota:nth-child(3n+1) .nota-foto { aspect-ratio: 4 / 5; }
+  .nota:nth-child(3n+2) { margin-top: 7rem; }
+  .nota:nth-child(3n) { margin-top: 2.5rem; }
+  .nota:nth-child(3n) .nota-foto { aspect-ratio: 1; }
+}
+
+/* Agenda: segunda lousa */
+.agenda { padding: clamp(4rem, 9vw, 8rem) var(--margem); }
+.agenda-cabeca h2 { font-family: var(--fonte-titulo); font-size: clamp(3rem, 10vw, 5.5rem); line-height: .9; }
+.agenda-cabeca p { margin-top: 1rem; max-width: 30rem; color: var(--giz-2); }
+.eventos { margin-top: 2.5rem; }
+.eventos-lista { gap: 0; }
+.evento {
+  display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem;
+  padding: 1.5rem 0;
+  background: linear-gradient(rgb(239 236 228 / .22), rgb(239 236 228 / .22)) top / 100% 2px no-repeat;
+}
+.evento-foto { width: 5.5rem; height: 5.5rem; object-fit: cover; filter: grayscale(.35) contrast(1.05); }
+.evento-data { font-family: var(--fonte-titulo); font-size: 1.7rem; font-weight: 700; line-height: 1.1; }
+.evento-titulo { font-size: 1.35rem; font-weight: 500; line-height: 1.25; margin: .2rem 0; }
+.evento-atracao { color: var(--giz-2); font-style: italic; }
+.evento-descricao { margin-top: .5rem; max-width: 34rem; }
+.evento-valor { margin-top: .5rem; color: var(--giz-2); }
+.evento-reservar {
+  display: inline-flex; align-items: center; min-height: 44px; margin-top: .6rem; padding: 0 1.1rem;
+  background: var(--giz); color: var(--lousa); text-decoration: none; font-weight: 500; border-radius: var(--raio);
+  transition: transform .18s ease, background-color .18s ease;
+}
+.evento-reservar:hover { background: #FFFFFF; }
+.evento-reservar:active { transform: scale(.97); }
+.eventos-vazio { font-family: var(--fonte-titulo); font-size: 1.8rem; }
+@media (min-width: 960px) {
+  .agenda { display: grid; grid-template-columns: .8fr 1.6fr; column-gap: 5rem; align-items: start; }
+  .agenda-cabeca { position: sticky; top: 2rem; }
+  .eventos { margin-top: 0; }
+  .evento { grid-template-columns: 11rem 1fr; gap: 2rem; padding: 2rem 0; }
+  .evento-foto { width: 11rem; height: 8rem; }
+}
+
+/* Galeria: tira de fotos */
+.galeria { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; padding: .5rem; }
+.galeria-foto img { width: 100%; height: 100%; aspect-ratio: 1; object-fit: cover; }
+@media (min-width: 960px) {
+  .galeria { grid-template-columns: 2fr 1fr 1fr 1.4fr; grid-auto-rows: 15rem; }
+  .galeria-foto img { aspect-ratio: auto; }
+  .galeria-foto:nth-child(1) { grid-row: span 2; }
+  .galeria-foto:nth-child(4) { grid-row: span 2; }
+}
+
+/* Reserva */
+.reserva { display: grid; gap: 2.5rem; padding: clamp(4rem, 10vw, 9rem) var(--margem); }
+.reserva h2 { font-family: var(--fonte-titulo); font-size: clamp(2.8rem, 9vw, 5rem); line-height: .92; max-width: 13ch; color: var(--cor-destaque); }
+.reserva-convite p { margin: 1.2rem 0 1.6rem; max-width: 30rem; }
+.reserva h3 { font-family: var(--fonte-titulo); font-size: 2rem; margin-bottom: .8rem; }
+.reserva-quadro { padding: 1.75rem; border-radius: var(--raio); transform: rotate(-1deg); }
+.horarios div { display: grid; gap: .1rem; padding: .55rem 0; }
+.horarios dt { font-weight: 500; }
+.horarios dd { margin: 0; font-family: var(--fonte-titulo); font-size: 1.55rem; line-height: 1.1; }
+.reserva-quadro .horarios dt { color: var(--giz-2); }
+.contato { font-style: normal; display: grid; gap: .1rem; }
+.contato a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: .25em; }
+.contato-endereco { margin-bottom: .4rem; }
+.contato-mapa { margin-top: 1rem; min-height: 15rem; filter: grayscale(.6) sepia(.15); border-radius: var(--raio); }
+@media (min-width: 960px) {
+  .reserva { grid-template-columns: 1.3fr .9fr 1fr; gap: 4rem; align-items: start; }
+}
+
+/* Fim */
+.fim { padding: 3rem var(--margem) 2rem; display: grid; gap: 1.25rem; }
+.fim-frase { font-family: var(--fonte-titulo); font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 700; line-height: 1; }
+.fim-links { display: flex; flex-wrap: wrap; gap: 0 1.5rem; }
+.fim-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.rodape { color: var(--giz-2); font-size: .9375rem; display: grid; gap: .4rem; }
+.rodape-creditos { max-width: 60rem; }
+
+/* ===== Cardápio ===== */
+.menu-topo { position: relative; }
+.menu-topo .cta { min-height: 44px; padding: 0 1rem; font-size: 1rem; }
+.menu { max-width: 46rem; margin: 0 auto; padding: 0 0 3rem; }
+.menu-abertura { padding: 2.25rem 1rem 1.25rem; }
+.menu-abertura h1 { font-family: var(--fonte-titulo); font-size: clamp(3.6rem, 16vw, 5.5rem); line-height: .85; color: var(--cor-destaque); }
+.menu-abertura p { margin-top: .6rem; color: var(--tinta-2); }
+
+.cardapio-busca { padding: 0 1rem 1rem; }
+.cardapio-busca input {
+  width: 100%; min-height: 48px; padding: 0 1rem;
+  background: #FBF7EF; border: 2px solid var(--papel-2); border-radius: var(--raio);
+}
+.cardapio-busca input:focus { border-color: var(--cor-destaque); outline: none; }
+.cardapio-abas { background: var(--cor-fundo); padding: 0 .5rem; box-shadow: 0 6px 12px -10px rgb(0 0 0 / .4); }
+.cardapio-abas a {
+  min-height: 48px; display: inline-flex; align-items: center;
+  font-family: var(--fonte-titulo); font-size: 1.45rem; font-weight: 700; color: var(--tinta-2);
+}
+.cardapio-abas a:hover, .cardapio-abas a[aria-current], .cardapio-abas a.ativa { color: var(--cor-destaque); }
+
+.categoria { padding: 2.5rem 1rem 1rem; scroll-margin-top: 3.5rem; }
+.categoria h2 { font-family: var(--fonte-titulo); font-size: 2.9rem; line-height: .95; color: var(--cor-destaque); }
+.categoria-descricao { margin-top: .4rem; color: var(--tinta-2); font-style: italic; }
+.itens { gap: 0; margin-top: 1.25rem; }
+.item { padding: 1rem 0; gap: .9rem; }
+.item + .item { background: linear-gradient(var(--papel-2), var(--papel-2)) top / 100% 2px no-repeat; }
+.item-foto { width: 5.25rem; height: 5.25rem; border-radius: var(--raio); }
+.item-nome { font-size: 1.15rem; font-weight: 500; line-height: 1.3; }
+.item-descricao { margin-top: .2rem; font-size: 1rem; color: var(--tinta-2); line-height: 1.45; }
+.item-preco { font-family: var(--fonte-titulo); font-size: 1.6rem; font-weight: 700; white-space: nowrap; line-height: 1.1; }
+.selos { margin-top: .45rem; }
+.selo { font-size: .8125rem; padding: .1rem .5rem; background: var(--papel-2); color: var(--cor-texto); border-radius: var(--raio); }
+.selo-chef { background: var(--cor-destaque); color: #FBF6EE; }
+.selo-vegano, .selo-vegetariano { background: #DCE3D3; }
+.sem-resultado { padding: 2rem 1rem; font-family: var(--fonte-titulo); font-size: 1.8rem; }
+
+/* A primeira categoria é a lousa do dia */
+.categoria:first-of-type { margin: 1.25rem .5rem 0; padding: 2rem 1.25rem 1.5rem; border-radius: var(--raio); }
+.categoria:first-of-type h2 { color: var(--giz); font-size: 3.4rem; }
+.categoria:first-of-type .categoria-descricao,
+.categoria:first-of-type .item-descricao { color: var(--giz-2); }
+.categoria:first-of-type .item + .item { background-image: linear-gradient(rgb(239 236 228 / .2), rgb(239 236 228 / .2)); }
+.categoria:first-of-type .item-nome { font-family: var(--fonte-titulo); font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+.categoria:first-of-type .selo { background: rgb(239 236 228 / .14); color: var(--giz); }
+
+.menu-fim { padding: 3rem 1rem 0; }
+.menu-fim h2 { font-family: var(--fonte-titulo); font-size: 2.6rem; margin-bottom: .5rem; }
+.fim-menu { margin-top: 2rem; }
+
+@media (min-width: 700px) {
+  .item-foto { width: 7rem; height: 7rem; }
+  .categoria:first-of-type { margin: 1.5rem 0 0; padding: 2.5rem 2rem 2rem; }
+}
+
+/* Entrada suave da lousa (só transform/opacity) */
+@media (prefers-reduced-motion: no-preference) {
+  .lousa-titulo, .lousa-itens li, .capa-foto img { animation: surge .7s cubic-bezier(.2, .7, .2, 1) both; }
+  .lousa-itens li:nth-child(1) { animation-delay: .12s; }
+  .lousa-itens li:nth-child(2) { animation-delay: .2s; }
+  .lousa-itens li:nth-child(3) { animation-delay: .28s; }
+  .lousa-itens li:nth-child(4) { animation-delay: .36s; }
+  .capa-foto img { animation-name: revela; animation-duration: 1.1s; }
+  .nota-foto, .casa-foto img, .adega-foto img { transition: transform .5s ease; }
+  .nota:hover .nota-foto, .casa-foto:hover img, .adega-foto:hover img { transform: scale(1.02); }
+}
+@keyframes surge { from { opacity: 0; transform: translateY(18px); } }
+@keyframes revela { from { opacity: 0; transform: scale(1.04); } }

@@ -1,4 +1,4 @@
-galeria = ["sala.jpg", "cozinha.jpg", "mesa.jpg", "tabua.jpg", "brinde.jpg", "sax.jpg"]
+galeria = ["cozinha.jpg", "carne.jpg", "macarons.jpg", "almondegas.jpg", "farfalle.jpg", "cafe-espresso.jpg"]
 
 [site]
 slug = "bistro"
@@ -7,7 +7,7 @@ nome = "Entrelinhas"
 segmento = "Bistrô"
 ordem = 6
 slogan = "Bistrô de bairro, menu escrito à mão"
-descricao = "Entrelinhas: bistrô em Santa Tereza, Belo Horizonte. Menu do dia na lousa, carta de vinhos curta e noites de jazz às quintas."
+descricao = "Entrelinhas: bistrô em Santa Tereza, Belo Horizonte. Menu do dia na lousa, carta de vinhos curta e noites de jazz ao vivo."
 modulos = ["eventos"]
 cor = "#2F3B35"
 
@@ -47,14 +47,14 @@ texto = "De terça a sexta, no almoço: entrada, prato e sobremesa escolhidos pe
 imagem = "frites.jpg"
 
 [[destaques]]
-titulo = "Quintas de jazz"
-texto = "Toda quinta, trio ao vivo a partir das 20h30, sem palco e sem pressa. Reserve para jantar e ganhe a melhor mesa para ouvir."
+titulo = "Jazz sem palco"
+texto = "Duas vezes por mês, trio ao vivo a partir das 20h30, no canto da sala e sem pressa. Reserve para jantar e fique com a melhor mesa para ouvir."
 imagem = "sax.jpg"
 
 [[destaques]]
 titulo = "Vinhos pequenos"
 texto = "Vinte rótulos de produtores pequenos de Minas, do Sul do Brasil, de Portugal e da França. Todos por taça, a partir de R$ 28."
-imagem = "vinhos.jpg"
+imagem = "mesa.jpg"
 
 [[cardapio.categorias]]
 id = "menu-do-dia"
@@ -273,7 +273,7 @@ vazio_mensagem = "A agenda da casa será atualizada em breve. Siga o Instagram."
   valor = "R$ 180 por pessoa"
 
   [[eventos.lista]]
-  titulo = "Quinta de jazz: Trio Calçada"
+  titulo = "Jazz na sala: Trio Calçada"
   em_dias = 9
   hora = "20h30"
   atracao = "Trio Calçada"
@@ -282,7 +282,7 @@ vazio_mensagem = "A agenda da casa será atualizada em breve. Siga o Instagram."
   valor = "Couvert R$ 25"
 
   [[eventos.lista]]
-  titulo = "Quinta de jazz: noite do trompete"
+  titulo = "Noite do trompete"
   em_dias = 16
   hora = "20h30"
   atracao = "Marcelo Duarte Quinteto"
@@ -301,8 +301,8 @@ vazio_mensagem = "A agenda da casa será atualizada em breve. Siga o Instagram."
 
 [[fotos]]
 arquivo = "capa.jpg"
-url = "https://images.unsplash.com/photo-1514933651103-005eec06c04b"
-autor = "Colaborador Unsplash"
+url = "https://images.unsplash.com/photo-1519756719377-e084f8333a83"
+autor = "Arthur Chauvineau"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -313,14 +313,14 @@ fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "cafe.jpg"
-url = "https://images.unsplash.com/photo-1525610553991-2bede1a236e2"
-autor = "Colaborador Unsplash"
+url = "https://images.unsplash.com/photo-1566670829021-13ba5cc73518"
+autor = "Louis Hansel"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "mesa.jpg"
 url = "https://images.unsplash.com/photo-1528605248644-14dd04022da1"
-autor = "Colaborador Unsplash"
+autor = "Priscilla Du Preez"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -332,7 +332,7 @@ fonte = "Unsplash"
 [[fotos]]
 arquivo = "frites.jpg"
 url = "https://images.unsplash.com/photo-1600891964092-4316c288032e"
-autor = "Colaborador Unsplash"
+autor = "Tim Toomey"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -344,19 +344,19 @@ fonte = "Unsplash"
 [[fotos]]
 arquivo = "vegetais.jpg"
 url = "https://images.unsplash.com/photo-1512621776951-a57141f2eefd"
-autor = "Colaborador Unsplash"
+autor = "Anna Pelzer"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "farfalle.jpg"
 url = "https://images.unsplash.com/photo-1473093295043-cdd812d0e601"
-autor = "Colaborador Unsplash"
+autor = "Eaters Collective"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "almondegas.jpg"
 url = "https://images.unsplash.com/photo-1529042410759-befb1204b468"
-autor = "Colaborador Unsplash"
+autor = "Emiliano Vittoriosi"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -374,41 +374,41 @@ fonte = "Unsplash"
 [[fotos]]
 arquivo = "cafe-espresso.jpg"
 url = "https://images.unsplash.com/photo-1511920170033-f8396924c348"
-autor = "Colaborador Unsplash"
+autor = "Nathan Dumlao"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "salada.jpg"
 url = "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe"
-autor = "Colaborador Unsplash"
+autor = "Eiliv Aceron"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "vinhos.jpg"
-url = "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea"
-autor = "Colaborador Unsplash"
+url = "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d"
+autor = "Lefteris Kallergis"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "brinde.jpg"
 url = "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3"
-autor = "Colaborador Unsplash"
+autor = "Kelsey Knight"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "sax.jpg"
 url = "https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f"
-autor = "Colaborador Unsplash"
+autor = "Jens Thekkeveettil"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "trompete.jpg"
 url = "https://images.unsplash.com/photo-1511192336575-5a79af67a629"
-autor = "Colaborador Unsplash"
+autor = "Chris Bair"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "carne.jpg"
 url = "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba"
-autor = "Colaborador Unsplash"
+autor = "José Ignacio Pompé"
 fonte = "Unsplash"

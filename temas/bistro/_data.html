@@ -1,0 +1,7 @@
+{# Escreve a data de hoje na lousa ("quinta-feira, 16 de outubro"). Sem script, fica "Hoje". #}
+<script>
+document.querySelectorAll("[data-lousa-data]").forEach(function (el) {
+  var t = new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" });
+  el.textContent = t.charAt(0).toUpperCase() + t.slice(1);
+});
+</script>
