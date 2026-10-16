@@ -58,9 +58,8 @@ Módulos opcionais, em `modulos = [...]`: `eventos` (agenda com datas fixas `dat
 
 Use o mesmo repositório. Em um novo site Netlify:
 
-- Build command: `pip install -r requirements.txt && python build.py --site meu-cliente --saida dist`
-- Publish directory: `dist`
-- Variável de ambiente `PYTHON_VERSION = 3.12`
+- Não altere build command nem publish directory: o `netlify.toml` do repositório manda neles.
+- Em **Environment variables**, crie `SITE = meu-cliente`. Com essa variável, o build publica só esse cliente (landing na raiz, cardápio em `/cardapio/`); sem ela, publica o portfólio.
 
 Antes, ajuste o `config.toml` do repositório (ou use um branch do cliente) com a `url_base` e o `whatsapp` do cliente. O WhatsApp do próprio cliente também pode ficar em `[contato] whatsapp` do `site.toml`, que tem prioridade sobre o do `config.toml`.
 

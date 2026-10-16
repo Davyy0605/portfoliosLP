@@ -1,5 +1,6 @@
 [build]
-  command = "pip install -r requirements.txt && python build.py"
+  # Sem SITE: publica o portfólio. Com SITE=<slug> (variável no painel do Netlify): publica só esse cliente.
+  command = "pip install -r requirements.txt && python build.py ${SITE:+--site \"$SITE\"}"
   publish = "dist"
 
 [build.environment]
