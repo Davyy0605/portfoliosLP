@@ -86,15 +86,21 @@ export function iniciar(raiz = document) {
     try {
       sessionStorage.setItem(chave, JSON.stringify(carrinho.itens()));
     } catch {}
-    lista.replaceChildren(
+    // o replaceChildren destrói o botão apertado: guardamos qual era para devolver o foco
+    const ativo = lista && lista.contains(document.activeElement) ? document.activeElement : null;
+    const pedido = ativo && { id: ativo.dataset.id, acao: ativo.dataset.acao };
+    const posicao = ativo ? [...lista.children].indexOf(ativo.closest("li")) : -1;
+    lista?.replaceChildren(
       ...carrinho.itens().map((i) => {
         const li = document.createElement("li");
         const nome = document.createElement("span");
         nome.textContent = `${i.nome} — ${formatarBRL(i.centavos * i.qtd)}`;
-        const botao = (rotulo, delta, simbolo) => {
+        const botao = (rotulo, delta, simbolo, acao) => {
           const b = document.createElement("button");
           b.type = "button";
           b.textContent = simbolo;
+          b.dataset.id = i.id;
+          b.dataset.acao = acao;
           b.setAttribute("aria-label", `${rotulo} quantidade de ${i.nome}`);
           b.addEventListener("click", () => {
             carrinho.alterar(i.id, i.qtd + delta);
@@ -104,14 +110,26 @@ export function iniciar(raiz = document) {
         };
         const n = document.createElement("span");
         n.textContent = String(i.qtd);
-        li.append(nome, botao("Diminuir", -1, "−"), n, botao("Aumentar", 1, "+"));
+        li.append(nome, botao("Diminuir", -1, "−", "menos"), n, botao("Aumentar", 1, "+", "mais"));
         return li;
       })
     );
+    if (pedido) {
+      const igual = [...lista.querySelectorAll("button")].find(
+        (b) => b.dataset.id === pedido.id && b.dataset.acao === pedido.acao
+      );
+      const linha = lista.children[Math.min(posicao, lista.children.length - 1)];
+      // item removido: foco vai para a linha vizinha; sem linhas, para a observação
+      const alvo = igual ?? linha?.querySelector("button") ?? obs ?? painel;
+      if (alvo === painel) painel.tabIndex = -1;
+      alvo.focus();
+    }
     const n = carrinho.quantidade();
-    total.textContent = formatarBRL(carrinho.totalCentavos());
+    const totalTxt = formatarBRL(carrinho.totalCentavos());
+    if (total) total.textContent = totalTxt;
     if (qtdEl) qtdEl.textContent = String(n);
-    viva.textContent = `${n} ${n === 1 ? "item" : "itens"}, total ${total.textContent}`;
+    viva.textContent = `${n} ${n === 1 ? "item" : "itens"}, total ${totalTxt}`;
+    if (!enviar) return;
     if (n === 0) {
       enviar.removeAttribute("href");
       enviar.setAttribute("aria-disabled", "true");
@@ -121,14 +139,16 @@ export function iniciar(raiz = document) {
     }
   };
 
-  enviar.addEventListener("click", (e) => {
+  enviar?.addEventListener("click", (e) => {
     if (enviar.getAttribute("aria-disabled") === "true") e.preventDefault();
   });
   if (obs) obs.addEventListener("input", desenhar);
 
   for (const b of raiz.querySelectorAll("button[data-adicionar]")) {
     b.addEventListener("click", () => {
-      carrinho.adicionar(b.dataset.id, b.dataset.nome, Number(b.dataset.centavos));
+      const centavos = Number(b.dataset.centavos);
+      if (!b.dataset.id || !Number.isInteger(centavos) || centavos < 0) return; // dado inválido no botão
+      carrinho.adicionar(b.dataset.id, b.dataset.nome, centavos);
       desenhar();
     });
   }

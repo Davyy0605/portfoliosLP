@@ -3,13 +3,14 @@ const iso = (d) =>
 
 export function resolverData({ data, emDias }, hoje) {
   if (data) return data;
+  if (emDias == null || emDias === "" || !Number.isFinite(Number(emDias))) return null;
   // new Date(a, m, d + n) normaliza o mês e evita cair no fuso UTC
   return iso(new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + Number(emDias)));
 }
 
 // AAAA-MM-DD compara certo como texto
 export function visivel(dataISO, hoje) {
-  return dataISO >= iso(hoje);
+  return Boolean(dataISO) && dataISO >= iso(hoje);
 }
 
 export function formatarData(dataISO) {

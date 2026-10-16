@@ -14,5 +14,12 @@ test("visivel: hoje e futuro sim, passado não", () => {
   assert.strictEqual(visivel("2026-10-15", hoje), false);
 });
 test("formatarData devolve texto pt-BR", () => {
-  assert.match(formatarData("2026-10-16"), /16/);
+  const norm = (s) => s.replace(/ /g, " ");
+  assert.strictEqual(norm(formatarData("2026-10-16")), "sex., 16 de out.");
+  assert.strictEqual(norm(formatarData("2026-12-01")), "ter., 1 de dez.");
+});
+test("sem data nem em-dias: null e invisível", () => {
+  assert.strictEqual(resolverData({}, hoje), null);
+  assert.strictEqual(resolverData({ emDias: "abc" }, hoje), null);
+  assert.strictEqual(visivel(null, hoje), false);
 });
