@@ -1,4 +1,4 @@
-galeria = ["capa.jpg", "latte-art.jpg", "coado.jpg", "paes.jpg", "bolo-chocolate.jpg", "mesa-notebook.jpg"]
+galeria = ["paes.jpg", "cappuccino-croissant.jpg", "croissant.jpg", "cappuccino.jpg", "bolo-morango.jpg", "latte-art.jpg"]
 
 [site]
 slug = "cafeteria"
@@ -53,7 +53,7 @@ imagem = "mesa-notebook.jpg"
 
 [[destaques]]
 titulo = "Confeitaria da casa"
-texto = "Bolo de cenoura com calda de chocolate, cheesecake de goiabada, croissant folhado de manteiga. Tudo feito de manhã, até acabar."
+texto = "Bolo de cenoura com calda de chocolate, cheesecake de mirtilo, croissant folhado de manteiga. Tudo feito de manhã, até acabar."
 imagem = "bolo-chocolate.jpg"
 
 [[destaques]]
@@ -157,8 +157,8 @@ descricao = "Assados todas as manhãs, até acabar."
   selos = ["vegetariano"]
 
   [[cardapio.categorias.itens]]
-  nome = "Cheesecake de goiabada"
-  descricao = "Base de biscoito amanteigado e calda de goiabada cascão."
+  nome = "Cheesecake de mirtilo"
+  descricao = "Base de biscoito amanteigado e calda de mirtilo da Mantiqueira."
   preco = 22.0
   imagem = "cheesecake.jpg"
   selos = ["vegetariano", "chef"]
@@ -170,8 +170,8 @@ descricao = "Assados todas as manhãs, até acabar."
   selos = ["vegetariano"]
 
   [[cardapio.categorias.itens]]
-  nome = "Torta de morango"
-  descricao = "Massa sablée, creme de baunilha e morangos frescos."
+  nome = "Bolo de frutas vermelhas"
+  descricao = "Massa amanteigada, creme de baunilha e framboesas frescas."
   preco = 24.0
   imagem = "bolo-morango.jpg"
   selos = ["vegetariano"]
@@ -216,7 +216,6 @@ descricao = "Para a pausa do almoço ou o café da manhã."
   nome = "Torrada com ovos mexidos e abacate"
   descricao = "Pão de fermentação natural, ovos cremosos e limão."
   preco = 28.0
-  imagem = "paes.jpg"
   selos = ["vegetariano"]
 
   [[cardapio.categorias.itens]]
