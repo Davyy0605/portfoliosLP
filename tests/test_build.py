@@ -74,3 +74,19 @@ def test_dados_invalidos_preservam_dist(raiz, tmp_path, monkeypatch, editar):
     editar("preco = 5", 'preco = "cinco"')
     assert build.main(["--saida", str(d)]) == 1
     assert (d / "index.html").is_file()
+
+
+def test_build_usa_cache_de_imagens(raiz, tmp_path, monkeypatch):
+    from PIL import Image
+    monkeypatch.setattr(build, "RAIZ", raiz)
+    assert build.main(["--saida", str(tmp_path / "dist")]) == 0
+    cache = raiz / ".cache" / "imagens"
+    webps = list(cache.rglob("*.webp"))
+    assert webps
+    antes = {p: p.stat().st_mtime_ns for p in webps}
+    chamadas = []
+    orig = Image.Image.save
+    monkeypatch.setattr(Image.Image, "save", lambda self, *a, **k: (chamadas.append(1), orig(self, *a, **k))[1])
+    assert build.main(["--saida", str(tmp_path / "dist")]) == 0
+    assert chamadas == [] and antes == {p: p.stat().st_mtime_ns for p in webps}
+    assert list((tmp_path / "dist" / "completo" / "cardapio" / "img").glob("*.webp"))

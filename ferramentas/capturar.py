@@ -52,15 +52,19 @@ def capturar(base, saida):
     gravados = []
     with sync_playwright() as p:
         nav = p.chromium.launch()
-        for largura, altura in TAMANHOS.items():
-            pagina = nav.new_page(viewport={"width": largura, "height": altura})
-            for slug, nome, caminho in paginas(base):
-                pagina.goto(base + caminho, wait_until="networkidle")
-                arq = saida / f"{slug}-{nome}-{largura}.png"
-                pagina.screenshot(path=str(arq), full_page=True)
-                gravados.append(arq)
-            pagina.close()
-        nav.close()
+        try:
+            for largura, altura in TAMANHOS.items():
+                pagina = nav.new_page(viewport={"width": largura, "height": altura})
+                for slug, nome, caminho in paginas(base):
+                    # "networkidle" nunca chega com o iframe do Google Maps
+                    pagina.goto(base + caminho, wait_until="load")
+                    pagina.evaluate("document.fonts.ready")
+                    arq = saida / f"{slug}-{nome}-{largura}.png"
+                    pagina.screenshot(path=str(arq), full_page=True)
+                    gravados.append(arq)
+                pagina.close()
+        finally:
+            nav.close()
     return gravados
 
 

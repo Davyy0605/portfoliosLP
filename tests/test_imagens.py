@@ -111,3 +111,25 @@ def test_baixar_ok(tmp_path, monkeypatch):
     monkeypatch.setattr(baixar_fotos.urllib.request, "urlopen", lambda *a, **k: _Resp("image/jpeg", b"img"))
     assert baixar_fotos.main([str(pasta)]) == 0
     assert (pasta / "imagens" / "a.jpg").read_bytes() == b"img"
+
+
+def test_cache_nao_reconverte_e_copia(tmp_path, monkeypatch):
+    o, c = tmp_path / "o", tmp_path / "cache"
+    o.mkdir()
+    _img(o / "c.jpg", (900, 600))
+    r1 = otimizar_imagens(o, tmp_path / "d1" / "img", cache=c)
+    chamadas = []
+    orig = Image.Image.save
+    monkeypatch.setattr(Image.Image, "save", lambda self, *a, **k: (chamadas.append(1), orig(self, *a, **k))[1])
+    r2 = otimizar_imagens(o, tmp_path / "d2" / "img", cache=c)
+    assert chamadas == [] and r1 == r2
+    assert (tmp_path / "d2" / "img" / "c-800.webp").is_file() and (tmp_path / "d2" / "img" / "c-900.webp").is_file()
+
+
+def test_arquivos_restringe(tmp_path):
+    o, d = tmp_path / "o", tmp_path / "img"
+    o.mkdir()
+    _img(o / "a.jpg", (100, 100))
+    _img(o / "b.jpg", (100, 100))
+    r = otimizar_imagens(o, d, arquivos=["a.jpg"])
+    assert list(r) == ["a.jpg"] and [x.name for x in d.iterdir()] == ["a-100.webp"]

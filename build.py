@@ -39,10 +39,11 @@ def construir_portfolio(raiz: Path, saida: Path) -> list[str]:
     sites = listar_sites(pasta, raiz / "temas") if pasta.is_dir() else []
     _preparar(raiz, saida)
     env = criar_ambiente(raiz)
-    render_hub(env, sites, config, saida)
+    render_hub(env, sites, config, saida, raiz / ".cache" / "imagens")
     for s in sites:
         slug = s["site"]["slug"]
-        render_site(env, s, config, saida / slug, "../", config["url_base"] + slug + "/")
+        render_site(env, s, config, saida / slug, "../", config["url_base"] + slug + "/",
+                    raiz / ".cache" / "imagens")
     return avisos_config(config)
 
 
@@ -54,7 +55,8 @@ def construir_cliente(raiz: Path, slug: str, saida: Path) -> list[str]:
     config = carregar_config(raiz / "config.toml")
     site = carregar_site(pasta, raiz / "temas")
     _preparar(raiz, saida)
-    render_site(criar_ambiente(raiz), site, config, saida, "", config["url_base"])
+    render_site(criar_ambiente(raiz), site, config, saida, "", config["url_base"],
+                raiz / ".cache" / "imagens")
     return avisos_config(config)
 
 

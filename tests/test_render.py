@@ -85,3 +85,14 @@ def test_eventos_data_e_em_dias(raiz):
 def test_rodape_creditos_e_demo(raiz):
     html = _html(raiz, "landing")
     assert "Fulano" in html and "Site de demonstração por Davy" in html
+
+
+def test_hub_otimiza_so_a_capa(raiz, tmp_path):
+    env = criar_ambiente(raiz)
+    config = carregar_config(raiz / "config.toml")
+    site = carregar_site(raiz / "sites" / "completo", raiz / "temas")
+    out = tmp_path / "hub"
+    render_hub(env, [site], config, out, tmp_path / "cache")
+    nomes = [p.name for p in (out / "img" / "completo").iterdir()]
+    assert nomes and all(n.startswith("capa-") for n in nomes)
+    assert (tmp_path / "cache" / "hub" / "completo").is_dir()
