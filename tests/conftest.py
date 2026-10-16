@@ -34,3 +34,14 @@ def editar(site_dir):
         assert antigo in txt
         arq.write_text(txt.replace(antigo, novo, 1), encoding="utf-8")
     return _editar
+
+
+@pytest.fixture
+def raiz(site_dir):
+    """Raiz de projeto temporária: temas/, static/, config.toml reais + sites/completo."""
+    base = site_dir.parent.parent
+    real = Path(__file__).parent.parent
+    shutil.copytree(real / "temas", base / "temas", dirs_exist_ok=True)
+    shutil.copytree(real / "static", base / "static")
+    shutil.copy(real / "config.toml", base / "config.toml")
+    return base

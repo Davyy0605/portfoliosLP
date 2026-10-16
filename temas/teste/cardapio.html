@@ -1,0 +1,4 @@
+{% extends "_base/pagina.html" %}
+{% block conteudo %}<h1>{{ site.site.nome }}</h1>
+{% for c in site.cardapio.categorias %}{% for i in c['itens'] %}<p>{{ i.nome }} {{ i.preco|brl }}</p>
+{% endfor %}{% endfor %}{% endblock %}

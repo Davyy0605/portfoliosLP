@@ -1,0 +1,4 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>{{ config.marca.nome }}</title></head>
+<body>{% for c in cards %}<a href="{{ c.url }}">{{ c.site.site.nome }}</a>{{ c.qr|safe }}
+{% endfor %}</body></html>
