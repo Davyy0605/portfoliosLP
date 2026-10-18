@@ -1,0 +1,222 @@
+galeria = ["cortina.jpg", "corte.jpg", "ferramentas.jpg", "penteado.jpg", "espelhos.jpg", "interior.jpg"]
+
+[site]
+slug = "salao"
+tema = "salao"
+ramo = "beleza"
+nome = "Ateliê Marfim Salão"
+segmento = "Salão de beleza"
+ordem = 2
+slogan = "Cor, corte e escova com assinatura, em um salão feito de luz."
+descricao = "Ateliê Marfim Salão, nos Jardins, São Paulo. Escolha o serviço, a profissional e o horário e envie o agendamento pelo WhatsApp."
+cor = "#9A5B4F"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-3232"
+instagram = "ateliemarfim.demo"
+endereco = "Alameda das Camélias, 88 — Jardins, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Jardins,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Ter a Sex"
+horas = "9h às 19h (pausa das 12h30 às 14h)"
+
+[[horarios]]
+dias = "Sáb"
+horas = "9h às 17h"
+
+[[horarios]]
+dias = "Dom e Seg"
+horas = "Fechado"
+
+[capa]
+titulo = "Cabelo bonito começa com tempo."
+subtitulo = "Coloração, corte e escova com hora marcada, produtos de linha profissional e uma conversa antes de qualquer tesoura. Escolha seu horário em poucos toques."
+imagem = "capa.jpg"
+cta = "agendar"
+
+[sobre]
+titulo = "Um ateliê para o seu cabelo."
+texto = "O Ateliê Marfim nasceu de uma ideia simples: cada cabelo pede um plano. Antes de começar, a profissional olha o fio, ouve o que você quer e combina o resultado. Sem pressa, com luz natural e um café à mão."
+imagens = ["interior.jpg", "ferramentas.jpg"]
+
+[agenda]
+intervalo = 30
+dias = 14
+
+[[agenda.funcionamento]]
+dias = ["ter", "qua", "qui", "sex"]
+periodos = ["09:00-12:30", "14:00-19:00"]
+
+[[agenda.funcionamento]]
+dias = ["sab"]
+periodos = ["09:00-17:00"]
+
+[[servicos]]
+id = "corte-fem"
+nome = "Corte feminino"
+categoria = "Corte e finalização"
+descricao = "Conversa, lavagem, corte e finalização."
+duracao = 60
+preco = 140.0
+
+[[servicos]]
+id = "escova"
+nome = "Escova modelada"
+categoria = "Corte e finalização"
+descricao = "Lavagem e escova com acabamento brilhante."
+duracao = 45
+preco = 80.0
+
+[[servicos]]
+id = "penteado"
+nome = "Penteado"
+categoria = "Corte e finalização"
+descricao = "Para festas e eventos. Fazemos um teste antes, se quiser."
+duracao = 75
+preco = 180.0
+a_partir_de = true
+
+[[servicos]]
+id = "coloracao"
+nome = "Coloração"
+categoria = "Cor"
+descricao = "Raiz ou comprimento. O valor varia com o tamanho do cabelo."
+duracao = 120
+preco = 190.0
+a_partir_de = true
+
+[[servicos]]
+id = "mechas"
+nome = "Mechas e iluminado"
+categoria = "Cor"
+descricao = "Técnica escolhida na avaliação, com tonalização."
+duracao = 240
+preco = 480.0
+a_partir_de = true
+
+[[servicos]]
+id = "tonalizacao"
+nome = "Tonalização"
+categoria = "Cor"
+duracao = 60
+preco = 110.0
+
+[[servicos]]
+id = "progressiva"
+nome = "Escova progressiva"
+categoria = "Tratamentos"
+descricao = "Alinhamento sem formol, com o comprimento avaliado antes."
+duracao = 180
+preco = 380.0
+a_partir_de = true
+
+[[servicos]]
+id = "hidratacao"
+nome = "Hidratação profunda"
+categoria = "Tratamentos"
+descricao = "Máscara de nutrição com vapor."
+duracao = 45
+preco = 95.0
+
+[[servicos]]
+id = "cronograma"
+nome = "Reconstrução capilar"
+categoria = "Tratamentos"
+duracao = 60
+preco = 130.0
+
+[[adicionais]]
+id = "cafe"
+nome = "Café e petisco da casa"
+preco = 12.0
+
+[[adicionais]]
+id = "massagem"
+nome = "Massagem capilar relaxante"
+preco = 30.0
+
+[[equipe]]
+nome = "Helena"
+especialidade = "Colorista e loiros"
+servicos = ["coloracao", "mechas", "tonalizacao", "hidratacao"]
+
+[[equipe]]
+nome = "Beatriz"
+especialidade = "Corte e penteados"
+servicos = ["corte-fem", "escova", "penteado"]
+
+[[equipe.funcionamento]]
+dias = ["qua", "qui", "sex", "sab"]
+periodos = ["09:00-12:30", "14:00-18:00"]
+
+[[equipe]]
+nome = "Larissa"
+especialidade = "Tratamentos e alinhamento"
+servicos = ["progressiva", "hidratacao", "cronograma", "escova"]
+
+[[depoimentos]]
+nome = "Camila S."
+texto = "Fui com receio de mexer na cor e a Helena desenhou um plano de três etapas. O loiro ficou exatamente como eu imaginava."
+servico = "Mechas e iluminado"
+
+[[depoimentos]]
+nome = "Renata M."
+texto = "Penteado do casamento da minha irmã. Fizemos o teste antes e no dia foi tudo tranquilo, no horário."
+servico = "Penteado"
+
+[[depoimentos]]
+nome = "Fernanda L."
+texto = "A progressiva durou muito mais do que eu esperava e o cabelo ficou macio, não duro. Agendei tudo pelo WhatsApp."
+servico = "Escova progressiva"
+
+[[perguntas]]
+pergunta = "Por que alguns serviços têm preço 'a partir de'?"
+resposta = "Cor e progressiva dependem do comprimento e da quantidade de cabelo. A profissional confirma o valor final antes de começar."
+
+[[perguntas]]
+pergunta = "Como funciona a confirmação do horário?"
+resposta = "Você envia o pedido pelo WhatsApp e nós confirmamos o horário por lá."
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1580618672591-eb180b1a973f"
+autor = "Adam Winger"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "interior.jpg"
+url = "https://images.unsplash.com/photo-1781450090585-1a511b7066d9"
+autor = "Barney Goodman"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "ferramentas.jpg"
+url = "https://images.unsplash.com/photo-1595475884562-073c30d45670"
+autor = "Adam Winger"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "corte.jpg"
+url = "https://images.unsplash.com/photo-1634449571010-02389ed0f9b0"
+autor = "Lindsay Cash"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "penteado.jpg"
+url = "https://images.unsplash.com/photo-1774660810725-fb04e002003d"
+autor = "Alexander Mass"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "espelhos.jpg"
+url = "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6"
+autor = "Benyamin Bohlouli"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "cortina.jpg"
+url = "https://images.unsplash.com/photo-1560869713-7d0a29430803"
+autor = "Baylee Gramling"
+fonte = "Unsplash"

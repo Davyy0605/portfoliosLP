@@ -1,0 +1,73 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% import "_base/servicos.html" as b with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Jost:wght@400;500;600&display=swap">
+{% endblock %}
+{% block conteudo %}
+{% set nome = site.site.nome %}
+{% set marca = nome|replace(" Salão", "") %}
+<a class="pular" href="#servicos-titulo">Pular para os serviços</a>
+<header class="topo">
+  <a class="topo-marca" href="./">{{ marca }}</a>
+  <a class="topo-cta" href="agendar/">Agendar</a>
+</header>
+<main>
+  <section class="capa" aria-labelledby="titulo">
+    <div class="capa-texto">
+      <p class="capa-selo">Salão de beleza &middot; Jardins</p>
+      <h1 id="titulo"><span class="sr-only">{{ nome }}. </span><span aria-hidden="true" class="capa-nome">{{ marca }}</span></h1>
+      <p class="capa-frase">{{ site.capa.titulo }}</p>
+      <p class="capa-sub">{{ site.capa.subtitulo }}</p>
+      {{ m.cta(site, wa_numero, raiz) }}
+    </div>
+    <div class="capa-arco">
+      {{ m.imagem(imagens, site.capa.imagem, "Cabeleireira secando o cabelo de uma cliente com escova", "(min-width: 900px) 40vw, 80vw", "capa-foto", prioridade=True) }}
+    </div>
+  </section>
+
+  <section class="sobre" aria-labelledby="sobre-titulo">
+    <p class="numero" aria-hidden="true">01</p>
+    <div class="sobre-corpo">
+      <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
+      <p>{{ site.sobre.texto }}</p>
+    </div>
+    <div class="sobre-fotos">
+      {{ m.imagem(imagens, site.sobre.imagens[0], "Salão com poltronas e espelhos em arco, em preto e branco", "(min-width: 800px) 30vw, 60vw", "sobre-1") }}
+      {{ m.imagem(imagens, site.sobre.imagens[1], "Escovas, tesoura e pincel de coloração erguidos contra um fundo branco", "(min-width: 800px) 30vw, 60vw", "sobre-2") }}
+    </div>
+  </section>
+
+  <div class="miolo indice">
+    <p class="numero" aria-hidden="true">02</p>
+    {{ b.servicos(site) }}
+    <a class="botao" href="agendar/">Agendar horário</a>
+  </div>
+
+  <section class="galeria" aria-label="Galeria">
+    {% set alts = {"cortina.jpg": "Cabelo castanho com cachos feitos com babyliss", "corte.jpg": "Lavagem do cabelo no lavatório do salão", "penteado.jpg": "Cabeleireira finalizando um penteado preso", "espelhos.jpg": "Salão com espelhos redondos e cadeiras pretas"} %}
+    {% for f in site.galeria if f not in site.sobre.imagens %}
+    {{ m.imagem(imagens, f, alts[f] or "Detalhe do salão", "(min-width: 800px) 25vw, 50vw") }}
+    {% endfor %}
+  </section>
+
+  <div class="miolo miolo-equipe">
+    <p class="numero" aria-hidden="true">03</p>
+    {{ b.equipe(site, imagens) }}
+  </div>
+  <div class="miolo miolo-fala">{{ b.depoimentos(site) }}</div>
+  <div class="miolo">{{ b.perguntas(site) }}</div>
+
+  <section class="endereco" id="contato" aria-labelledby="contato-titulo">
+    <h2 id="contato-titulo">Venha nos visitar</h2>
+    {{ m.horarios(site) }}
+    {{ m.contato(site, wa_numero) }}
+  </section>
+</main>
+<div class="fecho">
+  <a class="cta" href="agendar/">Agendar horário</a>
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}
