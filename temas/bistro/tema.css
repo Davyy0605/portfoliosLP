@@ -86,7 +86,7 @@ img { border-radius: var(--raio); }
 .lousa-data { color: var(--giz-2); font-size: 1rem; }
 .lousa-titulo {
   font-family: var(--fonte-titulo); font-weight: 700;
-  font-size: clamp(3.4rem, 15vw, 7.6rem); line-height: .86; letter-spacing: -.01em;
+  font-size: clamp(3.4rem, min(15vw, 22svh), 7.6rem); line-height: .86; letter-spacing: -.01em;
   margin: .6rem 0 1.6rem; max-width: 11ch;
   text-shadow: 0 0 1px rgb(239 236 228 / .35);
 }
@@ -109,7 +109,7 @@ img { border-radius: var(--raio); }
   font-style: italic;
 }
 @media (min-width: 700px) {
-  .capa { grid-template-columns: 1.15fr 1fr; min-height: calc(100vh - 64px); }
+  .capa { grid-template-columns: 1.15fr 1fr; min-height: calc(100svh - 64px); }
   .lousa { padding: 3rem var(--margem) 3.5rem; align-self: center; }
   .capa-foto { display: grid; grid-template-rows: 1fr auto; }
   .capa-foto img { height: 100%; aspect-ratio: auto; min-height: 0; }

@@ -277,7 +277,7 @@ a { color: inherit; }
 }
 .contato-bloco .contato p:nth-child(even),
 .contato-bloco .horarios > div:nth-child(even) { background: var(--mostarda-fundo); }
-.contato-bloco .contato a { text-decoration: none; }
+.contato-bloco .contato a { text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
 .contato-bloco .contato a:hover { text-decoration: underline; text-decoration-thickness: .08em; text-underline-offset: .12em; }
 .contato-bloco .contato p.contato-endereco { font-size: clamp(1.25rem, 0.8rem + 2.4vw, 3rem); }
 .contato-bloco .contato p:last-child { background: var(--carvao); color: var(--mostarda); }
@@ -298,6 +298,7 @@ a { color: inherit; }
 }
 .rodape { display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between; padding: clamp(56px, 8vw, 120px) 0 1.5rem; font-size: var(--passo-pequeno); color: #e4dad1; }
 .rodape p { margin: 0; }
+.rodape a { display: inline-flex; align-items: center; min-height: 44px; }
 .rodape-creditos { flex-basis: 100%; max-width: 90ch; }
 .fecho-nome {
   margin: 0 calc(var(--margem) * -1);
@@ -402,12 +403,13 @@ a { color: inherit; }
 
 /* primeira categoria (combos): vitrine com foto grande e chão de mostarda */
 .categoria:first-of-type .itens { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
-@media (min-width: 700px) { .categoria:first-of-type .itens { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 700px) { .categoria:first-of-type .itens { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .categoria:first-of-type .itens { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .categoria:first-of-type .itens { align-items: start; }
 .categoria:first-of-type .item { background: var(--mostarda); flex-direction: column; align-items: stretch; }
 .categoria:first-of-type .item-foto { width: calc(100% + 32px); max-width: none; height: auto; aspect-ratio: 4 / 3; margin: -16px -16px 0; }
 .categoria:first-of-type .item-texto { flex: 1 0 auto; }
-.categoria:first-of-type .item-compra { flex: 0 0 auto; }
+.categoria:first-of-type .item-compra { flex: 0 0 auto; flex-wrap: wrap; }
 .categoria:first-of-type .item-nome { font-size: 1.5rem; }
 .categoria:first-of-type .item-adicionar { background: var(--carvao); color: var(--mostarda); }
 .categoria:first-of-type .item-adicionar:hover { background: var(--vermelho); color: var(--branco); }
@@ -433,11 +435,17 @@ a { color: inherit; }
   bottom: 6.5rem; border-radius: 0; background: var(--carvao); color: var(--mostarda);
   font-weight: 900; font-variation-settings: "wdth" 118; text-transform: uppercase; font-size: .9375rem;
 }
-.item-adicionar[data-escolhido]::before { content: "\2713 "; }
+.item-adicionar[data-escolhido]::before { content: "\2713\00a0"; }
 @media (min-width: 700px) {
   .barra-resumo { left: auto; right: 24px; bottom: 24px; min-width: 22rem; max-width: 30rem; }
   .aviso { left: auto; right: 24px; transform: none; bottom: 7.5rem; }
   @keyframes aviso-entra { from { opacity: 0; } }
+}
+
+@media (max-height: 500px) {
+  .barra-resumo { min-height: 44px; padding: .25rem 1rem; bottom: 8px; }
+  .barra-resumo ul { display: none; }
+  .aviso { bottom: 4rem; padding: .35rem .75rem; font-size: .8125rem; }
 }
 
 dialog.carrinho {

@@ -23,6 +23,7 @@ a { color: inherit; }
   padding: 1.25rem var(--margem);
 }
 .marca {
+  display: inline-flex; align-items: center; min-height: 44px;
   font-size: 1.5rem; font-weight: 600; letter-spacing: -0.03em; text-decoration: none;
   color: var(--cor-destaque);
 }
@@ -64,10 +65,10 @@ a { color: inherit; }
   display: flex; align-items: center; gap: .875rem;
   margin-top: auto; padding-top: 1.75rem;
 }
-.card-qr svg { width: 5.5rem; aspect-ratio: 1; height: auto; flex: none; background: #fff; }
-.card-qr figcaption { font-size: .9375rem; color: var(--cor-suave); max-width: 12rem; }
+.card-qr svg { width: calc(var(--m, 33) * 3px); aspect-ratio: 1; height: auto; flex: none; background: #fff; shape-rendering: crispEdges; }
+.card-qr figcaption { flex: 1 1 0; min-width: 0; font-size: .9375rem; color: var(--cor-suave); max-width: 12rem; }
 /* No celular o lead já está no aparelho: o QR só ocupa espaço. */
-@media (max-width: 639px) { .card-qr { display: none; } }
+@media (max-width: 639px), (max-height: 500px) { .card-qr { display: none; } }
 
 /* Entrada: um cartão por ramo */
 .ramos { padding: 0 var(--margem) clamp(4rem, 9vw, 7rem); }

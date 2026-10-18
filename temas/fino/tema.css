@@ -266,6 +266,7 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 
 .sem-resultado { padding: 3rem 1.25rem; text-align: center; }
 .carta-reserva { margin: clamp(3.5rem, 8vw, 5rem) 1.25rem 0; padding: 2rem 0 0; border-top: 5px dotted #c4bfb6; display: grid; gap: 1.25rem; }
+@media (max-height: 500px) { .cardapio-abas { flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto; } }
 @media (min-width: 700px) {
   .categoria, .cardapio-busca { padding-left: 3.5rem; padding-right: 3.5rem; }
   .cardapio-abas { justify-content: center; flex-wrap: wrap; }
@@ -287,3 +288,6 @@ main > section + section { margin-top: clamp(6rem, 12vw, 11rem); }
 @keyframes subir { from { opacity: 0; transform: translateY(1.25rem); } to { opacity: 1; transform: none; } }
 @keyframes surgir { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fio { from { transform: scaleY(0); } to { transform: none; } }
+
+/* celular deitado: foto mais baixa para o título aparecer na primeira tela */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 699px) { .capa-foto img { height: 28svh; } }

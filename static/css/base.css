@@ -61,7 +61,12 @@ dialog.carrinho::backdrop { background: rgb(0 0 0 / .6); }
 @media (min-width: 700px) { dialog.carrinho { margin: auto; } }
 .carrinho-lista li { display: flex; align-items: center; gap: .5rem; }
 .carrinho-lista li > span:first-child { flex: 1; }
-.carrinho-acoes { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+.carrinho-acoes { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; position: sticky; bottom: 0; padding-top: .5rem; background: var(--cor-fundo, canvas); }
+@media (max-height: 500px) {
+  dialog.carrinho { max-height: 96dvh; }
+  dialog.carrinho textarea { height: 3rem; min-height: 0; }
+  .aviso { bottom: 4rem; padding: .35rem .75rem; font-size: .8125rem; }
+}
 .carrinho-enviar { display: inline-flex; align-items: center; justify-content: center; padding: 0 1rem; text-decoration: none; }
 .carrinho-enviar[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 dialog.carrinho textarea { width: 100%; }

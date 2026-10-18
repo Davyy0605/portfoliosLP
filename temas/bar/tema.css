@@ -140,6 +140,12 @@ a { color: inherit; text-underline-offset: .2em; }
   .capa-horas { grid-column: 11 / 13; grid-row: 1; grid-template-columns: minmax(0, 1fr); grid-auto-rows: 1fr; gap: 8px; }
   .capa-horas p { padding: 1rem; }
   .capa-acao .cta { height: 100%; align-items: flex-end; justify-content: flex-start; padding: 1rem; font-size: 1.75rem; }
+  .capa-trilho > *, .capa-horas > * { min-width: 0; overflow-wrap: anywhere; }
+}
+@media (min-width: 700px) and (max-width: 1000px) {
+  .capa-acao .cta { padding: .5rem; font-size: 1.25rem; }
+  .capa-horas p { padding: .5rem; font-size: .8125rem; }
+  .capa-horas strong { font-size: 1.125rem; }
 }
 
 /* ---------- Sobre: retrato como capitular ---------- */
@@ -236,7 +242,7 @@ a { color: inherit; text-underline-offset: .2em; }
 .eventos-vazio { font-size: var(--passo-frase); max-width: 30ch; }
 @media (min-width: 700px) {
   .evento { padding: 1.75rem 0; }
-  .evento-texto { grid-template-columns: 16rem minmax(0, 1fr) 12rem auto; column-gap: 2rem; padding: 0 1.5rem; }
+  .evento-texto { grid-template-columns: minmax(6rem, 16rem) minmax(0, 1fr) minmax(5rem, 12rem) auto; column-gap: clamp(1rem, 3vw, 2rem); padding: 0 1.5rem; }
   .evento-data { grid-column: 1; grid-row: 1 / span 3; font-size: 1.625rem; padding-top: .35rem; }
   .evento-titulo { grid-column: 2; grid-row: 1; }
   .evento-atracao { grid-column: 2; grid-row: 2; }
@@ -400,7 +406,7 @@ a { color: inherit; text-underline-offset: .2em; }
 @media (min-width: 700px) {
   .carta { max-width: 80rem; margin: 0 auto; }
   .carta-topo, .carta-pe { padding-inline: max(var(--margem), (100% - 80rem) / 2 + var(--margem)); }
-  .categoria .itens { grid-template-columns: 1fr 1fr; }
+  .categoria .itens { grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
   .item-foto { width: 7.5rem; height: 7.5rem; }
 }
 

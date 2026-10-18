@@ -39,7 +39,7 @@ h3 { font: 600 .78rem/1.2 var(--fonte-texto); text-transform: uppercase; letter-
 .capa::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, var(--preto) 8%, rgba(13,11,12,.78) 38%, rgba(13,11,12,0) 70%); }
 .capa::before { content: ""; position: absolute; inset: 0 0 auto; height: 110px; background: linear-gradient(rgba(13,11,12,.7), rgba(13,11,12,0)); z-index: 1; }
 .capa-texto { position: relative; z-index: 2; padding: 0 var(--m) 1.75rem; width: 100%; }
-.capa-selo { font: 600 .74rem/1 var(--fonte-texto); letter-spacing: .24em; text-transform: uppercase; color: var(--rubi); margin: 0 0 .9rem; }
+.capa-selo { font: 600 .74rem/1 var(--fonte-texto); letter-spacing: .24em; text-transform: uppercase; color: var(--rubi); margin: 0 0 .9rem; text-shadow: 0 0 6px rgba(13,11,12,.95), 0 1px 2px #000; }
 .capa h1 { font-size: clamp(2.9rem, 1.4rem + 8vw, 7rem); letter-spacing: -.02em; max-width: 11ch; margin-bottom: 1.25rem; }
 .capa-sub { display: none; max-width: 30rem; color: var(--apoio); margin: 0 0 1.5rem; font-size: 1.1rem; }
 @media (min-width: 900px) {

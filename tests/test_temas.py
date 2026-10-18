@@ -1,6 +1,10 @@
 """Contrato dos temas: cada site de sites/ gera landing + cardápio completos, e o hub lista todos."""
+import contextlib
+import functools
+import http.server
 import re
 import shutil
+import threading
 from pathlib import Path
 
 import pytest
@@ -90,31 +94,77 @@ def test_hub(dist):
     assert (dist / "hub.css").is_file()
 
 
-@pytest.mark.parametrize("largura,altura", [(390, 844), (720, 360), (844, 390), (1024, 768), (1440, 900)])
-def test_sem_rolagem_lateral(dist, largura, altura):
-    """Celular em pé, deitado, tablet e desktop: nenhuma página pode ficar mais larga que a tela."""
-    sync_api = pytest.importorskip("playwright.sync_api")
-    import sys
-    sys.path.insert(0, str(RAIZ / "ferramentas"))
-    from capturar import servir
+@contextlib.contextmanager
+def _servir(pasta):
+    """http.server local com fila de conexões grande: o padrão (5) estourava quando o chromium abre dezenas de
+    conexões paralelas por página, e o reset virava "Navigation interrupted by chrome-error" no Windows."""
+    class Quieto(http.server.SimpleHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
 
-    largas = []
-    with servir(dist) as base, sync_api.sync_playwright() as p:
+        def handle(self):
+            try:
+                super().handle()
+            except (ConnectionAbortedError, ConnectionResetError, BrokenPipeError):
+                pass  # o navegador cancelou a requisição (ex.: imagem fora da tela): não é erro do servidor
+
+    class Servidor(http.server.ThreadingHTTPServer):
+        request_queue_size = 128
+        daemon_threads = True
+
+    srv = Servidor(("127.0.0.1", 0), functools.partial(Quieto, directory=str(pasta)))
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    try:
+        yield f"http://127.0.0.1:{srv.server_port}/"
+    finally:
+        srv.shutdown()
+        srv.server_close()
+
+
+@pytest.fixture(scope="module")
+def navegador(dist):
+    """Um servidor e um chromium para o módulo todo; subir e derrubar a cada teste deixava requisições em voo."""
+    sync_api = pytest.importorskip("playwright.sync_api")
+    with _servir(dist) as base, sync_api.sync_playwright() as p:
         try:
             nav = p.chromium.launch()
         except Exception as e:  # chromium não instalado
             pytest.skip(f"chromium do Playwright indisponível: {e}")
-        pagina = nav.new_page(viewport={"width": largura, "height": altura}, reduced_motion="reduce")
-        for hub in ["", *(f"{r}/" for r in _ramos_com_sites())]:
-            pagina.goto(base + hub, wait_until="domcontentloaded", timeout=60000)
-            pagina.evaluate("document.fonts.ready")
-            if pagina.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"):
-                largas.append(hub or "/")
-        for s in SITES:
-            for sub in ("", PAGINAS[s["site"]["ramo"]] + "/"):
-                pagina.goto(f"{base}{s['site']['slug']}/{sub}", wait_until="domcontentloaded", timeout=60000)
-                pagina.evaluate("document.fonts.ready")
-                if pagina.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"):
-                    largas.append(s["site"]["slug"] + "/" + sub)
+        yield base, nav
         nav.close()
+
+
+def _abrir(ctx, pagina, url):
+    """Navega; se a carga for interrompida, repete numa página nova (a antiga fica presa em chrome-error)."""
+    for tentativa in (1, 2, 3):
+        try:
+            pagina.goto(url, wait_until="load", timeout=60000)
+            pagina.evaluate("document.fonts.ready")
+            return pagina
+        except Exception:
+            if tentativa == 3:
+                raise
+            pagina.close()
+            pagina = ctx.new_page()
+
+
+@pytest.mark.parametrize("largura,altura", [(390, 844), (720, 360), (844, 390), (1024, 768), (1440, 900)])
+def test_sem_rolagem_lateral(navegador, largura, altura):
+    """Celular em pé, deitado, tablet e desktop: nenhuma página pode ficar mais larga que a tela."""
+    base, nav = navegador
+    ctx = nav.new_context(viewport={"width": largura, "height": altura}, reduced_motion="reduce")
+    # só o servidor local: fontes/mapas externos não são o assunto e deixavam conexões penduradas
+    ctx.route(lambda u: not u.startswith(base), lambda r: r.abort())
+    pagina = ctx.new_page()
+    urls = [base + hub for hub in ["", *(f"{r}/" for r in _ramos_com_sites())]]
+    urls += [f"{base}{s['site']['slug']}/{sub}" for s in SITES for sub in ("", PAGINAS[s["site"]["ramo"]] + "/")]
+    largas = []
+    try:
+        for url in urls:
+            pagina = _abrir(ctx, pagina, url)
+            sw, cw = pagina.evaluate("[document.documentElement.scrollWidth, document.documentElement.clientWidth]")
+            if sw > cw:
+                largas.append(f"{url.removeprefix(base) or '/'} ({sw}>{cw})")
+    finally:
+        ctx.close()
     assert not largas

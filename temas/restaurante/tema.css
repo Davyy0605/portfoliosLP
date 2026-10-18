@@ -180,7 +180,7 @@ img { border-radius: var(--raio); }
 .destaque p { margin-top: 8px; }
 @media (min-width: 700px) {
   .casa { grid-template-columns: repeat(12, 1fr); column-gap: 2vw; align-items: start; }
-  .casa-fixo { grid-column: 1 / 6; position: sticky; top: 6vh; }
+  .casa-fixo { grid-column: 1 / 6; }
   .casa-passa { grid-column: 7 / 13; gap: 20vh; padding-top: 14vh; }
   .destaque { width: 74%; }
   .destaque p { max-width: 36ch; }
@@ -224,7 +224,8 @@ img { border-radius: var(--raio); }
 .contato-dados .cta { justify-self: start; }
 .contato { font-style: normal; display: grid; gap: 2px; }
 .contato p { min-height: 44px; display: flex; align-items: center; }
-.contato a { text-underline-offset: 0.25em; }
+.contato a { text-underline-offset: 0.25em; display: inline-flex; align-items: center; min-height: 44px; }
+@media (min-width: 700px) and (min-height: 700px) { .casa-fixo { position: sticky; top: 6vh; } }
 .contato-endereco { color: var(--cor-suave); }
 .contato-mapa { grid-column: 1 / -1; margin-top: 8px; min-height: 18rem; background: var(--cor-fundo); filter: saturate(0.6); }
 .contato-horarios { grid-column: 1 / -1; }

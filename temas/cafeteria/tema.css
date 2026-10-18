@@ -88,6 +88,15 @@ a { color: inherit; }
   .capa h1 { font-size: clamp(3rem, 5.3vw, 6.5rem); }
 }
 
+/* celular deitado: texto e fruto lado a lado, o título não fica abaixo de uma foto de tela cheia */
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 699px) {
+  .capa { grid-template-columns: minmax(0, 58%) 1fr; align-items: center; padding-bottom: 1.5rem; }
+  .capa-fruto { order: 0; width: min(60vw, 118svh); margin: -1.5rem -22vw -1.5rem 0; }
+  .capa h1 { font-size: clamp(1.75rem, 7svh + 2vw, 3rem); }
+  .capa-acoes { margin-top: 1rem; }
+  .aberto { margin-top: 1rem; }
+}
+
 /* Cafés de origem: lista em duas colunas, foto no lugar do marcador */
 .vitrine { padding: clamp(5rem, 10vw, 9rem) var(--margem); }
 .vitrine-cabeca { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
@@ -203,6 +212,7 @@ a { color: inherit; }
 .fecho-marca:hover { letter-spacing: -0.03em; }
 .rodape { display: grid; gap: .5rem; margin-top: 3rem; font-size: var(--passo-pequeno); }
 .rodape-creditos { max-width: 80ch; }
+.rodape a { display: inline-flex; align-items: center; min-height: 44px; }
 @media (min-width: 700px) { .rodape { grid-template-columns: auto auto 1fr; column-gap: 3rem; } .rodape-creditos { justify-self: end; text-align: right; } }
 
 /* ---------- Cardápio ---------- */
@@ -267,3 +277,6 @@ a { color: inherit; }
   .capa-texto > :nth-child(3) { animation-delay: .16s; }
   .capa-texto > :nth-child(4) { animation-delay: .24s; }
 }
+
+/* paisagem baixa: pastas empilhadas cobririam o texto */
+@media (max-height: 600px) { .pasta { position: static; } }
