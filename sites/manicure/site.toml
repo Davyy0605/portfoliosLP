@@ -1,0 +1,251 @@
+galeria = ["n02.jpg", "n03.jpg", "n05.jpg", "n07.jpg", "n09.jpg", "n10.jpg", "n11.jpg", "n12.jpg", "n14.jpg", "n15.jpg", "n01.jpg", "n08.jpg"]
+
+[site]
+slug = "manicure"
+tema = "manicure"
+ramo = "beleza"
+nome = "Pétala Nude Studio"
+segmento = "Manicure e nail design"
+ordem = 3
+slogan = "Unhas delicadas, esmaltação em gel e nail art feita com calma."
+descricao = "Pétala Nude Studio, em Pinheiros, São Paulo. Veja a galeria, escolha o serviço e o horário e envie o agendamento pelo WhatsApp."
+cor = "#9B4A62"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-5757"
+instagram = "petalanude.demo"
+endereco = "Rua das Hortênsias, 215 — Pinheiros, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Seg a Sex"
+horas = "9h às 19h"
+
+[[horarios]]
+dias = "Sáb"
+horas = "9h às 15h"
+
+[[horarios]]
+dias = "Dom"
+horas = "Fechado"
+
+[capa]
+titulo = "Unhas que combinam com você."
+subtitulo = "Esmaltação em gel, alongamento e nail art em tons suaves, com hora marcada e todo o tempo que o detalhe pede."
+imagem = "n06.jpg"
+cta = "agendar"
+
+[sobre]
+titulo = "Um estúdio pequeno, feito de detalhe."
+texto = "No Pétala Nude cada atendimento tem hora marcada e uma conversa antes do primeiro esmalte: formato, cor, rotina. Materiais esterilizados, cabine silenciosa e uma xícara de chá enquanto o gel cura."
+imagens = ["n01.jpg", "n08.jpg"]
+
+[agenda]
+intervalo = 30
+dias = 14
+
+[[agenda.funcionamento]]
+dias = ["seg", "ter", "qua", "qui", "sex"]
+periodos = ["09:00-19:00"]
+
+[[agenda.funcionamento]]
+dias = ["sab"]
+periodos = ["09:00-15:00"]
+
+[[servicos]]
+id = "esmaltacao"
+nome = "Esmaltação em gel"
+categoria = "Esmaltação"
+descricao = "Preparação da cutícula, gel de longa duração e brilho de espelho."
+duracao = 60
+preco = 75.0
+
+[[servicos]]
+id = "manicure"
+nome = "Manicure completa"
+categoria = "Esmaltação"
+descricao = "Cutilagem, lixa, hidratação e esmalte tradicional."
+duracao = 45
+preco = 45.0
+
+[[servicos]]
+id = "mani-pedi"
+nome = "Mão e pé"
+categoria = "Esmaltação"
+descricao = "Manicure e pedicure no mesmo horário."
+duracao = 90
+preco = 85.0
+
+[[servicos]]
+id = "blindagem"
+nome = "Blindagem das unhas"
+categoria = "Cuidado"
+descricao = "Camada protetora que fortalece a unha natural."
+duracao = 60
+preco = 90.0
+
+[[servicos]]
+id = "spa"
+nome = "Spa das mãos"
+categoria = "Cuidado"
+descricao = "Esfoliação, máscara e massagem com óleo de amêndoas."
+duracao = 30
+preco = 50.0
+
+[[servicos]]
+id = "alongamento"
+nome = "Alongamento em gel"
+categoria = "Alongamento"
+descricao = "Aplicação em molde, no formato que você escolher."
+duracao = 150
+preco = 220.0
+
+[[servicos]]
+id = "manutencao"
+nome = "Manutenção de alongamento"
+categoria = "Alongamento"
+descricao = "Reposição do crescimento a cada 20 a 25 dias, com novo esmalte."
+duracao = 120
+preco = 160.0
+
+[[servicos]]
+id = "remocao"
+nome = "Remoção de gel ou alongamento"
+categoria = "Alongamento"
+duracao = 45
+preco = 60.0
+
+[[servicos]]
+id = "nailart"
+nome = "Nail art"
+categoria = "Arte"
+descricao = "Desenhos, cromados, pedrarias e francesinha. Valor por conjunto, conforme o desenho."
+duracao = 45
+preco = 40.0
+a_partir_de = true
+
+[[adicionais]]
+id = "cha"
+nome = "Chá gelado da casa"
+preco = 8.0
+
+[[adicionais]]
+id = "pedraria"
+nome = "Pedraria (cada unha)"
+preco = 5.0
+
+[[equipe]]
+nome = "Clarice"
+especialidade = "Alongamento e nail art"
+servicos = ["alongamento", "manutencao", "nailart", "remocao", "esmaltacao"]
+
+[[equipe]]
+nome = "Marina"
+especialidade = "Esmaltação e cuidado"
+servicos = ["esmaltacao", "manicure", "mani-pedi", "blindagem", "spa"]
+
+[[equipe.funcionamento]]
+dias = ["ter", "qua", "qui", "sex", "sab"]
+periodos = ["09:00-15:00"]
+
+[[depoimentos]]
+nome = "Júlia P."
+texto = "O gel durou três semanas sem descascar e o tom nude ficou perfeito. O estúdio é silencioso, dá para relaxar de verdade."
+servico = "Esmaltação em gel"
+
+[[depoimentos]]
+nome = "Aline T."
+texto = "Faço a manutenção do alongamento a cada 25 dias com a Clarice. Nunca levantou uma unha."
+servico = "Manutenção de alongamento"
+
+[[depoimentos]]
+nome = "Bianca R."
+texto = "Levei uma foto de referência e ela adaptou o desenho ao formato das minhas unhas. Ficou delicado, do jeito que eu queria."
+servico = "Nail art"
+
+[[perguntas]]
+pergunta = "De quanto em quanto tempo faço a manutenção do alongamento?"
+resposta = "Entre 20 e 25 dias, conforme o crescimento da unha. Passando disso, o gel pode levantar."
+
+[[perguntas]]
+pergunta = "Como funciona a confirmação do horário?"
+resposta = "Você envia o pedido pelo WhatsApp e nós confirmamos o horário por lá."
+
+[[fotos]]
+arquivo = "n01.jpg"
+url = "https://images.unsplash.com/photo-1632345031435-8727f6897d53"
+autor = "Giorgio Trovato"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n02.jpg"
+url = "https://images.unsplash.com/photo-1769687209448-025548dfca8b"
+autor = "Julia Schuwer"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n03.jpg"
+url = "https://images.unsplash.com/photo-1604654894610-df63bc536371"
+autor = "Bryony Elena"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n05.jpg"
+url = "https://images.unsplash.com/photo-1610992015762-45dca7fa3a85"
+autor = "Chelson Tamares"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n06.jpg"
+url = "https://images.unsplash.com/photo-1607779097040-26e80aa78e66"
+autor = "Patrícia Hellinger"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n07.jpg"
+url = "https://images.unsplash.com/photo-1777287216954-2b4b22bb6bf2"
+autor = "de Aura"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n08.jpg"
+url = "https://images.unsplash.com/photo-1619607146034-5a05296c8f9a"
+autor = "H&CO"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n09.jpg"
+url = "https://images.unsplash.com/photo-1770210257340-dc2b0f44642a"
+autor = "Caroline Badran"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n10.jpg"
+url = "https://images.unsplash.com/photo-1612887390768-fb02affea7a6"
+autor = "Jodene Isakowitz"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n11.jpg"
+url = "https://images.unsplash.com/photo-1777288390469-828f8816231c"
+autor = "de Aura"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n12.jpg"
+url = "https://images.unsplash.com/photo-1736434518489-0eb84070017f"
+autor = "Caroline Badran"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n14.jpg"
+url = "https://images.unsplash.com/photo-1519014816548-bf5fe059798b"
+autor = "DESIGNECOLOGIST"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "n15.jpg"
+url = "https://images.unsplash.com/photo-1754799670312-8e7da8e40ad7"
+autor = "Ari Kurniawan"
+fonte = "Unsplash"
