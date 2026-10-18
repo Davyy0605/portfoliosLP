@@ -4,70 +4,252 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap">
 {% endblock %}
 {% block conteudo %}
 {% set nome = site.site.nome %}
-{% set marca = nome|replace(" Barbearia", "") %}
-<a class="pular" href="#servicos-titulo">Pular para os serviços</a>
+{% set marca = nome|replace(" Barbearia", "")|replace("Barbearia ", "") %}
+{% set rotulo_dia = {"seg": "Seg", "ter": "Ter", "qua": "Qua", "qui": "Qui", "sex": "Sex", "sab": "Sáb", "dom": "Dom"} %}
+{% set dias_casa = site.agenda.funcionamento.keys()|list %}
+{% set alts = {
+  "capa.jpg": "Cadeira de barbeiro antiga ao lado de uma porta de venezianas aberta, com luz de tarde no assoalho",
+  "fade.jpg": "Barbeiro fazendo um degradê baixo na máquina, com o pente segurando o cabelo de cima",
+  "espuma.jpg": "Barbeiro espalhando espuma de barbear no rosto antes da navalha",
+  "barba.jpg": "Barbeiro aparando a barba com tesoura, de perfil",
+  "toalha.jpg": "Cadeira de barbeiro creme com uma toalha listrada no braço",
+  "navalha.jpg": "Navalha, pincel e caneca de espuma",
+  "trabalho.jpg": "Barbeiro de luvas definindo um corte com textura natural",
+  "maquina.jpg": "Máquina acertando a nuca num degradê curto",
+} %}
+{% set foto_equipe = (site.galeria or [])[0] if site.galeria else None %}
+{% set foto_depo = site.galeria[1] if site.galeria|length > 1 else None %}
+{% set assinatura = site.destaques|map(attribute="titulo")|list %}
+{% set outros = site.servicos|rejectattr("nome", "in", assinatura)|map(attribute="nome")|list %}
+<a class="pular" href="#oficio">Pular para o conteúdo</a>
+
 <header class="topo">
   <a class="topo-marca" href="./">{{ marca }}</a>
+  <nav class="topo-links" aria-label="Seções">
+    <a href="#oficio">O ofício</a>
+    <a href="#casa">A casa</a>
+    <a href="#equipe">Barbeiros</a>
+    <a href="#contato">Visita</a>
+  </nav>
   <a class="topo-cta" href="agendar/">Agendar</a>
 </header>
+
 <main>
   <section class="capa" aria-labelledby="titulo">
-    {{ m.imagem(imagens, site.capa.imagem, "Poltrona de couro de barbearia", "100vw", "capa-foto", prioridade=True) }}
+    <div class="capa-foto">
+      {{ m.imagem(imagens, site.capa.imagem, alts[site.capa.imagem] or "Interior da " ~ nome, "(min-width: 900px) 60vw, (orientation: landscape) 50vw, 100vw", prioridade=True) }}
+    </div>
+    <div class="poste" aria-hidden="true">
+      <div class="poste-tampa"></div>
+      <div class="poste-tubo">
+        <div class="poste-giro">{% for i in range(12) %}<i style="--f:{{ i }}"></i>{% endfor %}</div>
+        <div class="poste-brilho"></div>
+      </div>
+      <div class="poste-tampa poste-base"></div>
+    </div>
     <div class="capa-texto">
-      <p class="capa-selo">Barbearia &middot; Pinheiros &middot; SP</p>
-      <h1 id="titulo"><span class="sr-only">{{ nome }}. </span><span aria-hidden="true" class="capa-nome">{{ marca }}</span></h1>
-      <p class="capa-frase">{{ site.capa.titulo }}</p>
-      <p class="capa-sub">{{ site.capa.subtitulo }}</p>
-      {{ m.cta(site, wa_numero, raiz) }}
+      <p class="capa-selo" style="--i:0">{{ site.site.segmento }} na {{ site.contato.endereco.split("—")[-1].split(",")[0]|trim }}</p>
+      <h1 id="titulo" class="capa-nome" style="--i:1"><span class="sr-only">{{ nome }}. </span><span aria-hidden="true">{{ marca }}</span></h1>
+      <p class="capa-frase" style="--i:2">{{ site.capa.titulo }}</p>
+      <p class="capa-sub" style="--i:3">{{ site.capa.subtitulo }}</p>
+      <div class="capa-acoes" style="--i:4">
+        {{ m.cta(site, wa_numero, raiz) }}
+        <a class="link-seta" href="agendar/">Serviços e preços</a>
+      </div>
+      {% if site.horarios %}
+      <p class="capa-fato" style="--i:5">{{ site.horarios[0].dias }} · {{ site.horarios[0].horas.split("(")[0]|trim }}{% if site.horarios|length > 1 %} &nbsp;/&nbsp; {{ site.horarios[1].dias }} · {{ site.horarios[1].horas.split("(")[0]|trim }}{% endif %}</p>
+      {% endif %}
     </div>
   </section>
 
-  <div class="faixa-latao" aria-hidden="true"><span>Navalha</span><span>Toalha quente</span><span>Hora marcada</span></div>
+  <section class="manifesto" aria-label="A casa em uma frase">
+    <p class="manifesto-frase revela">
+      Aqui o corte começa numa conversa
+      {% if site.sobre.imagens|length > 1 %}<span class="pilula">{{ m.imagem(imagens, site.sobre.imagens[1], alts[site.sobre.imagens[1]] or "Ferramentas do barbeiro", "180px") }}</span>{% endif %}
+      e só termina quando você aprova a nuca no espelho de mão.
+    </p>
+  </section>
 
-  <div class="miolo">
-    <div class="bloco-tabela">
-      {{ b.servicos(site) }}
-      <a class="botao-latao" href="agendar/">Agendar horário</a>
+  {% if site.destaques %}
+  <section class="oficio" id="oficio" aria-labelledby="oficio-titulo">
+    <div class="secao-cabeca revela">
+      <p class="rotulo">O ofício</p>
+      <h2 id="oficio-titulo">O que sai daqui toda semana.</h2>
     </div>
-  </div>
+    <ol class="pecas">
+      {% for d in site.destaques %}
+      {% set s = site.servicos|selectattr("nome", "equalto", d.titulo)|first %}
+      <li class="peca peca-{{ loop.index }}">
+        <figure class="peca-foto revela" data-inclina>
+          {{ m.imagem(imagens, d.imagem, alts[d.imagem] or d.titulo, "(min-width: 900px) 52vw, 100vw") }}
+        </figure>
+        <div class="peca-texto revela">
+          <span class="peca-num" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>
+          <h3>{{ d.titulo }}</h3>
+          <p>{{ d.texto }}</p>
+          {% if s %}<p class="peca-meta"><span>{{ s.duracao|duracao }}</span><span>{{ b.preco(s) }}</span></p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+    {% if outros %}
+    <div class="tambem revela">
+      <p><span class="rotulo">Também na cadeira</span> {{ outros|join(" · ") }}.</p>
+      <a class="botao-linha" href="agendar/">Ver os {{ site.servicos|length }} serviços e preços</a>
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
 
-  <section class="sobre" aria-labelledby="sobre-titulo">
-    <div class="sobre-fotos">
-      {{ m.imagem(imagens, site.sobre.imagens[0], "Cadeiras de barbeiro com espelhos", "(min-width: 800px) 45vw, 92vw", "sobre-1") }}
-      {{ m.imagem(imagens, site.sobre.imagens[1], "Cadeira de barbeiro cromada", "(min-width: 800px) 25vw, 50vw", "sobre-2") }}
-    </div>
-    <div class="sobre-corpo">
-      <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
-      <p>{{ site.sobre.texto }}</p>
+  <section class="casa" id="casa" aria-labelledby="casa-titulo">
+    {% if site.sobre.imagens %}
+    <figure class="casa-foto revela" data-inclina>
+      {{ m.imagem(imagens, site.sobre.imagens[0], alts[site.sobre.imagens[0]] or "Interior da " ~ nome, "(min-width: 900px) 42vw, 100vw") }}
+    </figure>
+    {% endif %}
+    <div class="casa-corpo">
+      <p class="rotulo revela">A casa</p>
+      <h2 id="casa-titulo" class="revela">{{ site.sobre.titulo }}</h2>
+      <p class="casa-texto revela">{{ site.sobre.texto }}</p>
+      <dl class="fatos revela">
+        {% if site.equipe %}<div><dt>{{ site.equipe|length }} barbeiros</dt><dd>cada um com a sua mão</dd></div>{% endif %}
+        <div><dt>{{ rotulo_dia[dias_casa[0]] }} a {{ rotulo_dia[dias_casa[-1]] }}</dt><dd>só com hora marcada</dd></div>
+        <div><dt>Preço fixo</dt><dd>combinado antes de sentar</dd></div>
+        {% if site.adicionais %}<div><dt>{{ site.adicionais[0].nome }}</dt><dd>{% if site.adicionais[0].preco %}+ {{ site.adicionais[0].preco|brl }}{% else %}por conta da casa{% endif %}</dd></div>{% endif %}
+      </dl>
     </div>
   </section>
 
-  <div class="miolo miolo-equipe">{{ b.equipe(site, imagens) }}</div>
+  {% if site.equipe %}
+  <section class="equipe" id="equipe" aria-labelledby="equipe-titulo">
+    <div class="equipe-corpo">
+      <p class="rotulo revela">Barbeiros</p>
+      <h2 id="equipe-titulo" class="revela">Escolha quem vai cuidar do seu cabelo.</h2>
+      <ul class="barbeiros">
+        {% for p in site.equipe %}
+        {% set dias = (p.funcionamento or site.agenda.funcionamento).keys()|list %}
+        <li class="barbeiro revela">
+          <strong class="barbeiro-nome">{{ p.nome }}</strong>
+          <span class="barbeiro-esp">{{ p.especialidade }}</span>
+          <span class="barbeiro-dias">{{ rotulo_dia[dias[0]] }} a {{ rotulo_dia[dias[-1]] }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if foto_equipe %}
+    <figure class="equipe-foto revela" data-inclina>
+      {{ m.imagem(imagens, foto_equipe, alts[foto_equipe] or "Barbeiro trabalhando", "(min-width: 900px) 40vw, 100vw") }}
+    </figure>
+    {% endif %}
+  </section>
+  {% endif %}
 
-  <section class="galeria" aria-label="Galeria">
-    <div class="galeria-trilho">
-      {% set alts = {"barba.jpg": "Barbeiro aparando a barba com tesoura", "poltrona.jpg": "Poltrona de barbeiro cromada ao lado do balcão", "tesoura.jpg": "Tesoura aparando a barba, em preto e branco", "corte.jpg": "Barbeiro cortando o cabelo com tesoura e pente"} %}
-      {% for f in site.galeria if f not in site.sobre.imagens %}
-      {{ m.imagem(imagens, f, alts[f] or "Detalhe da barbearia", "(min-width: 800px) 30vw, 70vw") }}
+  {% if site.depoimentos %}
+  {% set d0 = site.depoimentos[0] %}
+  <section class="vozes" aria-labelledby="vozes-titulo">
+    {% if foto_depo %}
+    <figure class="vozes-foto">
+      {{ m.imagem(imagens, foto_depo, alts[foto_depo] or "Detalhe de um corte", "(min-width: 900px) 34vw, 100vw") }}
+    </figure>
+    {% endif %}
+    <div class="vozes-corpo">
+      <h2 id="vozes-titulo" class="rotulo">Quem senta, volta</h2>
+      <figure class="vozes-grande revela">
+        <blockquote>{{ d0.texto }}</blockquote>
+        <figcaption>{{ d0.nome }}{% if d0.servico %} · {{ d0.servico }}{% endif %}</figcaption>
+      </figure>
+      <ul class="vozes-lista">
+        {% for d in site.depoimentos[1:] %}
+        <li class="revela">
+          <blockquote>{{ d.texto }}</blockquote>
+          <p>{{ d.nome }}{% if d.servico %} · {{ d.servico }}{% endif %}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if site.perguntas %}
+  <section class="duvidas" aria-labelledby="perguntas-titulo">
+    <div class="duvidas-cabeca revela">
+      <p class="rotulo">Antes de marcar</p>
+      <h2 id="perguntas-titulo">Perguntas que a gente sempre ouve.</h2>
+    </div>
+    <div class="duvidas-lista">
+      {% for q in site.perguntas %}
+      <details class="pergunta">
+        <summary>{{ q.pergunta }}</summary>
+        <p>{{ q.resposta }}</p>
+      </details>
       {% endfor %}
     </div>
   </section>
+  {% endif %}
 
-  <div class="miolo">{{ b.depoimentos(site) }}</div>
-  <div class="miolo">{{ b.perguntas(site) }}</div>
-
-  <section class="endereco" id="contato" aria-labelledby="contato-titulo">
-    <h2 id="contato-titulo">Venha tomar uma</h2>
-    {{ m.horarios(site) }}
-    {{ m.contato(site, wa_numero) }}
+  <section class="visita" id="contato" aria-labelledby="contato-titulo">
+    <div class="visita-corpo">
+      <p class="rotulo">Visita</p>
+      <h2 id="contato-titulo">{{ site.contato.endereco.split("—")[0]|trim }}</h2>
+      {{ m.horarios(site) }}
+      {{ m.contato(site, wa_numero) }}
+    </div>
   </section>
 </main>
+
 <div class="fecho">
-  <a class="cta" href="agendar/">Agendar horário</a>
+  <div class="fecho-topo">
+    <p class="fecho-convite">A cadeira está esperando.</p>
+    {{ m.cta(site, wa_numero, raiz) }}
+  </div>
   {{ m.rodape(site, config) }}
+  <p class="fecho-nome" aria-hidden="true">{{ marca }}</p>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+/* Revelação na rolagem: IntersectionObserver marca .visto uma vez; sem suporte ou com "reduzir movimento", nada some. */
+(() => {
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const io = new IntersectionObserver((itens) => {
+    for (const it of itens) if (it.isIntersecting) { it.target.classList.add("visto"); io.unobserve(it.target); }
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.documentElement.classList.add("revela-on");
+  for (const el of document.querySelectorAll(".revela")) io.observe(el);
+})();
+/* 3D por ponteiro: parallax em camadas na capa e fotos que inclinam. Só com mouse/trackpad e sem "reduzir movimento";
+   no toque a página fica estática (e continua 3D pelo CSS). Um rAF por quadro, só transform via variáveis CSS. */
+(() => {
+  if (!matchMedia("(hover: hover) and (pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.documentElement.classList.add("tem-3d");
+  let fila = new Map(), agendado = false;
+  const quadro = () => {
+    agendado = false;
+    for (const [el, vars] of fila) for (const k in vars) el.style.setProperty(k, vars[k]);
+    fila.clear();
+  };
+  const por = (el, vars) => { fila.set(el, vars); if (!agendado) { agendado = true; requestAnimationFrame(quadro); } };
+  const capa = document.querySelector(".capa");
+  if (capa) {
+    capa.addEventListener("pointermove", (e) => {
+      const r = capa.getBoundingClientRect();
+      por(capa, { "--px": ((e.clientX - r.left) / r.width * 2 - 1).toFixed(3), "--py": ((e.clientY - r.top) / r.height * 2 - 1).toFixed(3) });
+    });
+    capa.addEventListener("pointerleave", () => por(capa, { "--px": "0", "--py": "0" }));
+  }
+  for (const el of document.querySelectorAll("[data-inclina]")) {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      por(el, { "--ry": (x * 9).toFixed(2) + "deg", "--rx": (-y * 7).toFixed(2) + "deg", "--ry-n": (x * 2).toFixed(3), "--rx-n": (y * 2).toFixed(3),
+                "--gx": ((x + .5) * 100).toFixed(1) + "%", "--gy": ((y + .5) * 100).toFixed(1) + "%" });
+    });
+    el.addEventListener("pointerleave", () => por(el, { "--ry": "0deg", "--rx": "0deg", "--ry-n": "0", "--rx-n": "0" }));
+  }
+})();
+</script>
 {% endblock %}

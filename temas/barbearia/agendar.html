@@ -4,17 +4,26 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap">
 {% endblock %}
 {% block conteudo %}
+{% set marca = site.site.nome|replace(" Barbearia", "")|replace("Barbearia ", "") %}
 <header class="topo">
-  <a class="topo-marca" href="../">{{ site.site.nome|replace(" Barbearia", "") }}</a>
-  <a class="topo-cta" href="../">Voltar ao site</a>
+  <a class="topo-marca" href="../">{{ marca }}</a>
+  <a class="topo-voltar" href="../">Voltar ao site</a>
 </header>
 <main class="ag-pagina">
-  <h1 class="ag-titulo">Agendar horário</h1>
-  <p class="ag-lead">Serviços, barbeiro, dia e hora. O pedido segue pelo WhatsApp.</p>
+  <div class="ag-intro">
+    <p class="rotulo">{{ site.site.nome }}</p>
+    <h1 class="ag-titulo">Agendar horário</h1>
+    <p class="ag-lead">Escolha o serviço, o barbeiro e o horário. A confirmação chega pelo WhatsApp.</p>
+  </div>
+  <h2 class="sr-only">Formulário de agendamento</h2>
   {{ b.agendamento(site, agenda, wa_numero) }}
+  <aside class="ag-info" aria-label="Horários e endereço">
+    {{ m.horarios(site) }}
+    {% if site.contato.endereco %}<p class="ag-endereco">{{ site.contato.endereco }}</p>{% endif %}
+  </aside>
 </main>
 <div class="fecho">{{ m.rodape(site, config) }}</div>
 {% endblock %}

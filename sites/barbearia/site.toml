@@ -1,45 +1,62 @@
-galeria = ["cadeira.jpg", "barba.jpg", "poltrona.jpg", "tesoura.jpg", "corte.jpg"]
+galeria = ["trabalho.jpg", "maquina.jpg"]
 
 [site]
 slug = "barbearia"
 tema = "barbearia"
 ramo = "beleza"
-nome = "Ferro e Cobre Barbearia"
+nome = "Veneziana Barbearia"
 segmento = "Barbearia"
 ordem = 1
-slogan = "Corte de respeito, barba de navalha e toalha quente."
-descricao = "Ferro e Cobre Barbearia, em Pinheiros, São Paulo. Escolha o serviço, o barbeiro e o horário e envie o agendamento pelo WhatsApp."
-cor = "#B8893A"
+slogan = "Corte no capricho, com hora marcada."
+descricao = "Veneziana Barbearia, num sobrado de 1931 na Barra Funda, São Paulo. Degradê, tesoura e barba de toalha quente. Escolha o serviço, o barbeiro e o horário e envie o agendamento pelo WhatsApp."
+cor = "#A2401C"
 
 [contato]
 whatsapp = ""
 telefone = "(11) 90000-0002"
-instagram = "ferroecobre.demo"
-endereco = "Rua dos Ferreiros, 212 — Pinheiros, São Paulo/SP"
-mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
+instagram = "veneziana.barbearia.demo"
+endereco = "Rua dos Torneiros, 177 — Barra Funda, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Barra+Funda,+S%C3%A3o+Paulo&output=embed"
 
 [[horarios]]
 dias = "Ter a Sex"
-horas = "9h às 20h (pausa das 12h às 13h)"
+horas = "9h às 20h (almoço das 12h30 às 13h30)"
 
 [[horarios]]
 dias = "Sáb"
-horas = "9h às 18h"
+horas = "8h às 17h"
 
 [[horarios]]
 dias = "Dom e Seg"
 horas = "Fechado"
 
 [capa]
-titulo = "Aqui o barbeiro não tem pressa."
-subtitulo = "Tesoura, máquina e navalha afiada, com cadeira de couro e toalha quente. Marque seu horário em poucos toques."
+titulo = "Corte no capricho, com hora marcada."
+subtitulo = "Degradê, tesoura e barba de toalha quente num sobrado com luz de tarde na Barra Funda. Escolha o barbeiro e o horário em poucos toques."
 imagem = "capa.jpg"
 cta = "agendar"
 
 [sobre]
-titulo = "Ofício antigo, mão firme."
-texto = "A Ferro e Cobre nasceu da vontade de ter uma barbearia como as de antigamente: hora marcada, conversa boa e nenhum corte feito às pressas. Cada cliente tem tempo de cadeira, e a navalha só encosta depois da toalha quente."
-imagens = ["cadeira.jpg", "poltrona.jpg"]
+titulo = "Um sobrado de 1931, três cadeiras e nenhuma pressa."
+texto = "A Veneziana ocupa o térreo de um sobrado na Barra Funda, com pé-direito alto e as janelas de madeira que deram nome à casa. São só três cadeiras, então cada horário é marcado com folga: ninguém corta olhando para o relógio, e quem chega no seu horário senta na hora."
+imagens = ["toalha.jpg", "navalha.jpg"]
+
+# Os destaques são os serviços-assinatura da landing: o título deve ser igual ao nome do serviço
+# para a página mostrar duração e preço. A lista completa fica em /agendar/.
+[[destaques]]
+titulo = "Degradê navalhado"
+texto = "Do zero ao comprimento que você pedir, sem degrau aparente. A linha final sai na navalha, e a nuca é conferida no espelho de mão antes de você levantar."
+imagem = "fade.jpg"
+
+[[destaques]]
+titulo = "Barba de toalha quente"
+texto = "Duas toalhas quentes, óleo, espuma batida no pincel e navalha com lâmina nova, aberta na sua frente. Fecha com toalha fria e loção sem álcool."
+imagem = "espuma.jpg"
+
+[[destaques]]
+titulo = "Combo corte + barba"
+texto = "Setenta minutos na mesma cadeira, com o mesmo barbeiro do começo ao fim. É o pedido mais comum do sábado de manhã."
+imagem = "barba.jpg"
 
 [agenda]
 intervalo = 30
@@ -47,17 +64,17 @@ dias = 14
 
 [[agenda.funcionamento]]
 dias = ["ter", "qua", "qui", "sex"]
-periodos = ["09:00-12:00", "13:00-20:00"]
+periodos = ["09:00-12:30", "13:30-20:00"]
 
 [[agenda.funcionamento]]
 dias = ["sab"]
-periodos = ["09:00-18:00"]
+periodos = ["08:00-17:00"]
 
 [[servicos]]
 id = "corte"
 nome = "Corte tradicional"
 categoria = "Cabelo"
-descricao = "Tesoura e máquina, acabamento na navalha."
+descricao = "Tesoura e máquina, lavagem e acabamento na navalha."
 duracao = 40
 preco = 55.0
 
@@ -65,22 +82,31 @@ preco = 55.0
 id = "degrade"
 nome = "Degradê navalhado"
 categoria = "Cabelo"
-descricao = "Fade do zero ao desejado, finalizado na navalha."
+descricao = "Fade do zero ao comprimento desejado, linha final na navalha."
 duracao = 50
 preco = 65.0
+
+[[servicos]]
+id = "infantil"
+nome = "Corte infantil"
+categoria = "Cabelo"
+descricao = "Até 12 anos, com tempo para a criança se acostumar à cadeira."
+duracao = 30
+preco = 45.0
 
 [[servicos]]
 id = "pezinho"
 nome = "Pezinho e acabamento"
 categoria = "Cabelo"
+descricao = "Contorno da nuca e das costeletas entre um corte e outro."
 duracao = 15
 preco = 20.0
 
 [[servicos]]
 id = "barba"
-nome = "Barba na navalha"
+nome = "Barba de toalha quente"
 categoria = "Barba"
-descricao = "Toalha quente, óleo e navalha."
+descricao = "Toalha quente, óleo pré-barba, espuma no pincel e navalha."
 duracao = 30
 preco = 45.0
 
@@ -88,7 +114,7 @@ preco = 45.0
 id = "barboterapia"
 nome = "Barboterapia"
 categoria = "Barba"
-descricao = "Vapor, esfoliação, toalha quente e hidratação."
+descricao = "Vapor, esfoliação, toalha quente e hidratação da pele."
 duracao = 50
 preco = 75.0
 
@@ -96,7 +122,7 @@ preco = 75.0
 id = "combo"
 nome = "Combo corte + barba"
 categoria = "Combos"
-descricao = "Corte tradicional e barba na navalha, na mesma cadeira."
+descricao = "Corte tradicional e barba de toalha quente, na mesma cadeira."
 duracao = 70
 preco = 90.0
 
@@ -104,6 +130,7 @@ preco = 90.0
 id = "combo-degrade"
 nome = "Combo degradê + barba"
 categoria = "Combos"
+descricao = "Degradê navalhado e barba de toalha quente."
 duracao = 80
 preco = 105.0
 
@@ -115,61 +142,93 @@ duracao = 15
 preco = 20.0
 
 [[adicionais]]
-id = "cerveja"
-nome = "Chopp artesanal na cadeira"
+id = "chopp"
+nome = "Chopp gelado na cadeira"
 preco = 15.0
 
 [[equipe]]
-nome = "Rubens"
-especialidade = "Barba e navalha"
-servicos = ["corte", "barba", "barboterapia", "combo", "sobrancelha"]
+nome = "Teodoro"
+especialidade = "Navalha e barba clássica"
+servicos = ["corte", "barba", "barboterapia", "combo", "pezinho", "sobrancelha"]
 
 [[equipe]]
-nome = "Caio"
-especialidade = "Degradê e cortes modernos"
-servicos = ["corte", "degrade", "pezinho", "combo-degrade", "sobrancelha"]
+nome = "Renan"
+especialidade = "Degradê e cortes texturizados"
+servicos = ["corte", "degrade", "pezinho", "barba", "combo", "combo-degrade", "sobrancelha"]
 
 [[equipe.funcionamento]]
-dias = ["qua", "qui", "sex", "sab"]
-periodos = ["10:00-12:00", "14:00-18:00"]
+dias = ["qua", "qui", "sex"]
+periodos = ["10:00-12:30", "13:30-20:00"]
+
+[[equipe.funcionamento]]
+dias = ["sab"]
+periodos = ["08:00-17:00"]
 
 [[equipe]]
-nome = "Wesley"
-especialidade = "Todos os serviços"
+nome = "Iara"
+especialidade = "Tesoura e corte infantil"
+servicos = ["corte", "infantil", "pezinho", "barba", "combo", "sobrancelha"]
+
+[[equipe.funcionamento]]
+dias = ["ter", "qua", "qui", "sex"]
+periodos = ["13:30-20:00"]
+
+[[equipe.funcionamento]]
+dias = ["sab"]
+periodos = ["08:00-12:30"]
 
 [[depoimentos]]
-nome = "Marcelo T."
-texto = "Fui pelo combo e saí com a melhor barba que já fiz. A toalha quente é outro nível."
-servico = "Combo corte + barba"
-
-[[depoimentos]]
-nome = "Henrique A."
-texto = "Horário respeitado, sem fila de espera. O degradê do Caio dura semanas."
+nome = "Rafael M."
+texto = "Corto com o Renan há dois anos. O degradê segura até a terceira semana, e ele lembra como eu gosto sem eu precisar explicar de novo."
 servico = "Degradê navalhado"
 
 [[depoimentos]]
-nome = "Paulo R."
-texto = "Agendei pelo WhatsApp em um minuto. Ambiente bom e atendimento sem pressa."
-servico = "Barboterapia"
+nome = "Otávio S."
+texto = "A barba de toalha quente virou meu ritual de sexta. Saio sem nenhuma irritação, coisa que não acontecia em outro lugar."
+servico = "Barba de toalha quente"
+
+[[depoimentos]]
+nome = "Diego F."
+texto = "Levei meu filho de 7 anos e a Iara teve uma paciência enorme. Agora é ele que pede para voltar."
+servico = "Corte infantil"
+
+[[depoimentos]]
+nome = "Leandro P."
+texto = "Marquei pelo WhatsApp às 8h e às 9h já estava na cadeira. Pontualidade de verdade."
+servico = "Combo corte + barba"
 
 [[perguntas]]
 pergunta = "Posso chegar sem horário marcado?"
-resposta = "Podemos encaixar se houver cadeira livre, mas com horário marcado você não espera."
+resposta = "Se houver cadeira livre, encaixamos. Com horário marcado você não espera: são só três cadeiras e a agenda é feita com folga."
 
 [[perguntas]]
 pergunta = "Como funciona a confirmação?"
-resposta = "Você envia o pedido pelo WhatsApp e nós confirmamos o horário por lá."
+resposta = "Você envia o pedido pelo WhatsApp com serviço, barbeiro e horário, e a gente confirma por lá mesmo, normalmente em poucos minutos."
+
+[[perguntas]]
+pergunta = "E se eu me atrasar?"
+resposta = "Seguramos o horário por 10 minutos. Depois disso, avisamos o próximo horário livre do mesmo barbeiro."
+
+[[perguntas]]
+pergunta = "Quais formas de pagamento vocês aceitam?"
+resposta = "Pix, cartão de débito e crédito e dinheiro, no fim do atendimento."
 
 [[fotos]]
 arquivo = "capa.jpg"
-url = "https://images.unsplash.com/photo-1702865272115-5afdbae975af"
-autor = "Redd Francisco"
+url = "https://images.unsplash.com/photo-1775494165568-42c0fbb4c782"
+autor = "Ten"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "cadeira.jpg"
-url = "https://images.unsplash.com/photo-1585747860715-2ba37e788b70"
-autor = "Nathon Oski"
+arquivo = "fade.jpg"
+url = "https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5"
+autor = "Michael DeMoya"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "espuma.jpg"
+url = "https://images.unsplash.com/photo-1733995471058-3d6ff2013de3"
+autor = "Victor Sirbu"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -179,19 +238,25 @@ autor = "Mr Shave"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "poltrona.jpg"
-url = "https://images.unsplash.com/photo-1621645582931-d1d3e6564943"
-autor = "Joshua Lawrence"
+arquivo = "toalha.jpg"
+url = "https://images.unsplash.com/photo-1599198547792-10bfaed5b72f"
+autor = "Logan Weaver"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "tesoura.jpg"
-url = "https://images.unsplash.com/photo-1517832606299-7ae9b720a186"
-autor = "Nathon Oski"
+arquivo = "navalha.jpg"
+url = "https://images.unsplash.com/photo-1524230616393-d6229fcd2eff"
+autor = "Josh Sorenson"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "corte.jpg"
-url = "https://images.unsplash.com/photo-1647140655214-e4a2d914971f"
-autor = "Nate Johnston"
+arquivo = "trabalho.jpg"
+url = "https://images.unsplash.com/photo-1567894340315-735d7c361db0"
+autor = "Obi"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "maquina.jpg"
+url = "https://images.unsplash.com/photo-1648221122323-572c13a31663"
+autor = "Tá Focando"
 fonte = "Unsplash"
