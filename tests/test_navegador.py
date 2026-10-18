@@ -54,6 +54,27 @@ def abrir(raiz, pagina):
         ctx.__exit__(None, None, None)
 
 
+@pytest.fixture
+def abrir_beleza(raiz_beleza, pagina):
+    """abrir_beleza(caminho): gera o site de beleza da fixture, serve e abre a página."""
+    pilha = []
+
+    def _abrir(caminho):
+        env = criar_ambiente(raiz_beleza)
+        site = carregar_site(raiz_beleza / "sites" / "studio-teste", raiz_beleza / "temas")
+        out = raiz_beleza / "out"
+        render_site(env, site, carregar_config(raiz_beleza / "config.toml"), out, "")
+        copiar_estaticos(raiz_beleza, out)
+        ctx = servir(out)
+        pilha.append(ctx)
+        pagina.goto(ctx.__enter__() + caminho)
+        return pagina
+
+    yield _abrir
+    for ctx in pilha:
+        ctx.__exit__(None, None, None)
+
+
 def test_busca_filtra_itens_categorias_e_abas(abrir):
     p = abrir("cardapio/")
     p.fill("input[data-busca]", "gin")
@@ -126,3 +147,50 @@ def test_carrinho(abrir):
     p.click("[data-carrinho-abrir]")
     assert p.locator("[data-carrinho-lista] li").count() == 2
     assert p.locator("[data-carrinho-total]").inner_text() == "R$ 69,00"
+
+
+def test_agendamento_fluxo_completo(abrir_beleza):
+    p = abrir_beleza("agendar/")
+    p.check("input[data-servico-id='corte']")
+    assert p.locator("[data-aviso]").inner_text() == "✓ Adicionado: Corte masculino"
+    p.check("input[data-servico-id='barba']")
+    assert p.locator("[data-barra-etiquetas] li").all_inner_texts() == ["Corte masculino", "Barba completa"]
+    p.click("[data-barra]")  # -> profissional
+    assert p.locator("[data-passo='profissional'] input[type=radio]").count() == 3  # sem preferência, Rafael, Ana
+    p.check("[data-passo='profissional'] input[value='']")
+    p.click("[data-barra]")  # -> quando
+    p.locator("[data-passo='quando'] input[name=dia]:not([disabled])").first.check()
+    p.locator("[data-passo='quando'] input[name=hora]").first.check()
+    p.click("[data-barra]")  # -> dados
+    p.fill("input[name=nome]", "Lucas")
+    msg = urllib.parse.unquote(p.locator("a[data-agendar-enviar]").get_attribute("href").split("?text=", 1)[1])
+    assert "• Corte masculino (R$ 45,00)" in msg and "Profissional: sem preferência" in msg and "Nome: Lucas" in msg
+
+
+def test_agendamento_troca_servico_limpa_profissional(abrir_beleza):
+    p = abrir_beleza("agendar/")
+    p.check("input[data-servico-id='corte']")
+    p.click("[data-barra]")
+    p.check("[data-passo='profissional'] input[type=radio] >> nth=2")  # Thiago (Rafael, Thiago, Ana? ordem da equipe)
+    assert p.locator("[data-passo='profissional'] input[type=radio]:checked").count() == 1
+    nome = p.locator("[data-passo='profissional'] input[type=radio]:checked").get_attribute("data-nome")
+    assert nome == "Thiago"
+    p.click("[data-passo-voltar]:visible")  # volta aos serviços
+    p.check("input[data-servico-id='barba']")
+    p.click("[data-barra]")
+    assert p.locator("[data-passo='profissional'] input[data-nome='Thiago']").count() == 0
+    assert p.locator("[data-passo='profissional'] input[value='']").is_checked()
+
+
+def test_agendamento_envio_bloqueado_sem_nome(abrir_beleza):
+    p = abrir_beleza("agendar/")
+    p.check("input[data-servico-id='corte']")
+    p.click("[data-barra]")
+    p.check("[data-passo='profissional'] input[value='']")
+    p.click("[data-barra]")
+    p.locator("[data-passo='quando'] input[name=dia]:not([disabled])").first.check()
+    p.locator("[data-passo='quando'] input[name=hora]").first.check()
+    p.click("[data-barra]")
+    enviar = p.locator("a[data-agendar-enviar]")
+    assert enviar.get_attribute("aria-disabled") == "true"
+    assert enviar.get_attribute("href") is None

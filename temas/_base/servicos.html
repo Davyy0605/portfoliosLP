@@ -1,0 +1,149 @@
+{# Macros do ramo beleza. Importar com: {% import "_base/servicos.html" as b with context %} #}
+{% import "_base/macros.html" as m with context %}
+
+{% macro preco(s) -%}
+{% if s.porte -%}
+{% set valores = s.porte.values()|list -%}
+{{ valores|min|brl }} a {{ valores|max|brl }}
+{%- elif s.preco is none -%}
+A combinar
+{%- else -%}
+{% if s.a_partir_de %}a partir de {% endif %}{{ s.preco|brl }}
+{%- endif %}
+{%- endmacro %}
+
+{% macro servicos(site) %}
+<section class="servicos" aria-labelledby="servicos-titulo">
+  <h2 id="servicos-titulo">Serviços</h2>
+  {% for cat in site.servicos|map(attribute='categoria')|unique %}
+  <div class="servicos-categoria">
+    {% if cat %}<h3>{{ cat }}</h3>{% endif %}
+    <ul class="servicos-lista">
+      {% for s in site.servicos if s.categoria == cat %}
+      <li class="servico" data-servico>
+        <span class="servico-nome">{{ s.nome }}</span>
+        {% if s.descricao %}<span class="servico-descricao">{{ s.descricao }}</span>{% endif %}
+        <span class="servico-duracao">{{ s.duracao|duracao }}</span>
+        <span class="servico-preco">{{ preco(s) }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>
+{% endmacro %}
+
+{% macro equipe(site, imagens) %}
+{% if site.equipe %}
+<section class="equipe" aria-labelledby="equipe-titulo">
+  <h2 id="equipe-titulo">Equipe</h2>
+  <ul class="equipe-lista">
+    {% for p in site.equipe %}
+    <li class="profissional" data-profissional>
+      {{ m.imagem(imagens, p.foto, p.nome, "(min-width: 700px) 200px, 40vw", "profissional-foto") }}
+      <strong class="profissional-nome">{{ p.nome }}</strong>
+      {% if p.especialidade %}<span class="profissional-especialidade">{{ p.especialidade }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endmacro %}
+
+{% macro depoimentos(site) %}
+{% if site.depoimentos %}
+<section class="depoimentos" aria-labelledby="depoimentos-titulo">
+  <h2 id="depoimentos-titulo">Depoimentos</h2>
+  <ul class="depoimentos-lista">
+    {% for d in site.depoimentos %}
+    <li class="depoimento">
+      <blockquote>{{ d.texto }}</blockquote>
+      <p class="depoimento-autor">{{ d.nome }}{% if d.servico %} · {{ d.servico }}{% endif %}</p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endmacro %}
+
+{% macro perguntas(site) %}
+{% if site.perguntas %}
+<section class="perguntas" aria-labelledby="perguntas-titulo">
+  <h2 id="perguntas-titulo">Perguntas frequentes</h2>
+  {% for q in site.perguntas %}
+  <details class="pergunta">
+    <summary>{{ q.pergunta }}</summary>
+    <p>{{ q.resposta }}</p>
+  </details>
+  {% endfor %}
+</section>
+{% endif %}
+{% endmacro %}
+
+{% macro agendamento(site, agenda, wa_numero) %}
+<form class="agendamento" data-agendamento data-whatsapp="{{ wa_numero }}" novalidate>
+  {% if agenda.pedePet %}
+  <fieldset class="passo" data-passo="pet" hidden>
+    <legend tabindex="-1">Seu pet</legend>
+    <label for="ag-pet">Nome do pet</label>
+    <input type="text" id="ag-pet" name="pet" autocomplete="off">
+    <div role="radiogroup" aria-label="Porte do pet">
+      {% for v, r in (("P", "Pequeno"), ("M", "Médio"), ("G", "Grande")) %}
+      <label class="opcao"><input type="radio" name="porte" value="{{ v }}"> {{ r }} ({{ v }})</label>
+      {% endfor %}
+    </div>
+  </fieldset>
+  {% endif %}
+  <fieldset class="passo" data-passo="servicos" hidden>
+    <legend tabindex="-1">Escolha os serviços</legend>
+    {% for cat in site.servicos|map(attribute='categoria')|unique %}
+    <div class="grupo">
+      {% if cat %}<h3>{{ cat }}</h3>{% endif %}
+      {% for s in site.servicos if s.categoria == cat %}
+      <label class="opcao"><input type="checkbox" name="servico" value="{{ s.id }}" data-servico-id="{{ s.id }}"> <span>{{ s.nome }}</span> <small>{{ s.duracao|duracao }} · {{ preco(s) }}</small></label>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    {% if site.adicionais %}
+    <div class="grupo">
+      <h3>Adicionais</h3>
+      {% for a in site.adicionais %}
+      <label class="opcao"><input type="checkbox" name="adicional" value="{{ a.id }}" data-adicional-id="{{ a.id }}"> <span>{{ a.nome }}</span>{% if a.preco is not none %} <small>+ {{ a.preco|brl }}</small>{% endif %}</label>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </fieldset>
+  <fieldset class="passo" data-passo="profissional" hidden>
+    <legend tabindex="-1">Com quem?</legend>
+    <div data-profissionais></div>
+  </fieldset>
+  <fieldset class="passo" data-passo="quando" hidden>
+    <legend tabindex="-1">Dia e horário</legend>
+    <div class="dias" data-dias role="radiogroup" aria-label="Dia"></div>
+    <div class="horas" data-horas role="radiogroup" aria-label="Horário"></div>
+  </fieldset>
+  <fieldset class="passo" data-passo="dados" hidden>
+    <legend tabindex="-1">Seus dados</legend>
+    <label for="ag-nome">Seu nome</label>
+    <input type="text" id="ag-nome" name="nome" autocomplete="name" required>
+    <div data-campo-bairro hidden>
+      <label for="ag-bairro">Bairro</label>
+      <input type="text" id="ag-bairro" name="bairro" autocomplete="off">
+    </div>
+    <label for="ag-obs">Observação (opcional)</label>
+    <textarea id="ag-obs" name="obs" rows="3"></textarea>
+    <p class="agendamento-aviso">O horário é confirmado pelo {{ site.site.nome }} no WhatsApp.</p>
+    <a class="agendamento-enviar" data-agendar-enviar aria-disabled="true" target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+  </fieldset>
+  <p class="agendamento-erro" data-erro role="status"></p>
+  <button type="button" class="passo-voltar" data-passo-voltar hidden>Voltar</button>
+  <button type="button" class="barra-resumo" data-barra hidden>
+    <span data-barra-linha></span>
+    <strong data-barra-total></strong>
+    <span data-barra-acao></span>
+    <ul data-barra-etiquetas></ul>
+  </button>
+  <script type="application/json" data-agenda-dados>{{ agenda|tojson }}</script>
+</form>
+<script type="module" src="{{ raiz }}static/js/agendamento.js"></script>
+{% endmacro %}

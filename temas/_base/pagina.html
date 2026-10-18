@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ site.site.nome }}{% if pagina == "cardapio" %} · Cardápio{% endif %}</title>
+<title>{{ site.site.nome }}{% if pagina == "cardapio" %} · Cardápio{% elif pagina == "agendar" %} · Agendar{% endif %}</title>
 <meta name="description" content="{{ site.site.descricao }}">
 <meta property="og:title" content="{{ site.site.nome }}">
 <meta property="og:description" content="{{ site.site.descricao }}">

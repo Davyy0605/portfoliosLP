@@ -147,6 +147,8 @@
 {% set tipo = site.capa.cta %}
 {% if tipo == "reservar" %}
 <a class="cta" href="{{ wa_numero|wa('Olá! Gostaria de fazer uma reserva.') }}">Reservar mesa</a>
+{% elif tipo == "agendar" %}
+<a class="cta" href="agendar/">Agendar horário</a>
 {% elif tipo == "pedir" %}
 <a class="cta" href="cardapio/#pedido">Fazer pedido</a>
 {% else %}

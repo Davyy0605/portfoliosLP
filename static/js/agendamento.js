@@ -1,6 +1,6 @@
-// Motor de agendamento: funções puras. Sem efeitos ao importar (nada toca o DOM aqui).
-import { formatarBRL } from "./carrinho.js";
-import { rotuloDuracao } from "./retorno.js";
+// Motor de agendamento: funções puras + iniciar(raiz) para a página. Nada toca o DOM ao importar em Node.
+import { formatarBRL, linkPedido } from "./carrinho.js";
+import { avisar, desenharBarra, rotuloDuracao } from "./retorno.js";
 
 export const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sab"];
 const DIAS_EXTENSO = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
@@ -103,3 +103,204 @@ export function mensagemAgendamento({ loja, servicos, adicionais, porte, pet, pr
 
   return linhas.join("\n");
 }
+
+// ---------------------------------------------------------------------------
+// Página de agendamento (só no navegador; os testes em Node importam as funções puras acima).
+
+const DIAS_CURTOS = DIAS_EXTENSO.map((d) => d.slice(0, 3));
+
+export function iniciar(raiz = document) {
+  const form = raiz.querySelector("[data-agendamento]");
+  const dadosEl = raiz.querySelector("[data-agenda-dados]");
+  if (!form || !dadosEl) return;
+  const agenda = JSON.parse(dadosEl.textContent);
+  const whatsapp = form.dataset.whatsapp;
+  const q = (s) => form.querySelector(s);
+
+  const passos = [...form.querySelectorAll("[data-passo]")];
+  const barra = q("[data-barra]");
+  const voltar = q("[data-passo-voltar]");
+  const erro = q("[data-erro]");
+  const enviar = q("[data-agendar-enviar]");
+  const nome = q("input[name=nome]");
+  const bairro = q("input[name=bairro]");
+  const obs = q("textarea[name=obs]");
+  const pet = q("input[name=pet]");
+  const reduzMovimento = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+  const estado = { passo: 0, dia: null, hora: null, profissional: "" };
+  const marcados = (campo, lista) =>
+    lista.filter((x) => form.querySelector(`input[name=${campo}][value="${x.id}"]`)?.checked);
+  const servicos = () => marcados("servico", agenda.servicos);
+  const adicionais = () => marcados("adicional", agenda.adicionais);
+  const porte = () => form.querySelector("input[name=porte]:checked")?.value ?? "";
+  const profissional = () => agenda.equipe.find((p) => p.id === estado.profissional) ?? null;
+  const pedeBairro = () => adicionais().some((a) => a.pedeBairro);
+  const hoje = new Date();
+
+  function diasDisponiveis() {
+    const t = totais(servicos(), adicionais(), porte());
+    const func = profissional()?.funcionamento ?? agenda.funcionamento;
+    return diasDaAgenda(func, hoje, agenda.dias).map((d, i) => {
+      const agoraMin = i === 0 ? hoje.getHours() * 60 + hoje.getMinutes() : null;
+      const horarios = t.minutos > 0 ? horariosDoDia(d.periodos, t.minutos, agenda.intervalo, agoraMin) : [];
+      return { ...d, horarios };
+    });
+  }
+
+  function radio(campo, valor, rotulo, marcado, extra = {}) {
+    const label = raiz.createElement("label");
+    label.className = "opcao";
+    const input = raiz.createElement("input");
+    input.type = "radio";
+    input.name = campo;
+    input.value = valor;
+    input.checked = marcado;
+    Object.assign(input.dataset, extra);
+    label.append(input, " ", rotulo);
+    return label;
+  }
+
+  function desenharProfissionais() {
+    const lista = profissionaisPara(agenda.equipe, servicos().map((s) => s.id));
+    if (!lista.some((p) => p.id === estado.profissional)) estado.profissional = "";
+    q("[data-profissionais]").replaceChildren(
+      radio("profissional", "", "Sem preferência", estado.profissional === ""),
+      ...lista.map((p) =>
+        radio("profissional", p.id, p.especialidade ? `${p.nome} · ${p.especialidade}` : p.nome, estado.profissional === p.id, { nome: p.nome })
+      )
+    );
+  }
+
+  function desenharHoras(dias) {
+    const horarios = estado.dia === null ? [] : dias[estado.dia].horarios;
+    if (!horarios.includes(estado.hora)) estado.hora = null;
+    q("[data-horas]").replaceChildren(...horarios.map((h) => radio("hora", h, h, estado.hora === h)));
+  }
+
+  function desenharQuando() {
+    const dias = diasDisponiveis();
+    if (estado.dia !== null && !dias[estado.dia]?.horarios.length) estado.dia = null;
+    q("[data-dias]").replaceChildren(
+      ...dias.map((d, i) => {
+        const rotulo = `${DIAS_CURTOS[d.data.getDay()]} ${dois(d.data.getDate())}/${dois(d.data.getMonth() + 1)}`;
+        const l = radio("dia", String(i), rotulo, estado.dia === i);
+        if (!d.horarios.length) {
+          l.querySelector("input").disabled = true;
+          l.classList.add("indisponivel");
+        }
+        return l;
+      })
+    );
+    desenharHoras(dias);
+  }
+
+  function mensagem() {
+    return mensagemAgendamento({
+      loja: agenda.loja, servicos: servicos(), adicionais: adicionais(), porte: porte(), pet: pet?.value,
+      profissional: profissional(), data: diasDisponiveis()[estado.dia].data, hora: estado.hora,
+      nome: nome.value.trim(), bairro: bairro.value.trim(), obs: obs.value,
+    });
+  }
+
+  function desenharEnvio() {
+    q("[data-campo-bairro]").hidden = !pedeBairro();
+    const pronto = servicos().length > 0 && estado.dia !== null && estado.hora !== null &&
+      nome.value.trim() !== "" && (!pedeBairro() || bairro.value.trim() !== "");
+    if (pronto) {
+      enviar.removeAttribute("aria-disabled");
+      enviar.href = linkPedido(whatsapp, mensagem());
+    } else {
+      enviar.setAttribute("aria-disabled", "true");
+      enviar.removeAttribute("href");
+    }
+  }
+
+  function desenharResumo() {
+    const sv = servicos();
+    const ad = adicionais();
+    const t = totais(sv, ad, porte());
+    desenharBarra(barra, {
+      linha: `${sv.length} ${sv.length === 1 ? "serviço" : "serviços"} · ${rotuloDuracao(t.minutos)}`,
+      total: `${t.aPartirDe ? "a partir de " : ""}${formatarBRL(t.centavos)}${t.aCombinar.length ? " + a combinar" : ""}`,
+      etiquetas: [...sv, ...ad].map((x) => x.nome),
+    });
+    // No último passo o botão de enviar assume; a barra some para não cobri-lo.
+    if (estado.passo === passos.length - 1) barra.hidden = true;
+    q("[data-barra-acao]").textContent = "Continuar";
+  }
+
+  // Motivo pelo qual o passo atual ainda não permite avançar ("" quando pode).
+  function pendencia() {
+    switch (passos[estado.passo].dataset.passo) {
+      case "pet":
+        return !pet.value.trim() || !porte() ? "Informe o nome e o porte do pet." : "";
+      case "servicos":
+        return servicos().length === 0 ? "Escolha ao menos um serviço." : "";
+      case "quando":
+        return estado.dia === null || estado.hora === null ? "Escolha o dia e o horário." : "";
+      default:
+        return "";
+    }
+  }
+
+  function irPara(i) {
+    estado.passo = i;
+    erro.textContent = "";
+    passos.forEach((p, k) => {
+      p.hidden = k !== i;
+    });
+    voltar.hidden = i === 0;
+    desenharProfissionais();
+    desenharQuando();
+    desenharResumo();
+    desenharEnvio();
+    const legenda = passos[i].querySelector("legend");
+    legenda.focus({ preventScroll: true });
+    legenda.scrollIntoView({ block: "start", behavior: reduzMovimento ? "auto" : "smooth" });
+  }
+
+  barra.addEventListener("click", () => {
+    const motivo = pendencia();
+    if (motivo) {
+      erro.textContent = motivo;
+      return;
+    }
+    if (estado.passo < passos.length - 1) irPara(estado.passo + 1);
+  });
+  voltar.addEventListener("click", () => irPara(estado.passo - 1));
+  enviar.addEventListener("click", (e) => {
+    if (enviar.getAttribute("aria-disabled") === "true") e.preventDefault();
+  });
+
+  // Redesenha só o que depende do campo alterado, para não destruir o foco do radio clicado.
+  form.addEventListener("change", (e) => {
+    const alvo = e.target;
+    erro.textContent = "";
+    if (alvo.name === "profissional") {
+      estado.profissional = alvo.value;
+      desenharQuando();
+    } else if (alvo.name === "dia") {
+      estado.dia = Number(alvo.value);
+      desenharHoras(diasDisponiveis());
+    } else if (alvo.name === "hora") {
+      estado.hora = alvo.value;
+    } else if (alvo.name === "servico" || alvo.name === "adicional" || alvo.name === "porte") {
+      if (alvo.type === "checkbox" && alvo.checked) {
+        avisar("✓ Adicionado: " + alvo.closest("label").querySelector("span").textContent, raiz);
+      }
+      desenharProfissionais();
+      desenharQuando();
+    }
+    desenharResumo();
+    desenharEnvio();
+  });
+  form.addEventListener("input", (e) => {
+    if (e.target === nome || e.target === bairro || e.target === obs || e.target === pet) desenharEnvio();
+  });
+  form.addEventListener("submit", (e) => e.preventDefault());
+
+  irPara(0);
+}
+
+if (typeof document !== "undefined") iniciar();

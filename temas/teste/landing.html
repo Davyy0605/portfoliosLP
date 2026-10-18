@@ -1,9 +1,17 @@
 {% extends "_base/pagina.html" %}
 {% import "_base/macros.html" as m with context %}
+{% import "_base/servicos.html" as b with context %}
 {% block conteudo %}<h1>{{ site.site.nome }}</h1>
 {{ m.imagem(imagens, site.capa.imagem, site.capa.titulo, prioridade=True) }}
 {{ m.cta(site, wa_numero, raiz) }}
+{% if site.site.ramo == "beleza" %}
+{{ b.servicos(site) }}
+{{ b.equipe(site, imagens) }}
+{{ b.depoimentos(site) }}
+{{ b.perguntas(site) }}
+{% else %}
 {{ m.eventos(site, imagens, wa_numero) }}
+{% endif %}
 {{ m.horarios(site) }}
 {{ m.contato(site, wa_numero) }}
 {{ m.rodape(site, config) }}{% endblock %}

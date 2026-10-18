@@ -69,3 +69,11 @@ def site_beleza(tmp_path):
     for nome in ("capa.jpg", "a.jpg"):
         Image.new("RGB", (8, 8), "red").save(pasta / "imagens" / nome)
     return pasta
+
+
+@pytest.fixture
+def raiz_beleza(site_beleza, raiz):
+    """Como `raiz`, mas com sites/studio-teste (ramo beleza)."""
+    base = site_beleza.parent.parent
+    assert base == raiz
+    return base

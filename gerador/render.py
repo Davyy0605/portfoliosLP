@@ -5,15 +5,20 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from markupsafe import Markup
 
-from gerador.formatos import brl, centavos, link_whatsapp
+from gerador.agenda import dados_agendamento
+from gerador.formatos import brl, centavos, duracao, link_whatsapp
 from gerador.imagens import otimizar_imagens
 from gerador.qr import qr_svg
+
+
+# Segunda página de cada ramo (a primeira é sempre a landing).
+PAGINAS = {"gastronomia": "cardapio", "beleza": "agendar"}
 
 
 def criar_ambiente(raiz: Path) -> Environment:
     env = Environment(loader=FileSystemLoader(Path(raiz) / "temas"), autoescape=True,
                       trim_blocks=True, lstrip_blocks=True)
-    env.filters.update(brl=brl, centavos=centavos, wa=link_whatsapp)
+    env.filters.update(brl=brl, centavos=centavos, duracao=duracao, wa=link_whatsapp)
     return env
 
 
@@ -39,13 +44,16 @@ def render_site(env, site: dict, config: dict, destino: Path, raiz_rel: str, url
     destino = Path(destino)
     tema = site["site"]["tema"]
     wa = site["contato"]["whatsapp"] or config["whatsapp"]
-    # shortcut: imagens duplicadas no cardápio; trocar por prefixo "../" se o deploy pesar.
+    ramo = site["site"]["ramo"]
+    segunda = PAGINAS[ramo]
+    extra = {"agenda": dados_agendamento(site)} if ramo == "beleza" else {}
+    # shortcut: imagens duplicadas na segunda página; trocar por prefixo "../" se o deploy pesar.
     paginas = (("landing", destino, raiz_rel, "tema.css"),
-               ("cardapio", destino / "cardapio", raiz_rel + "../", "../tema.css"))
+               (segunda, destino / segunda, raiz_rel + "../", "../tema.css"))
     for pagina, pasta, raiz, tema_css in paginas:
         imagens = _imagens(site, pasta / "img", cache=cache and Path(cache) / _chave(site))
         _escrever(env, f"{tema}/{pagina}.html", pasta / "index.html", site=site, config=config,
-                  imagens=imagens, wa_numero=wa, raiz=raiz, tema_css=tema_css, pagina=pagina, url_site=url_site)
+                  imagens=imagens, wa_numero=wa, raiz=raiz, tema_css=tema_css, pagina=pagina, url_site=url_site, **extra)
     shutil.copy(Path(env.loader.searchpath[0]) / tema / "tema.css", destino / "tema.css")
 
 

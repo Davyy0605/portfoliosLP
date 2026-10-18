@@ -1,0 +1,6 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% import "_base/servicos.html" as b with context %}
+{% block conteudo %}<h1>{{ site.site.nome }}</h1>
+{{ b.agendamento(site, agenda, wa_numero) }}
+{{ m.rodape(site, config) }}{% endblock %}

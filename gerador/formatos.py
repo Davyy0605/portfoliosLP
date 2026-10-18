@@ -13,6 +13,14 @@ def brl(valor: float) -> str:
     return "R$ " + f"{centavos(valor) / 100:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
+def duracao(minutos: int) -> str:
+    """Rótulo de duração, igual ao rotuloDuracao do JS: "40 min", "2h", "1h30"."""
+    h, m = divmod(int(minutos), 60)
+    if h == 0:
+        return f"{m} min"
+    return f"{h}h" if m == 0 else f"{h}h{m:02d}"
+
+
 def normalizar_whatsapp(numero: str) -> str:
     d = re.sub(r"\D", "", numero)
     if len(d) in (10, 11):

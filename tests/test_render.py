@@ -134,3 +134,28 @@ def test_qr_escala_sem_cortar():
     tag = svg[:svg.index(">")]
     assert 'viewBox="0 0 ' in tag
     assert "width=" not in tag and "height=" not in tag
+
+
+def test_render_beleza(raiz_beleza):
+    env = criar_ambiente(raiz_beleza)
+    config = carregar_config(raiz_beleza / "config.toml")
+    site = carregar_site(raiz_beleza / "sites" / "studio-teste", raiz_beleza / "temas")
+    out = raiz_beleza / "out"
+    render_site(env, site, config, out, "")
+    assert not (out / "cardapio").exists()
+    landing = (out / "index.html").read_text(encoding="utf-8")
+    agendar = (out / "agendar" / "index.html").read_text(encoding="utf-8")
+    assert 'href="agendar/"' in landing
+    assert landing.count("data-servico") == len(site["servicos"])
+    assert "data-profissional" in landing
+    assert "data-agendamento" in agendar
+    import json
+    import re
+    bruto = re.search(r"<script type=\"application/json\" data-agenda-dados>(.*?)</script>", agendar, re.S).group(1)
+    assert json.loads(bruto)["servicos"][0]["centavos"] == 4500
+
+
+def test_gastronomia_sem_agendar(raiz):
+    _, _, _, out = _gerar(raiz)
+    assert not (out / "agendar").exists()
+    assert (out / "cardapio" / "index.html").is_file()
