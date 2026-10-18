@@ -1,6 +1,6 @@
 # Davy: landing pages e cardápios digitais
 
-Gerador estático em Python que monta um portfólio com um hub ("Davy") e 6 sites de demonstração de restaurantes fictícios (bar, restaurante, hamburgueria, cafeteria, fino, bistrô). Cada um tem landing page e cardápio digital. Front-end em HTML, CSS e JS puros.
+Gerador estático em Python que monta um portfólio com um hub ("Davy") e 12 sites de demonstração fictícios em dois ramos: gastronomia (bar, restaurante, hamburgueria, cafeteria, fino, bistrô), cada um com landing page e cardápio digital, e beleza e bem-estar (barbearia, salão, manicure, maquiagem, estética, pet shop), cada um com landing page e agendamento pelo WhatsApp. Front-end em HTML, CSS e JS puros.
 
 ## Instalação
 
