@@ -373,5 +373,12 @@ img { border-radius: var(--raio); }
 .revela-on [data-inclina].revela { transition: opacity .9s var(--mola), translate .9s var(--mola), transform .6s var(--mola), box-shadow .6s var(--mola); }
 .revela-on .tem-3d [data-inclina].revela:hover, .tem-3d.revela-on [data-inclina].revela:hover { transition-duration: .9s, .9s, .25s, .25s; }
 
+/* Experimento three.js (cena3d.js): canvas transparente no lugar do poste em CSS, só >= 1024px com mouse. */
+.cena3d { display: none; }
+@media (min-width: 1024px) and (pointer: fine) {
+  .cena3d { display: block; position: absolute; z-index: 2; top: 2%; left: calc(47% - 118px); width: 300px; height: 78%; pointer-events: none; opacity: 0; transition: opacity 1.2s var(--mola); }
+  .cena3d-pronta .cena3d { opacity: 1; }
+  .cena3d-pronta .poste { opacity: 0; transition: opacity .6s; }
+}
 /* o quadro de horários só aparece com o formulário montado (o 1º passo empurraria o quadro: CLS) */
 .ag-pagina:has([data-agendamento]:not([data-pronto])) .ag-info { visibility: hidden; animation: fecho-mostra 0s 2.5s forwards; }

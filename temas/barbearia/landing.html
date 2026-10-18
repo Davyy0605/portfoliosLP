@@ -253,4 +253,9 @@
   }
 })();
 </script>
+{# three.js só em desktop: o import map é só texto (nada é baixado); o módulo decide se carrega. #}
+<script type="importmap">{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+{% include "barbearia/cena3d.js" %}
+</script>
 {% endblock %}
