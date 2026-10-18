@@ -4,7 +4,9 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap">
+{# fontes sem bloquear a 1ª pintura: a página aparece com a fonte do sistema e troca quando chegam #}
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap"></noscript>
 {% endblock %}
 {% block conteudo %}
 {% set nome = site.site.nome %}
@@ -201,13 +203,12 @@
   </section>
 </main>
 
-<div class="fecho">
+<div class="fecho" data-marca="{{ marca }}">
   <div class="fecho-topo">
     <p class="fecho-convite">A cadeira está esperando.</p>
     {{ m.cta(site, wa_numero, raiz) }}
   </div>
   {{ m.rodape(site, config) }}
-  <p class="fecho-nome" aria-hidden="true">{{ marca }}</p>
 </div>
 {% endblock %}
 {% block scripts %}

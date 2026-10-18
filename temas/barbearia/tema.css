@@ -212,7 +212,8 @@ img { border-radius: var(--raio); }
 .fecho-convite { font: 700 clamp(2rem, 1.2rem + 3.6vw, 4rem)/1 var(--fonte-titulo); font-stretch: 75%; letter-spacing: -.02em; }
 .rodape { color: var(--apoio-noite); font-size: .85rem; padding: 1.5rem 0; }
 .rodape p { margin: .2rem 0; }
-.fecho-nome { font: 800 23vw/.72 var(--fonte-titulo); font-stretch: 75%; letter-spacing: -.04em; color: var(--noite-2); margin: 0 0 -.06em -.04em; white-space: nowrap; user-select: none; }
+/* nome gigante decorativo como conteúdo gerado: não é texto da página (nem para leitores de tela) */
+.fecho[data-marca]::after { content: attr(data-marca); display: block; font: 800 23vw/.72 var(--fonte-titulo); font-stretch: 75%; letter-spacing: -.04em; color: var(--noite-2); margin: 0 0 -.06em -.04em; white-space: nowrap; user-select: none; }
 
 /* Movimento: entrada da capa e revelação na rolagem (sem JS; quem pede menos movimento não vê nada disso) */
 @media (prefers-reduced-motion: no-preference) {
@@ -371,3 +372,6 @@ img { border-radius: var(--raio); }
 }
 .revela-on [data-inclina].revela { transition: opacity .9s var(--mola), translate .9s var(--mola), transform .6s var(--mola), box-shadow .6s var(--mola); }
 .revela-on .tem-3d [data-inclina].revela:hover, .tem-3d.revela-on [data-inclina].revela:hover { transition-duration: .9s, .9s, .25s, .25s; }
+
+/* o quadro de horários só aparece com o formulário montado (o 1º passo empurraria o quadro: CLS) */
+.ag-pagina:has([data-agendamento]:not([data-pronto])) .ag-info { visibility: hidden; animation: fecho-mostra 0s 2.5s forwards; }

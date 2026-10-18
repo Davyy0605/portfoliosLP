@@ -4,7 +4,9 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap">
+{# fontes sem bloquear a 1ª pintura: a página aparece com a fonte do sistema e troca quando chegam #}
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Geist:wght@400;500;600&display=swap"></noscript>
 {% endblock %}
 {% block conteudo %}
 {% set marca = site.site.nome|replace(" Barbearia", "")|replace("Barbearia ", "") %}
