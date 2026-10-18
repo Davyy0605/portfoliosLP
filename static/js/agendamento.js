@@ -304,6 +304,7 @@ export function iniciar(raiz = document) {
   form.addEventListener("submit", (e) => e.preventDefault());
 
   irPara(0, false);
+  form.dataset.pronto = "";
 }
 
 if (typeof document !== "undefined") iniciar();

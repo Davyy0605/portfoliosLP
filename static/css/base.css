@@ -86,3 +86,5 @@ dialog.carrinho textarea { width: 100%; }
 .agendamento-enviar[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 
 .contato-mapa { width: 100%; min-height: 16rem; border: 0; }
+/* Rodapé só aparece quando o formulário já foi montado: evita salto de layout (CLS) */
+.ag-pagina:has([data-agendamento]:not([data-pronto])) + .fecho { visibility: hidden; }
