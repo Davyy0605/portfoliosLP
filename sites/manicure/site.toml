@@ -1,4 +1,4 @@
-galeria = ["n02.jpg", "n03.jpg", "n05.jpg", "n07.jpg", "n09.jpg", "n10.jpg", "n11.jpg", "n12.jpg", "n14.jpg", "n15.jpg", "n01.jpg", "n08.jpg"]
+galeria = ["n02.jpg", "n03.jpg", "n07.jpg", "n09.jpg", "n11.jpg", "n12.jpg", "n14.jpg", "n15.jpg"]
 
 [site]
 slug = "manicure"

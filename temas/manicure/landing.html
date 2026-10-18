@@ -30,7 +30,7 @@
   <section class="galeria" aria-labelledby="galeria-titulo">
     <h2 id="galeria-titulo">Galeria</h2>
     <p class="galeria-sub">Algumas das últimas unhas do estúdio.</p>
-    {% set alts = {"n02.jpg": "Mão com unhas em tom rosado e pedrinhas douradas segurando folhas de eucalipto", "n03.jpg": "Mão com unhas pretas e casco de tartaruga, com anel dourado", "n05.jpg": "Mão com unhas curtas em tom nude rosado", "n07.jpg": "Unhas amendoadas com acabamento cromado e desenhos prateados", "n09.jpg": "Mão com unhas amendoadas douradas", "n10.jpg": "Mão com francesinha rosa suave", "n11.jpg": "Mãos com nail art em preto, prata e glitter sobre pelúcia branca", "n12.jpg": "Mão com unhas amendoadas em tom taupe entre flores laranja", "n14.jpg": "Unhas rosadas com a palavra love desenhada", "n15.jpg": "Mãos com unhas azul-marinho, douradas e brancas", "n01.jpg": "Manicure aplicando nail art em uma cliente, com a cabine de cura ao lado", "n08.jpg": "Prateleiras douradas com frascos de esmalte"} %}
+    {% set alts = {"n02.jpg": "Mão com unhas em tom rosado e pedrinhas douradas segurando folhas de eucalipto", "n03.jpg": "Mão com unhas pretas e casco de tartaruga, com anel dourado", "n07.jpg": "Unhas amendoadas com acabamento cromado e desenhos prateados", "n09.jpg": "Mão com unhas amendoadas douradas", "n11.jpg": "Mãos com nail art em preto, prata e glitter sobre pelúcia branca", "n12.jpg": "Mão com unhas amendoadas em tom taupe entre flores laranja", "n14.jpg": "Unhas rosadas com a palavra love desenhada", "n15.jpg": "Mãos com unhas azul-marinho, douradas e brancas"} %}
     <div class="galeria-grade">
       {% for f in site.galeria %}
       {{ m.imagem(imagens, f, alts[f] or "Unhas feitas no estúdio", "(min-width: 900px) 25vw, 50vw", "galeria-foto") }}
@@ -53,7 +53,7 @@
       <p>{{ site.sobre.texto }}</p>
     </div>
     <div class="sobre-fotos">
-      {{ m.imagem(imagens, site.sobre.imagens[0], "Manicure aplicando nail art em uma cliente, com a cabine de cura ao lado", "(min-width: 800px) 30vw, 50vw", "sobre-1") }}
+      {{ m.imagem(imagens, site.sobre.imagens[0], "Manicure aplicando nail art com a cabine de cura ao lado", "(min-width: 800px) 30vw, 50vw", "sobre-1") }}
       {{ m.imagem(imagens, site.sobre.imagens[1], "Prateleiras douradas com frascos de esmalte", "(min-width: 800px) 30vw, 50vw", "sobre-2") }}
     </div>
   </section>
