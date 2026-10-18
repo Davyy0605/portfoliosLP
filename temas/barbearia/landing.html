@@ -50,8 +50,9 @@
 
   <section class="galeria" aria-label="Galeria">
     <div class="galeria-trilho">
+      {% set alts = {"barba.jpg": "Barbeiro aparando a barba com tesoura", "poltrona.jpg": "Poltrona de barbeiro cromada ao lado do balcão", "tesoura.jpg": "Tesoura aparando a barba, em preto e branco", "corte.jpg": "Barbeiro cortando o cabelo com tesoura e pente"} %}
       {% for f in site.galeria if f not in site.sobre.imagens %}
-      {{ m.imagem(imagens, f, "Cena de barbearia", "(min-width: 800px) 30vw, 70vw") }}
+      {{ m.imagem(imagens, f, alts[f] or "Detalhe da barbearia", "(min-width: 800px) 30vw, 70vw") }}
       {% endfor %}
     </div>
   </section>

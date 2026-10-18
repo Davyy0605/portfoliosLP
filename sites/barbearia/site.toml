@@ -38,7 +38,7 @@ cta = "agendar"
 
 [sobre]
 titulo = "Ofício antigo, mão firme."
-texto = "A Ferro & Cobre nasceu da vontade de ter uma barbearia como as de antigamente: hora marcada, conversa boa e nenhum corte feito às pressas. Cada cliente tem tempo de cadeira, e a navalha só encosta depois da toalha quente."
+texto = "A Ferro e Cobre nasceu da vontade de ter uma barbearia como as de antigamente: hora marcada, conversa boa e nenhum corte feito às pressas. Cada cliente tem tempo de cadeira, e a navalha só encosta depois da toalha quente."
 imagens = ["cadeira.jpg", "poltrona.jpg"]
 
 [agenda]
