@@ -1,0 +1,20 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% import "_base/servicos.html" as b with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap">
+{% endblock %}
+{% block conteudo %}
+<header class="topo">
+  <a class="topo-marca" href="../"><span class="topo-bolinha" aria-hidden="true"></span>{{ site.site.nome }}</a>
+  <a class="topo-cta" href="../">Voltar ao site</a>
+</header>
+<main class="ag-pagina">
+  <h1 class="ag-titulo">Agende o banho</h1>
+  <p class="ag-lead">Conte quem é o pet, escolha os serviços, o dia e a hora. O pedido segue pelo WhatsApp.</p>
+  {{ b.agendamento(site, agenda, wa_numero) }}
+</main>
+<div class="fecho">{{ m.rodape(site, config) }}</div>
+{% endblock %}

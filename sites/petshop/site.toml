@@ -1,0 +1,257 @@
+galeria = ["p02.jpg", "p03.jpg", "p04.jpg", "p05.jpg", "p06.jpg", "p07.jpg"]
+
+[site]
+slug = "petshop"
+tema = "petshop"
+ramo = "beleza"
+nome = "Jabuticaba Pet Spa"
+segmento = "Banho e tosa"
+ordem = 6
+slogan = "Banho, tosa e carinho com hora marcada, do jeito que o seu pet gosta."
+descricao = "Jabuticaba Pet Spa, em Vila Mariana, São Paulo. Veja os serviços por porte, escolha o horário e envie o agendamento pelo WhatsApp."
+cor = "#2F5BD9"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-6060"
+instagram = "jabuticabapetspa.demo"
+endereco = "Rua Domingos de Morais, 1480 — Vila Mariana, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Vila+Mariana,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Seg a Sex"
+horas = "8h às 18h"
+
+[[horarios]]
+dias = "Sáb"
+horas = "8h às 14h"
+
+[[horarios]]
+dias = "Dom"
+horas = "Fechado"
+
+[capa]
+titulo = "Banho bom, pet feliz."
+subtitulo = "Banho, tosa e cuidados com hora marcada, produtos suaves e todo o tempo que o seu pet precisa para ficar tranquilo."
+imagem = "capa.jpg"
+cta = "agendar"
+
+[sobre]
+titulo = "Cada pet tem o seu ritmo."
+texto = "Na Jabuticaba atendemos um pet de cada vez por profissional, sem gaiolas e sem pressa. Secagem com temperatura controlada, produtos hipoalergênicos e um relato no fim: como foi o banho, como ele se comportou e o que merece atenção em casa."
+imagens = ["p08.jpg", "p09.jpg"]
+
+[agenda]
+intervalo = 30
+dias = 14
+pede_pet = true
+
+[[agenda.funcionamento]]
+dias = ["seg", "ter", "qua", "qui", "sex"]
+periodos = ["08:00-12:00", "13:00-18:00"]
+
+[[agenda.funcionamento]]
+dias = ["sab"]
+periodos = ["08:00-14:00"]
+
+[[servicos]]
+id = "banho"
+nome = "Banho"
+categoria = "Banho"
+descricao = "Shampoo conforme o pelo, condicionador, secagem e perfume suave."
+duracao = 60
+[servicos.porte]
+P = 55.0
+M = 75.0
+G = 105.0
+
+[[servicos]]
+id = "banho-hidratacao"
+nome = "Banho com hidratação"
+categoria = "Banho"
+descricao = "Máscara de hidratação profunda para pelos ressecados ou opacos."
+duracao = 90
+[servicos.porte]
+P = 85.0
+M = 110.0
+G = 150.0
+
+[[servicos]]
+id = "banho-medicamentoso"
+nome = "Banho medicamentoso"
+categoria = "Banho"
+descricao = "Com shampoo indicado pelo veterinário. Traga a receita."
+duracao = 75
+[servicos.porte]
+P = 75.0
+M = 95.0
+G = 130.0
+
+[[servicos]]
+id = "banho-tosa"
+nome = "Banho e tosa"
+categoria = "Tosa"
+descricao = "Banho completo e tosa na máquina no padrão que você escolher."
+duracao = 90
+[servicos.porte]
+P = 85.0
+M = 115.0
+G = 160.0
+
+[[servicos]]
+id = "tosa-tesoura"
+nome = "Tosa na tesoura"
+categoria = "Tosa"
+descricao = "Acabamento manual para raças com tosa de padrão, como shih tzu e poodle."
+duracao = 120
+[servicos.porte]
+P = 110.0
+M = 140.0
+G = 190.0
+
+[[servicos]]
+id = "tosa-higienica"
+nome = "Tosa higiênica"
+categoria = "Tosa"
+descricao = "Patinhas, barriga e região íntima aparadas. Combina com o banho."
+duracao = 30
+preco = 35.0
+
+[[servicos]]
+id = "unhas"
+nome = "Corte de unhas"
+categoria = "Cuidados"
+descricao = "Corte e lixa, com paciência para quem tem medo."
+duracao = 15
+preco = 20.0
+
+[[servicos]]
+id = "dentes"
+nome = "Escovação dental"
+categoria = "Cuidados"
+descricao = "Escovação com pasta própria para pets e dicas para repetir em casa."
+duracao = 15
+preco = 25.0
+
+[[servicos]]
+id = "ouvidos"
+nome = "Limpeza de ouvidos"
+categoria = "Cuidados"
+duracao = 15
+preco = 20.0
+
+[[adicionais]]
+id = "taxi-dog"
+nome = "Táxi dog (buscamos e levamos)"
+
+[[adicionais]]
+id = "laco"
+nome = "Laço ou bandana"
+preco = 10.0
+
+[[adicionais]]
+id = "perfume"
+nome = "Perfume especial"
+preco = 12.0
+
+[[equipe]]
+nome = "Carol"
+especialidade = "Tosa na tesoura e raças de padrão"
+servicos = ["banho", "banho-tosa", "tosa-tesoura", "tosa-higienica"]
+
+[[equipe]]
+nome = "Diego"
+especialidade = "Pets grandes e banho medicamentoso"
+servicos = ["banho", "banho-hidratacao", "banho-medicamentoso", "banho-tosa", "unhas", "ouvidos"]
+
+[[equipe]]
+nome = "Bia"
+especialidade = "Filhotes e pets ansiosos"
+[[equipe.funcionamento]]
+dias = ["ter", "qua", "qui", "sex", "sab"]
+periodos = ["08:00-12:00", "13:00-16:00"]
+
+[[depoimentos]]
+nome = "Fernanda M."
+texto = "A Mel morre de medo de secador e aqui ninguém forçou nada. Foi no ritmo dela e voltou cheirosa e calma."
+servico = "Banho e tosa"
+
+[[depoimentos]]
+nome = "Rogério T."
+texto = "O táxi dog salvou minha semana. Buscaram o Bento na hora combinada, e ainda mandaram um relato de como foi."
+servico = "Banho com hidratação"
+
+[[depoimentos]]
+nome = "Camila A."
+texto = "Tosa na tesoura do jeito que eu pedi, com foto de referência e tudo. Dá pra ver o cuidado no acabamento."
+servico = "Tosa na tesoura"
+
+[[perguntas]]
+pergunta = "Como sei o porte do meu pet?"
+resposta = "Pequeno (P) vai até uns 10 kg, médio (M) até uns 25 kg e grande (G) acima disso. Se estiver em dúvida, escolha o mais próximo e confirmamos no WhatsApp."
+
+[[perguntas]]
+pergunta = "Quanto custa o táxi dog?"
+resposta = "O valor depende da distância entre a sua casa e o pet spa, por isso combinamos pelo WhatsApp depois do agendamento."
+
+[[perguntas]]
+pergunta = "Meu pet precisa estar vacinado?"
+resposta = "Sim. Pedimos vacinas em dia, vermifugação recente e antipulgas. Pets com pulgas ou carrapatos têm o banho ajustado, com valor combinado antes."
+
+[[perguntas]]
+pergunta = "Quanto tempo meu pet fica?"
+resposta = "Em média, de uma a duas horas e meia, conforme o serviço e o porte. Avisamos pelo WhatsApp quando ele estiver pronto."
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1719464454959-9cf304ef4774"
+autor = "Buddy AN"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p02.jpg"
+url = "https://images.unsplash.com/photo-1772437883387-8076cf660c65"
+autor = "Freya Song"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p03.jpg"
+url = "https://images.unsplash.com/photo-1583511655826-05700d52f4d9"
+autor = "Karsten Winegeart"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p04.jpg"
+url = "https://images.unsplash.com/photo-1611173622933-91942d394b04"
+autor = "Hayffield L"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p05.jpg"
+url = "https://images.unsplash.com/photo-1588943211346-0908a1fb0b01"
+autor = "Ralu Gal"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p06.jpg"
+url = "https://images.unsplash.com/photo-1561037404-61cd46aa615b"
+autor = "Victor G"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p07.jpg"
+url = "https://images.unsplash.com/photo-1560807707-8cc77767d783"
+autor = "T.R Photography"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p08.jpg"
+url = "https://images.unsplash.com/photo-1782022491533-267c13b410bf"
+autor = "Alvan Nee"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "p09.jpg"
+url = "https://images.unsplash.com/photo-1560743641-3914f2c45636"
+autor = "Alvan Nee"
+fonte = "Unsplash"
