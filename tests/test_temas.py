@@ -106,13 +106,13 @@ def test_sem_rolagem_lateral(dist, largura, altura):
             pytest.skip(f"chromium do Playwright indisponível: {e}")
         pagina = nav.new_page(viewport={"width": largura, "height": altura}, reduced_motion="reduce")
         for hub in ["", *(f"{r}/" for r in _ramos_com_sites())]:
-            pagina.goto(base + hub, wait_until="load")
+            pagina.goto(base + hub, wait_until="domcontentloaded", timeout=60000)
             pagina.evaluate("document.fonts.ready")
             if pagina.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"):
                 largas.append(hub or "/")
         for s in SITES:
             for sub in ("", PAGINAS[s["site"]["ramo"]] + "/"):
-                pagina.goto(f"{base}{s['site']['slug']}/{sub}", wait_until="load")
+                pagina.goto(f"{base}{s['site']['slug']}/{sub}", wait_until="domcontentloaded", timeout=60000)
                 pagina.evaluate("document.fonts.ready")
                 if pagina.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"):
                     largas.append(s["site"]["slug"] + "/" + sub)
