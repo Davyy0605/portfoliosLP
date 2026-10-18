@@ -1,3 +1,5 @@
+import re
+
 import pytest
 
 from gerador.dados import ErroDeDados, avisos_config, carregar_config, carregar_site, listar_sites
@@ -183,3 +185,45 @@ def test_cor_da_marca_invalida(tmp_path):
     c.write_text('url_base="https://x.app/"\nwhatsapp="5511987654321"\n[marca]\nnome="D"\ncor="roxo"\n')
     with pytest.raises(ErroDeDados, match=r"marca\.cor"):
         carregar_config(c)
+
+
+def test_ramo_padrao_gastronomia(site_dir, temas_dir):
+    s = carregar_site(site_dir, temas_dir)
+    assert s["site"]["ramo"] == "gastronomia" and s["servicos"] == []
+    assert s["equipe"] == [] and s["adicionais"] == [] and s["agenda"]["funcionamento"] == {}
+
+
+def test_beleza_carrega(site_beleza, temas_dir):
+    s = carregar_site(site_beleza, temas_dir)
+    assert s["site"]["ramo"] == "beleza"
+    assert s["agenda"]["funcionamento"]["ter"] == [[540, 720], [810, 1140]]
+    assert "dom" not in s["agenda"]["funcionamento"]
+    assert len(s["depoimentos"]) == 1 and len(s["perguntas"]) == 1
+
+
+@pytest.mark.parametrize("antigo, novo, trecho", [
+    ('periodos = ["09:00-12:00", "13:30-19:00"]', 'periodos = ["19:00-09:00"]', "periodos[0]"),
+    ('dias = ["ter", "qua", "qui", "sex", "sab"]', 'dias = ["segunda"]', "dias"),
+    ('ramo = "beleza"', 'ramo = "padaria"', "site.ramo"),
+    ('id = "barba"', 'id = "corte"', "repetido"),
+    ('servicos = ["corte", "barba"]', 'servicos = ["inexistente"]', "equipe[0].servicos"),
+    ('duracao = 40\npreco = 45.0', 'duracao = 40', "preco"),
+    ('duracao = 40\npreco = 45.0', 'duracao = 40\npreco = 45.0\nporte = { P = 50.0 }', "porte"),
+    ('periodos = ["09:00-12:00", "13:30-19:00"]', 'periodos = ["09:00-12:00", "11:00-13:00"]', "sobrep"),
+])
+def test_beleza_erros(site_beleza, temas_dir, antigo, novo, trecho):
+    arq = site_beleza / "site.toml"
+    txt = arq.read_text(encoding="utf-8")
+    assert antigo in txt
+    arq.write_text(txt.replace(antigo, novo, 1), encoding="utf-8")
+    with pytest.raises(ErroDeDados, match=re.escape(trecho)):
+        carregar_site(site_beleza, temas_dir)
+
+
+def test_beleza_sem_servicos(site_beleza, temas_dir):
+    arq = site_beleza / "site.toml"
+    txt = arq.read_text(encoding="utf-8")
+    ini, fim = txt.index("[[servicos]]"), txt.index("[[adicionais]]")
+    arq.write_text(txt[:ini] + txt[fim:], encoding="utf-8")
+    with pytest.raises(ErroDeDados, match="servicos"):
+        carregar_site(site_beleza, temas_dir)

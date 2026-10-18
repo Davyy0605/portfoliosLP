@@ -54,3 +54,18 @@ def raiz(site_dir):
         encoding="utf-8",
     )
     return base
+
+
+FIXTURE_BELEZA = Path(__file__).parent / "fixtures" / "beleza"
+
+
+@pytest.fixture
+def site_beleza(tmp_path):
+    """Cópia da fixture de beleza em sites/studio-teste/, com imagens geradas."""
+    pasta = tmp_path / "sites" / "studio-teste"
+    pasta.mkdir(parents=True)
+    shutil.copy(FIXTURE_BELEZA / "site.toml", pasta / "site.toml")
+    (pasta / "imagens").mkdir()
+    for nome in ("capa.jpg", "a.jpg"):
+        Image.new("RGB", (8, 8), "red").save(pasta / "imagens" / nome)
+    return pasta

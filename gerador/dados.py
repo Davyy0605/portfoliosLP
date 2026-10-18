@@ -9,7 +9,11 @@ from gerador.formatos import NUMERO_PROVISORIO as PROVISORIO, normalizar_whatsap
 
 MODULOS = {"eventos", "pedido"}
 SELOS = {"vegano", "vegetariano", "sem-gluten", "picante", "novo", "chef"}
-CTAS = {"cardapio", "reservar", "pedir"}
+CTAS = {"cardapio", "reservar", "pedir", "agendar"}
+RAMOS = {"gastronomia", "beleza"}
+DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sab"]
+PORTES = ["P", "M", "G"]
+RE_PERIODO = re.compile(r"(\d{2}):(\d{2})-(\d{2}):(\d{2})")
 RE_ID = re.compile(r"[a-z0-9-]+")
 RE_COR = re.compile(r"#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})")
 RE_INSTAGRAM = re.compile(r"(?:https?://)?(?:www\.)?(?:instagram\.com/)?@?([A-Za-z0-9._]+)/?(?:\?.*)?")
@@ -175,8 +179,11 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
     tema = v.texto(s, "tema", "site.tema", obrigatorio=True)
     if not (Path(temas_dir) / tema).is_dir():
         raise v.erro("site.tema", f"tema {tema!r} não existe em temas/")
+    ramo = v.texto(s, "ramo", "site.ramo", "gastronomia")
+    if ramo not in RAMOS:
+        raise v.erro("site.ramo", f"{ramo!r} inválido; use um de {sorted(RAMOS)}")
     site = {
-        "slug": slug, "tema": tema,
+        "ramo": ramo, "slug": slug, "tema": tema,
         "nome": v.texto(s, "nome", "site.nome", obrigatorio=True),
         "segmento": v.texto(s, "segmento", "site.segmento", obrigatorio=True),
         "ordem": v.numero(s, "ordem", "site.ordem", 99, inteiro=True),
@@ -295,11 +302,146 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
         fotos.append(foto)
 
     return {
+        **_beleza(v, bruto, ramo == "beleza"),
         "site": site, "contato": contato, "horarios": horarios, "capa": capa, "sobre": sobre,
         "destaques": destaques, "galeria": galeria, "cardapio": {"categorias": categorias},
         "eventos": {"vazio_mensagem": v.texto(ev, "vazio_mensagem", "eventos.vazio_mensagem"), "lista": lista},
         "fotos": fotos, "_pasta": pasta,
     }
+
+
+def _funcionamento(v, lista, caminho):
+    """Converte [[...funcionamento]] em {dia: [[ini, fim], ...]} (minutos desde 00:00)."""
+    res = {}
+    for i, f in enumerate(lista):
+        p = f"{caminho}[{i}]"
+        f = v.item_tabela(f, p)
+        dias = v.escolhas(f, "dias", f"{p}.dias", set(DIAS))
+        if not dias:
+            raise v.erro(f"{p}.dias", "informe ao menos um dia")
+        brutos = v.lista(f, "periodos", f"{p}.periodos", obrigatorio=True)
+        if not brutos:
+            raise v.erro(f"{p}.periodos", "informe ao menos um período")
+        periodos = []
+        for j, per in enumerate(brutos):
+            q = f"{p}.periodos[{j}]"
+            m = RE_PERIODO.fullmatch(per) if isinstance(per, str) else None
+            if not m:
+                raise v.erro(q, f"{per!r} inválido; use HH:MM-HH:MM")
+            ini, fim = int(m[1]) * 60 + int(m[2]), int(m[3]) * 60 + int(m[4])
+            if int(m[2]) > 59 or int(m[4]) > 59 or fim > 1440 or ini >= fim:
+                raise v.erro(q, f"{per!r} inválido; o início deve ser anterior ao fim, em horas válidas")
+            periodos.append([ini, fim])
+        for d in dias:
+            ordenados = sorted(res.get(d, []) + periodos)
+            for a, b in zip(ordenados, ordenados[1:]):
+                if b[0] < a[1]:
+                    raise v.erro(f"{p}.periodos", f"períodos com sobreposição em {d!r}")
+            res[d] = ordenados
+    return res
+
+
+def _faixa(v, d, chave, caminho, padrao, minimo, maximo):
+    n = v.numero(d, chave, caminho, padrao, inteiro=True)
+    if not minimo <= n <= maximo:
+        raise v.erro(caminho, f"deve estar entre {minimo} e {maximo}, recebido {n}")
+    return n
+
+
+def _booleano(v, d, chave, caminho):
+    b = d.get(chave, False)
+    if not isinstance(b, bool):
+        raise v.erro(caminho, f"esperado verdadeiro/falso, recebido {b!r}")
+    return b
+
+
+def _id_unico(v, d, anteriores, caminho):
+    i = v.texto(d, "id", f"{caminho}.id", obrigatorio=True)
+    if not RE_ID.fullmatch(i):
+        raise v.erro(f"{caminho}.id", f"{i!r} inválido; use letras minúsculas, números e hífen")
+    if any(x["id"] == i for x in anteriores):
+        raise v.erro(f"{caminho}.id", f"id {i!r} repetido")
+    return i
+
+
+def _beleza(v, bruto, exigir):
+    """Serviços, equipe e agenda; obrigatórios só no ramo beleza, vazios nos demais."""
+    ag = v.tabela(bruto, "agenda", "agenda")
+    pede_pet = _booleano(v, ag, "pede_pet", "agenda.pede_pet")
+    agenda = {"intervalo": _faixa(v, ag, "intervalo", "agenda.intervalo", 30, 5, 240),
+              "dias": _faixa(v, ag, "dias", "agenda.dias", 14, 1, 60),
+              "pede_pet": pede_pet,
+              "funcionamento": _funcionamento(v, v.lista(ag, "funcionamento", "agenda.funcionamento"),
+                                              "agenda.funcionamento")}
+    if exigir and not agenda["funcionamento"]:
+        raise v.erro("agenda.funcionamento", "obrigatório (ao menos 1) no ramo beleza")
+
+    servicos = []
+    for i, sv in enumerate(v.lista(bruto, "servicos", "servicos")):
+        p = f"servicos[{i}]"
+        sv = v.item_tabela(sv, p)
+        sid = _id_unico(v, sv, servicos, p)
+        duracao = v.numero(sv, "duracao", f"{p}.duracao", obrigatorio=True, inteiro=True)
+        if duracao <= 0:
+            raise v.erro(f"{p}.duracao", "deve ser maior que zero")
+        porte = None
+        if "porte" in sv:
+            if not pede_pet:
+                raise v.erro(f"{p}.porte", "exige agenda.pede_pet = true")
+            bp = v.tabela(sv, "porte", f"{p}.porte")
+            if not bp or any(k not in PORTES for k in bp):
+                raise v.erro(f"{p}.porte", f"use chaves entre {PORTES}")
+            porte = {k: v.numero(bp, k, f"{p}.porte.{k}", obrigatorio=True) for k in bp}
+        elif "preco" not in sv:
+            raise v.erro(f"{p}.preco", "campo obrigatório ausente (ou informe porte)")
+        servicos.append({"id": sid, "nome": v.texto(sv, "nome", f"{p}.nome", obrigatorio=True),
+                         "categoria": v.texto(sv, "categoria", f"{p}.categoria"),
+                         "descricao": v.texto(sv, "descricao", f"{p}.descricao"),
+                         "duracao": duracao, "preco": v.numero(sv, "preco", f"{p}.preco"),
+                         "a_partir_de": _booleano(v, sv, "a_partir_de", f"{p}.a_partir_de"),
+                         "porte": porte})
+    if exigir and not servicos:
+        raise v.erro("servicos", "obrigatório (ao menos 1) no ramo beleza")
+
+    adicionais = []
+    for i, ad in enumerate(v.lista(bruto, "adicionais", "adicionais")):
+        p = f"adicionais[{i}]"
+        ad = v.item_tabela(ad, p)
+        adicionais.append({"id": _id_unico(v, ad, adicionais, p),
+                           "nome": v.texto(ad, "nome", f"{p}.nome", obrigatorio=True),
+                           "preco": v.numero(ad, "preco", f"{p}.preco"),
+                           "pede_bairro": _booleano(v, ad, "pede_bairro", f"{p}.pede_bairro")})
+
+    ids = {x["id"] for x in servicos}
+    equipe = []
+    for i, e in enumerate(v.lista(bruto, "equipe", "equipe")):
+        p = f"equipe[{i}]"
+        e = v.item_tabela(e, p)
+        svs = v.lista(e, "servicos", f"{p}.servicos")
+        for j, x in enumerate(svs):
+            if x not in ids:
+                raise v.erro(f"{p}.servicos[{j}]", f"serviço {x!r} não existe em [[servicos]]")
+        func = _funcionamento(v, v.lista(e, "funcionamento", f"{p}.funcionamento"), f"{p}.funcionamento")
+        equipe.append({"nome": v.texto(e, "nome", f"{p}.nome", obrigatorio=True),
+                       "especialidade": v.texto(e, "especialidade", f"{p}.especialidade"),
+                       "foto": v.imagem(e, "foto", f"{p}.foto"),
+                       "servicos": svs, "funcionamento": func or None})
+
+    depoimentos = []
+    for i, d in enumerate(v.lista(bruto, "depoimentos", "depoimentos")):
+        p = f"depoimentos[{i}]"
+        d = v.item_tabela(d, p)
+        depoimentos.append({"nome": v.texto(d, "nome", f"{p}.nome", obrigatorio=True),
+                            "texto": v.texto(d, "texto", f"{p}.texto", obrigatorio=True),
+                            "servico": v.texto(d, "servico", f"{p}.servico")})
+    perguntas = []
+    for i, q in enumerate(v.lista(bruto, "perguntas", "perguntas")):
+        p = f"perguntas[{i}]"
+        q = v.item_tabela(q, p)
+        perguntas.append({"pergunta": v.texto(q, "pergunta", f"{p}.pergunta", obrigatorio=True),
+                          "resposta": v.texto(q, "resposta", f"{p}.resposta", obrigatorio=True)})
+    return {"agenda": agenda, "servicos": servicos, "adicionais": adicionais, "equipe": equipe,
+            "depoimentos": depoimentos, "perguntas": perguntas}
 
 
 def listar_sites(raiz: Path, temas_dir: Path | None = None) -> list[dict]:
