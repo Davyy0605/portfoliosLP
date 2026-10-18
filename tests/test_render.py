@@ -126,3 +126,11 @@ def test_rodape_agrupa_creditos(raiz, editar):
     html = _html(raiz, "landing")
     assert "Fotos: Pexels: Zé · Unsplash: Fulano, colaboradores da Unsplash" in html
     assert "Colaborador Unsplash" not in html
+
+
+def test_qr_escala_sem_cortar():
+    from gerador.qr import qr_svg
+    svg = qr_svg("https://exemplo.com/bar/cardapio/")
+    tag = svg[:svg.index(">")]
+    assert 'viewBox="0 0 ' in tag
+    assert "width=" not in tag and "height=" not in tag
