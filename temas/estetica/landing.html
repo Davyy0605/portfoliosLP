@@ -1,0 +1,73 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% import "_base/servicos.html" as b with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;600&display=swap">
+{% endblock %}
+{% block conteudo %}
+{% set nome = site.site.nome %}
+<a class="pular" href="#servicos-titulo">Pular para os tratamentos</a>
+<header class="topo">
+  <a class="topo-marca" href="./">{{ nome }}</a>
+  <a class="topo-cta" href="agendar/">Agendar</a>
+</header>
+<main>
+  <section class="capa" aria-labelledby="titulo">
+    <div class="capa-texto">
+      <p class="selo">{{ site.site.segmento }}</p>
+      <h1 id="titulo"><span class="sr-only">{{ nome }}. </span>{{ site.capa.titulo }}</h1>
+      <p class="capa-sub">{{ site.capa.subtitulo }}</p>
+      {{ m.cta(site, wa_numero, raiz) }}
+    </div>
+    <div class="capa-moldura">
+      {{ m.imagem(imagens, site.capa.imagem, "Rosto de mulher de olhos fechados recebendo um tratamento facial com luvas azul-turquesa e touca descartável", "(min-width: 900px) 46vw, 100vw", "capa-foto", prioridade=True) }}
+    </div>
+  </section>
+
+  <section class="etapas" aria-labelledby="etapas-titulo">
+    <h2 id="etapas-titulo">Como cuidamos</h2>
+    <ol class="etapas-lista">
+      <li><strong>Avaliação</strong><span>Conversa e análise da pele ou da queixa, sem pressa.</span></li>
+      <li><strong>Plano</strong><span>Só o que faz sentido, com número de sessões explicado.</span></li>
+      <li><strong>Acompanhamento</strong><span>Revemos o resultado a cada sessão e ajustamos.</span></li>
+    </ol>
+  </section>
+
+  <div class="miolo">{{ b.servicos(site) }}</div>
+
+  <section class="ambiente" aria-labelledby="ambiente-titulo">
+    <h2 id="ambiente-titulo">O cuidado de perto</h2>
+    {% set alts = {"e01.jpg": "Pessoa deitada de bruços em maca com pedras vulcânicas pretas alinhadas nas costas e flores brancas ao redor", "e02.jpg": "Rosto de mulher de olhos fechados recebendo um tratamento com aparelho de ponta fina, touca descartável e luvas", "e03.jpg": "Mulher recebendo máscara facial em um ambiente de spa", "e04.jpg": "Close do rosto de uma mulher durante uma massagem facial, com a luz suave sobre a pele", "e05.jpg": "Close de um pincel espalhando creme branco sobre o rosto durante um tratamento"} %}
+    <div class="ambiente-grade">
+      {% for f in site.galeria %}
+      {{ m.imagem(imagens, f, alts[f] or "Momento de um tratamento de estética", "(min-width: 900px) 20vw, 50vw", "ambiente-foto") }}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="sobre" aria-labelledby="sobre-titulo">
+    {{ m.imagem(imagens, site.sobre.imagens[0], "Frasco branco com bomba, toalha cinza enrolada, vela pequena e tulipas rosa sobre uma mesa clara", "(min-width: 800px) 22vw, 50vw", "sobre-1") }}
+    <div class="sobre-corpo">
+      <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
+      <p>{{ site.sobre.texto }}</p>
+    </div>
+    {{ m.imagem(imagens, site.sobre.imagens[1], "Mulher de roupão e toalha na cabeça tomando chá, sentada em um sofá claro em uma sala de tratamento", "(min-width: 800px) 22vw, 50vw", "sobre-2") }}
+  </section>
+
+  <div class="miolo miolo-equipe">{{ b.equipe(site, imagens) }}</div>
+  <div class="miolo-fala">{{ b.depoimentos(site) }}</div>
+  <div class="miolo miolo-duvidas">{{ b.perguntas(site) }}</div>
+
+  <section class="endereco" id="contato" aria-labelledby="contato-titulo">
+    <h2 id="contato-titulo">Venha nos visitar</h2>
+    {{ m.horarios(site) }}
+    {{ m.contato(site, wa_numero) }}
+  </section>
+</main>
+<div class="fecho">
+  <a class="cta" href="agendar/">Agendar horário</a>
+  {{ m.rodape(site, config) }}
+</div>
+{% endblock %}

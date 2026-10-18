@@ -1,0 +1,251 @@
+galeria = ["e01.jpg", "e02.jpg", "e03.jpg", "e04.jpg", "e05.jpg"]
+
+[site]
+slug = "estetica"
+tema = "estetica"
+ramo = "beleza"
+nome = "Casa Lírio Estética"
+segmento = "Estética facial e corporal"
+ordem = 5
+slogan = "Cuidado de pele e corpo com avaliação individual, calma e resultado gradual."
+descricao = "Casa Lírio Estética, em Higienópolis, São Paulo. Conheça os tratamentos e pacotes, escolha o horário e envie o agendamento pelo WhatsApp."
+cor = "#3F7060"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-8585"
+instagram = "casalirio.demo"
+endereco = "Rua Itambé, 210, conjunto 32 — Higienópolis, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Higien%C3%B3polis,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Seg a Sex"
+horas = "9h às 19h"
+
+[[horarios]]
+dias = "Sáb"
+horas = "9h às 14h"
+
+[[horarios]]
+dias = "Dom"
+horas = "Fechado"
+
+[capa]
+titulo = "Pele em ordem, sem pressa."
+subtitulo = "Tratamentos faciais e corporais planejados depois de uma avaliação, em um ambiente silencioso e muito claro."
+imagem = "capa.jpg"
+cta = "agendar"
+
+[sobre]
+titulo = "Menos produto, mais critério."
+texto = "Na Casa Lírio todo tratamento começa com uma conversa e uma avaliação da pele. Combinamos só o que faz sentido para você, explicamos cada etapa e acompanhamos a evolução sessão a sessão. Sem promessas de milagre, só cuidado bem feito."
+imagens = ["sobre1.jpg", "sobre2.jpg"]
+
+[agenda]
+intervalo = 30
+dias = 21
+
+[[agenda.funcionamento]]
+dias = ["seg", "ter", "qua", "qui", "sex"]
+periodos = ["09:00-12:30", "13:30-19:00"]
+
+[[agenda.funcionamento]]
+dias = ["sab"]
+periodos = ["09:00-14:00"]
+
+[[servicos]]
+id = "avaliacao"
+nome = "Avaliação de pele"
+categoria = "Facial"
+descricao = "Conversa, análise da pele e plano de cuidados. O valor é abatido no primeiro tratamento."
+duracao = 30
+preco = 60.0
+
+[[servicos]]
+id = "limpeza"
+nome = "Limpeza de pele profunda"
+categoria = "Facial"
+descricao = "Higienização, extração delicada, máscara calmante e proteção solar."
+duracao = 90
+preco = 190.0
+
+[[servicos]]
+id = "hidratacao"
+nome = "Hidratação facial com LED"
+categoria = "Facial"
+descricao = "Ativos hidratantes e luz LED para pele cansada ou desidratada."
+duracao = 60
+preco = 170.0
+
+[[servicos]]
+id = "peeling"
+nome = "Peeling superficial"
+categoria = "Facial"
+descricao = "Renovação suave para manchas leves e textura irregular. Indicado após avaliação."
+duracao = 45
+preco = 220.0
+
+[[servicos]]
+id = "drenagem"
+nome = "Drenagem linfática"
+categoria = "Corporal"
+descricao = "Massagem suave para reduzir a retenção de líquidos e a sensação de peso."
+duracao = 60
+preco = 150.0
+
+[[servicos]]
+id = "modeladora"
+nome = "Massagem modeladora"
+categoria = "Corporal"
+descricao = "Manobras firmes para contorno corporal e melhora da circulação."
+duracao = 60
+preco = 160.0
+
+[[servicos]]
+id = "relaxante"
+nome = "Massagem relaxante"
+categoria = "Corporal"
+descricao = "Pressão leve a moderada para aliviar a tensão do pescoço e das costas."
+duracao = 60
+preco = 150.0
+
+[[servicos]]
+id = "pacote-drenagem"
+nome = "Drenagem — pacote 10 sessões"
+categoria = "Pacotes"
+descricao = "Dez sessões de drenagem linfática, com validade de 90 dias."
+duracao = 60
+preco = 1290.0
+
+[[servicos]]
+id = "pacote-limpeza"
+nome = "Limpeza de pele — pacote 4 sessões"
+categoria = "Pacotes"
+descricao = "Uma limpeza profunda por mês, durante quatro meses."
+duracao = 90
+preco = 680.0
+
+[[servicos]]
+id = "pacote-peeling"
+nome = "Peeling facial — pacote 3 sessões"
+categoria = "Pacotes"
+descricao = "Três sessões com 21 dias de intervalo e protocolo de cuidados em casa."
+duracao = 45
+preco = 590.0
+
+[[adicionais]]
+id = "mascara"
+nome = "Máscara de colágeno"
+preco = 40.0
+
+[[adicionais]]
+id = "olhos"
+nome = "Cuidado para a área dos olhos"
+preco = 35.0
+
+[[adicionais]]
+id = "pedras"
+nome = "Pedras quentes nas costas"
+preco = 30.0
+
+[[equipe]]
+nome = "Dra. Helena Duarte"
+especialidade = "Biomédica esteta, facial"
+servicos = ["avaliacao", "limpeza", "hidratacao", "peeling", "pacote-limpeza", "pacote-peeling"]
+
+[[equipe]]
+nome = "Marina Sales"
+especialidade = "Estética corporal"
+servicos = ["drenagem", "modeladora", "relaxante", "pacote-drenagem", "limpeza"]
+
+[[equipe.funcionamento]]
+dias = ["ter", "qua", "qui", "sex", "sab"]
+periodos = ["09:00-13:00", "14:00-18:00"]
+
+[[equipe]]
+nome = "Bruno Tavares"
+especialidade = "Massagem e drenagem"
+servicos = ["drenagem", "relaxante", "pacote-drenagem"]
+
+[[depoimentos]]
+nome = "Marta C."
+texto = "Fiz a avaliação e a Helena me explicou tudo com calma. Em vez de me empurrar um monte de procedimentos, montou um plano simples. Minha pele está bem melhor."
+servico = "Limpeza de pele — pacote 4 sessões"
+
+[[depoimentos]]
+nome = "Renata P."
+texto = "Fechei o pacote de drenagem e senti diferença já na quarta sessão. O ambiente é tão tranquilo que eu saía de lá renovada."
+servico = "Drenagem — pacote 10 sessões"
+
+[[depoimentos]]
+nome = "Lúcia S."
+texto = "Tenho a pele sensível e sempre tive receio. Aqui testaram o produto antes e respeitaram meu ritmo."
+servico = "Peeling superficial"
+
+[[perguntas]]
+pergunta = "Preciso fazer avaliação antes do primeiro tratamento?"
+resposta = "Para tratamentos faciais, sim. A avaliação dura 30 minutos e o valor é abatido no primeiro tratamento contratado."
+
+[[perguntas]]
+pergunta = "Como funcionam os pacotes de sessões?"
+resposta = "Você contrata o pacote e agenda cada sessão pelo WhatsApp, no seu ritmo, dentro da validade informada. Cada sessão é marcada separadamente."
+
+[[perguntas]]
+pergunta = "Quantas sessões preciso para ver resultado?"
+resposta = "Depende da pele e do objetivo. Na avaliação indicamos o número de sessões sem exagero, e você decide se prefere começar com uma só."
+
+[[perguntas]]
+pergunta = "Quem não deve fazer os tratamentos?"
+resposta = "Gestantes, pessoas com lesões ativas na pele ou com algumas condições de saúde precisam de orientação antes. Avise na observação do agendamento."
+
+[[perguntas]]
+pergunta = "O que devo fazer antes da sessão?"
+resposta = "Venha sem maquiagem e evite exposição intensa ao sol nos três dias anteriores. Para massagens, faça uma refeição leve antes."
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1552693673-1bf958298935"
+autor = "karelys Ruiz"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "e01.jpg"
+url = "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2"
+autor = "engin akyurt"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "e02.jpg"
+url = "https://images.unsplash.com/photo-1713085085470-fba013d67e65"
+autor = "Look Studio"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "e03.jpg"
+url = "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881"
+autor = "Rosa Rafael"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "e04.jpg"
+url = "https://images.unsplash.com/photo-1643684391140-c5056cfd3436"
+autor = "Dominique Rivas"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "e05.jpg"
+url = "https://images.unsplash.com/photo-1761718209835-c8586b7dcac0"
+autor = "kimia kazemi"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sobre1.jpg"
+url = "https://images.unsplash.com/photo-1540555700478-4be289fbecef"
+autor = "Camille Brodard"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sobre2.jpg"
+url = "https://images.unsplash.com/photo-1630595271375-5073a6c0638b"
+autor = "Usen Parmanov"
+fonte = "Unsplash"
