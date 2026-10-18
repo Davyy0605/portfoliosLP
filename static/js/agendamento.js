@@ -227,6 +227,8 @@ export function iniciar(raiz = document) {
     });
     // No último passo o botão de enviar assume; a barra some para não cobri-lo.
     if (estado.passo === passos.length - 1) barra.hidden = true;
+    // Antes do passo de serviços (ex.: pet) ainda não há resumo, mas é a barra que avança.
+    else if (estado.passo < passos.findIndex((p) => p.dataset.passo === "servicos")) barra.hidden = false;
     q("[data-barra-acao]").textContent = "Continuar";
   }
 
@@ -244,7 +246,7 @@ export function iniciar(raiz = document) {
     }
   }
 
-  function irPara(i) {
+  function irPara(i, foco = true) {
     estado.passo = i;
     erro.textContent = "";
     passos.forEach((p, k) => {
@@ -255,6 +257,7 @@ export function iniciar(raiz = document) {
     desenharQuando();
     desenharResumo();
     desenharEnvio();
+    if (!foco) return;
     const legenda = passos[i].querySelector("legend");
     legenda.focus({ preventScroll: true });
     legenda.scrollIntoView({ block: "start", behavior: reduzMovimento ? "auto" : "smooth" });
@@ -300,7 +303,7 @@ export function iniciar(raiz = document) {
   });
   form.addEventListener("submit", (e) => e.preventDefault());
 
-  irPara(0);
+  irPara(0, false);
 }
 
 if (typeof document !== "undefined") iniciar();

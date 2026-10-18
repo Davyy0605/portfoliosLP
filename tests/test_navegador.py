@@ -171,7 +171,7 @@ def test_agendamento_troca_servico_limpa_profissional(abrir_beleza):
     p = abrir_beleza("agendar/")
     p.check("input[data-servico-id='corte']")
     p.click("[data-barra]")
-    p.check("[data-passo='profissional'] input[type=radio] >> nth=2")  # Thiago (Rafael, Thiago, Ana? ordem da equipe)
+    p.check("[data-passo='profissional'] input[data-nome='Thiago']")
     assert p.locator("[data-passo='profissional'] input[type=radio]:checked").count() == 1
     nome = p.locator("[data-passo='profissional'] input[type=radio]:checked").get_attribute("data-nome")
     assert nome == "Thiago"
@@ -194,3 +194,26 @@ def test_agendamento_envio_bloqueado_sem_nome(abrir_beleza):
     enviar = p.locator("a[data-agendar-enviar]")
     assert enviar.get_attribute("aria-disabled") == "true"
     assert enviar.get_attribute("href") is None
+
+
+def test_agendamento_com_pet(site_beleza, abrir_beleza):
+    arq = site_beleza / "site.toml"
+    txt = arq.read_text(encoding="utf-8")
+    txt = txt.replace("intervalo = 30", "intervalo = 30\npede_pet = true", 1)
+    txt = txt.replace("preco = 45.0", "porte = { P = 40.0, M = 50.0, G = 60.0 }", 1)
+    arq.write_text(txt, encoding="utf-8")
+    p = abrir_beleza("agendar/")
+    assert p.locator("[data-passo='pet']").is_visible()
+    p.fill("input[name=pet]", "Rex")
+    p.check("input[name=porte][value='M']")
+    p.click("[data-barra]")  # barra visível mesmo sem serviço
+    p.check("input[data-servico-id='corte']")
+    p.click("[data-barra]")
+    p.check("[data-passo='profissional'] input[value='']")
+    p.click("[data-barra]")
+    p.locator("[data-passo='quando'] input[name=dia]:not([disabled])").first.check()
+    p.locator("[data-passo='quando'] input[name=hora]").first.check()
+    p.click("[data-barra]")
+    p.fill("input[name=nome]", "Lucas")
+    msg = urllib.parse.unquote(p.locator("a[data-agendar-enviar]").get_attribute("href").split("?text=", 1)[1])
+    assert "Pet: Rex (porte M)" in msg and "R$ 50,00" in msg
