@@ -415,19 +415,30 @@ a { color: inherit; }
 .sem-resultado { padding: 2rem var(--margem); font-weight: 800; font-size: var(--passo-destaque); }
 
 /* Carrinho: barra fixa grande + comanda */
-.com-pedido { padding-bottom: 96px; }
-.carrinho-abrir {
+.com-pedido { padding-bottom: 140px; }
+.barra-resumo {
   left: 12px; right: 12px; bottom: 12px;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  min-height: 60px; padding: 0 1.25rem; border: 0; border-radius: 0;
-  background: var(--carvao); color: var(--mostarda);
+  display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 1rem; row-gap: .25rem;
+  min-height: 60px; padding: .625rem 1.25rem; border: 0; border-radius: 0; text-align: left;
+  background: var(--vermelho); color: var(--branco);
   font-weight: 900; font-variation-settings: "wdth" 118; text-transform: uppercase; font-size: 1.0625rem;
   transition: transform .18s cubic-bezier(.2,.8,.2,1), background-color .2s, color .2s;
 }
-.carrinho-resumo { font-weight: 700; text-transform: none; font-variation-settings: "wdth" 100; font-variant-numeric: tabular-nums; }
-.carrinho-abrir.tem-itens { background: var(--vermelho); color: var(--branco); animation: pulo .35s cubic-bezier(.2,.8,.2,1); }
-.carrinho-abrir:active { transform: scale(.98); }
-@media (min-width: 700px) { .carrinho-abrir { left: auto; right: 24px; bottom: 24px; min-width: 22rem; } }
+.barra-resumo:not([hidden]) { animation: pulo .35s cubic-bezier(.2,.8,.2,1); }
+.barra-resumo strong { font-variant-numeric: tabular-nums; }
+.barra-resumo ul { grid-column: 1 / -1; font-weight: 700; text-transform: none; font-variation-settings: "wdth" 100; font-size: .875rem; }
+.barra-resumo li:not(:last-child)::after { content: " ·"; }
+.barra-resumo:active { transform: scale(.98); }
+.aviso {
+  bottom: 6.5rem; border-radius: 0; background: var(--carvao); color: var(--mostarda);
+  font-weight: 900; font-variation-settings: "wdth" 118; text-transform: uppercase; font-size: .9375rem;
+}
+.item-adicionar[data-escolhido]::before { content: "\2713 "; }
+@media (min-width: 700px) {
+  .barra-resumo { left: auto; right: 24px; bottom: 24px; min-width: 22rem; max-width: 30rem; }
+  .aviso { left: auto; right: 24px; transform: none; bottom: 7.5rem; }
+  @keyframes aviso-entra { from { opacity: 0; } }
+}
 
 dialog.carrinho {
   border: 0; border-radius: 0; padding: 24px var(--margem) 20px;

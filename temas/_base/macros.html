@@ -85,7 +85,11 @@
 
 {% macro carrinho(site, wa_numero) %}
 {% if "pedido" in site.site.modulos %}
-<button type="button" class="carrinho-abrir" data-carrinho-abrir>Ver pedido</button>
+<button type="button" class="barra-resumo" data-barra data-carrinho-abrir hidden>
+  <span data-barra-linha></span>
+  <strong data-barra-total></strong>
+  <ul data-barra-etiquetas></ul>
+</button>
 <dialog data-carrinho class="carrinho" data-whatsapp="{{ wa_numero }}" data-loja="{{ site.site.nome }}" aria-labelledby="carrinho-titulo">
   <h2 id="carrinho-titulo">Seu pedido (<span data-carrinho-qtd>0</span>)</h2>
   <ul class="carrinho-lista" data-carrinho-lista></ul>

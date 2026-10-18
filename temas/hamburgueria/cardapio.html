@@ -30,25 +30,3 @@
 {{ m.carrinho(site, wa_numero) }}
 {{ m.rodape(site, config) }}
 {% endblock %}
-{% block scripts %}
-{% if "pedido" in site.site.modulos %}
-<script type="module">
-  // Mostra quantidade e total no botão fixo "Ver pedido" (o carrinho.js atualiza os campos do diálogo).
-  const botao = document.querySelector("[data-carrinho-abrir]");
-  const qtd = document.querySelector("[data-carrinho-qtd]");
-  const total = document.querySelector("[data-carrinho-total]");
-  if (botao && qtd && total) {
-    const resumo = document.createElement("span");
-    resumo.className = "carrinho-resumo";
-    botao.append(resumo);
-    const atualizar = () => {
-      const n = Number(qtd.textContent) || 0;
-      resumo.textContent = n ? `${n} ${n === 1 ? "item" : "itens"} · ${total.textContent}` : "vazio";
-      botao.classList.toggle("tem-itens", n > 0);
-    };
-    new MutationObserver(atualizar).observe(qtd, { childList: true, characterData: true, subtree: true });
-    atualizar();
-  }
-</script>
-{% endif %}
-{% endblock %}

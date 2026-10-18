@@ -89,12 +89,25 @@ def test_eventos_todos_passados_mostra_mensagem(raiz, editar, abrir):
     assert "Novas atrações em breve." in p.locator("[data-eventos-vazio]").inner_text()
 
 
+def test_carrinho_aviso_e_barra(abrir):
+    p = abrir("cardapio/")
+    assert p.locator("[data-barra]").is_hidden()
+    p.click("button[data-adicionar][data-nome='Gin']")
+    assert p.locator("[data-aviso]").inner_text() == "✓ Adicionado: Gin"
+    barra = p.locator("[data-barra]")
+    assert barra.is_visible()
+    assert barra.locator("[data-barra-etiquetas] li").all_inner_texts() == ["Gin"]
+    assert "1 item" in barra.locator("[data-barra-linha]").inner_text()
+    assert p.locator("button[data-adicionar][data-nome='Gin'][data-escolhido]").count() == 1
+    barra.click()
+    assert p.locator("dialog[data-carrinho]").is_visible()
+
+
 def test_carrinho(abrir):
     p = abrir("cardapio/")
-    p.click("[data-carrinho-abrir]")
+    assert p.locator("[data-barra]").is_hidden()
     enviar = p.locator("a[data-carrinho-enviar]")
     assert enviar.get_attribute("aria-disabled") == "true" and enviar.get_attribute("href") is None
-    p.keyboard.press("Escape")
 
     p.click("button[data-adicionar][data-nome='Gin']")
     p.click("button[data-adicionar][data-nome='Água']")

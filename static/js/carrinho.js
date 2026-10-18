@@ -1,3 +1,5 @@
+import { avisar, desenharBarra } from "./retorno.js";
+
 // Dinheiro sempre em centavos inteiros; sem ponto flutuante.
 export function formatarBRL(centavos) {
   const reais = String(Math.trunc(centavos / 100)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -65,6 +67,7 @@ export function iniciar(raiz = document) {
   const obs = q("textarea[data-carrinho-obs]");
   const enviar = q("a[data-carrinho-enviar]");
   const abrir = raiz.querySelector("[data-carrinho-abrir]");
+  const barra = raiz.querySelector("[data-barra]");
 
   let salvos = [];
   try {
@@ -128,7 +131,12 @@ export function iniciar(raiz = document) {
     const totalTxt = formatarBRL(carrinho.totalCentavos());
     if (total) total.textContent = totalTxt;
     if (qtdEl) qtdEl.textContent = String(n);
-    viva.textContent = `${n} ${n === 1 ? "item" : "itens"}, total ${totalTxt}`;
+    const linha = `${n} ${n === 1 ? "item" : "itens"}`;
+    viva.textContent = `${linha}, total ${totalTxt}`;
+    const itens = carrinho.itens();
+    if (barra) desenharBarra(barra, { linha, total: totalTxt, etiquetas: itens.map((i) => i.nome) });
+    const ids = new Set(itens.map((i) => i.id));
+    for (const b of raiz.querySelectorAll("button[data-adicionar]")) b.toggleAttribute("data-escolhido", ids.has(b.dataset.id));
     if (!enviar) return;
     if (n === 0) {
       enviar.removeAttribute("href");
@@ -150,6 +158,7 @@ export function iniciar(raiz = document) {
       if (!b.dataset.id || !Number.isInteger(centavos) || centavos < 0) return; // dado inválido no botão
       carrinho.adicionar(b.dataset.id, b.dataset.nome, centavos);
       desenhar();
+      avisar("✓ Adicionado: " + b.dataset.nome, raiz);
     });
   }
 
