@@ -19,6 +19,8 @@ button, input, textarea { font: inherit; color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  /* failsafe do rodapé (duração 0s: não é movimento) */
+  .ag-pagina:has([data-agendamento]:not([data-pronto])) + .fecho { animation: fecho-mostra 0s 2.5s forwards !important; }
 }
 
 /* Cardápio */
@@ -87,4 +89,5 @@ dialog.carrinho textarea { width: 100%; }
 
 .contato-mapa { width: 100%; min-height: 16rem; border: 0; }
 /* Rodapé só aparece quando o formulário já foi montado: evita salto de layout (CLS) */
-.ag-pagina:has([data-agendamento]:not([data-pronto])) + .fecho { visibility: hidden; }
+.ag-pagina:has([data-agendamento]:not([data-pronto])) + .fecho { visibility: hidden; animation: fecho-mostra 0s 2.5s forwards; }
+@keyframes fecho-mostra { to { visibility: visible; } }

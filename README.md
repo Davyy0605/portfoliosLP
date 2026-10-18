@@ -133,7 +133,7 @@ As fotos vêm da Unsplash e da Pexels e ficam listadas em `[[fotos]]` de cada `s
 ## QA visual
 
 ```bash
-python ferramentas/capturar.py dist capturas/     # hub + 6 sites, 390px e 1440px
+python ferramentas/capturar.py dist capturas/     # hub + 12 sites, 390px e 1440px
 python ferramentas/capturar.py dist-meu-cliente capturas/   # build de cliente
 ```
 

@@ -1,4 +1,4 @@
-import { avisar, desenharBarra } from "./retorno.js";
+import { avisar, prepararAviso, desenharBarra } from "./retorno.js";
 
 // Dinheiro sempre em centavos inteiros; sem ponto flutuante.
 export function formatarBRL(centavos) {
@@ -56,6 +56,7 @@ export class Carrinho {
 }
 
 export function iniciar(raiz = document) {
+  prepararAviso(raiz);
   const painel = raiz.querySelector("[data-carrinho]");
   if (!painel) return;
   const { whatsapp = "", loja = "" } = painel.dataset;

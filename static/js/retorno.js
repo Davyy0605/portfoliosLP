@@ -2,7 +2,8 @@
 // Sem efeitos ao importar: todo o trabalho com o DOM acontece dentro das funções.
 let temporizador;
 
-export function avisar(texto, raiz = document) {
+// Cria a região viva vazia no início, para leitores de tela já a monitorarem quando o 1º aviso chegar.
+export function prepararAviso(raiz = document) {
   let el = raiz.querySelector("[data-aviso]");
   if (!el) {
     el = raiz.createElement("p");
@@ -12,6 +13,11 @@ export function avisar(texto, raiz = document) {
     el.hidden = true;
     raiz.body.append(el);
   }
+  return el;
+}
+
+export function avisar(texto, raiz = document) {
+  const el = prepararAviso(raiz);
   el.textContent = texto;
   el.hidden = false;
   clearTimeout(temporizador);

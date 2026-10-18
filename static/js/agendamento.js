@@ -1,6 +1,6 @@
 // Motor de agendamento: funções puras + iniciar(raiz) para a página. Nada toca o DOM ao importar em Node.
 import { formatarBRL, linkPedido } from "./carrinho.js";
-import { avisar, desenharBarra, rotuloDuracao } from "./retorno.js";
+import { avisar, prepararAviso, desenharBarra, rotuloDuracao } from "./retorno.js";
 
 export const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sab"];
 const DIAS_EXTENSO = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
@@ -110,9 +110,11 @@ export function mensagemAgendamento({ loja, servicos, adicionais, porte, pet, pr
 const DIAS_CURTOS = DIAS_EXTENSO.map((d) => d.slice(0, 3));
 
 export function iniciar(raiz = document) {
+  prepararAviso(raiz);
   const form = raiz.querySelector("[data-agendamento]");
   const dadosEl = raiz.querySelector("[data-agenda-dados]");
-  if (!form || !dadosEl) return;
+  if (!form) return;
+  if (!dadosEl) { form.dataset.pronto = ""; return; }
   const agenda = JSON.parse(dadosEl.textContent);
   const whatsapp = form.dataset.whatsapp;
   const q = (s) => form.querySelector(s);
@@ -228,7 +230,13 @@ export function iniciar(raiz = document) {
     // No último passo o botão de enviar assume; a barra some para não cobri-lo.
     if (estado.passo === passos.length - 1) barra.hidden = true;
     // Antes do passo de serviços (ex.: pet) ainda não há resumo, mas é a barra que avança.
-    else if (estado.passo < passos.findIndex((p) => p.dataset.passo === "servicos")) barra.hidden = false;
+    else if (estado.passo < passos.findIndex((p) => p.dataset.passo === "servicos")) {
+      barra.hidden = false;
+      const l = q("[data-barra-linha]");
+      const tt = q("[data-barra-total]");
+      if (l) l.textContent = "";
+      if (tt) tt.textContent = "";
+    }
     q("[data-barra-acao]").textContent = "Continuar";
   }
 
