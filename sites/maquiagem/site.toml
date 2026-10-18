@@ -1,0 +1,269 @@
+galeria = ["r01.jpg", "r02.jpg", "r03.jpg", "r04.jpg", "r05.jpg", "r06.jpg", "r07.jpg", "r08.jpg"]
+
+[site]
+slug = "maquiagem"
+tema = "maquiagem"
+ramo = "beleza"
+nome = "Rubra Estúdio de Make"
+segmento = "Maquiagem profissional"
+ordem = 4
+slogan = "Maquiagem de impacto para noivas, festas e ensaios, no estúdio ou na sua casa."
+descricao = "Rubra Estúdio de Make, em Moema, São Paulo. Veja os retratos, escolha o serviço e o horário e envie o agendamento pelo WhatsApp."
+cor = "#FF4066"
+
+[contato]
+whatsapp = ""
+telefone = "(11) 4000-8484"
+instagram = "rubramake.demo"
+endereco = "Alameda dos Jurupis, 640 — Moema, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Moema,+S%C3%A3o+Paulo&output=embed"
+
+[[horarios]]
+dias = "Ter a Sex"
+horas = "10h às 19h"
+
+[[horarios]]
+dias = "Sáb"
+horas = "8h às 17h"
+
+[[horarios]]
+dias = "Dom e Seg"
+horas = "Fechado (noivas sob agenda)"
+
+[capa]
+titulo = "Pele, olhar e boca em alto contraste."
+subtitulo = "Maquiagem profissional para noivas, festas e ensaios, com pele que dura da primeira foto à última dança."
+imagem = "capa.jpg"
+cta = "agendar"
+
+[sobre]
+titulo = "Make é presença, não máscara."
+texto = "No Rubra a make começa pela conversa: ocasião, roupa, iluminação e o que você quer que as fotos mostrem. Produtos testados em pele real, camarim com luz de espelho e todo o tempo para ajustar o olhar antes de sair."
+imagens = ["sobre1.jpg", "sobre2.jpg"]
+
+[agenda]
+intervalo = 30
+dias = 21
+
+[[agenda.funcionamento]]
+dias = ["ter", "qua", "qui", "sex"]
+periodos = ["10:00-19:00"]
+
+[[agenda.funcionamento]]
+dias = ["sab"]
+periodos = ["08:00-17:00"]
+
+[[servicos]]
+id = "social"
+nome = "Make social"
+categoria = "Dia a dia e festas"
+descricao = "Pele leve, olhar definido e boca no tom certo para reuniões, jantares e eventos."
+duracao = 60
+preco = 180.0
+
+[[servicos]]
+id = "glam"
+nome = "Make glam de festa"
+categoria = "Dia a dia e festas"
+descricao = "Olhos esfumados, cílios e iluminador para a noite inteira."
+duracao = 90
+preco = 260.0
+
+[[servicos]]
+id = "formanda"
+nome = "Make de formatura"
+categoria = "Dia a dia e festas"
+descricao = "Pele que resiste a fotos, abraços e pista de dança."
+duracao = 90
+preco = 280.0
+
+[[servicos]]
+id = "madrinha"
+nome = "Madrinha ou convidada"
+categoria = "Noivas e eventos"
+descricao = "Make completa combinando com a paleta da cerimônia."
+duracao = 75
+preco = 240.0
+
+[[servicos]]
+id = "teste-noiva"
+nome = "Teste de make da noiva"
+categoria = "Noivas e eventos"
+descricao = "Definimos o look do grande dia e deixamos tudo anotado."
+duracao = 120
+preco = 320.0
+
+[[servicos]]
+id = "noiva"
+nome = "Make da noiva"
+categoria = "Noivas e eventos"
+descricao = "Atendimento exclusivo, com retoque até a cerimônia. Valor varia conforme o local e o horário."
+duracao = 150
+preco = 650.0
+a_partir_de = true
+
+[[servicos]]
+id = "ensaio"
+nome = "Make para ensaio fotográfico"
+categoria = "Foto e vídeo"
+descricao = "Acabamento pensado para câmera, com ajuste de brilho entre as trocas de look."
+duracao = 90
+preco = 300.0
+
+[[servicos]]
+id = "sobrancelha"
+nome = "Design de sobrancelha"
+categoria = "Olhar"
+descricao = "Mapeamento do formato, henna ou pigmento e finalização."
+duracao = 30
+preco = 70.0
+
+[[servicos]]
+id = "aula"
+nome = "Aula de automaquiagem"
+categoria = "Olhar"
+descricao = "Passo a passo com os seus produtos, para você repetir em casa."
+duracao = 120
+preco = 350.0
+
+[[adicionais]]
+id = "domicilio"
+nome = "Atendimento a domicílio"
+preco = 120.0
+pede_bairro = true
+
+[[adicionais]]
+id = "cilios"
+nome = "Cílios postiços"
+preco = 35.0
+
+[[adicionais]]
+id = "retoque"
+nome = "Kit de retoque para levar"
+preco = 45.0
+
+[[equipe]]
+nome = "Letícia Brandão"
+especialidade = "Noivas e glam"
+servicos = ["social", "glam", "formanda", "madrinha", "teste-noiva", "noiva", "ensaio", "aula"]
+
+[[equipe]]
+nome = "Caio Mendes"
+especialidade = "Pele, foto e vídeo"
+servicos = ["social", "glam", "madrinha", "ensaio", "sobrancelha"]
+
+[[equipe.funcionamento]]
+dias = ["qua", "qui", "sex", "sab"]
+periodos = ["10:00-17:00"]
+
+[[equipe]]
+nome = "Dani Aguiar"
+especialidade = "Sobrancelha e olhar"
+servicos = ["sobrancelha", "social", "formanda"]
+
+[[depoimentos]]
+nome = "Camila R."
+texto = "A make da minha festa de casamento durou até a última música, sem precisar retocar. Nas fotos, a pele ficou impecável."
+servico = "Make da noiva"
+
+[[depoimentos]]
+nome = "Fernanda L."
+texto = "Fiz o teste antes de escolher o look e foi a melhor decisão. No dia, a Letícia já sabia exatamente o que eu queria."
+servico = "Teste de make da noiva"
+
+[[depoimentos]]
+nome = "Paula M."
+texto = "Chamei o Caio em casa para o ensaio da minha família. Veio com tudo montado e a luz ficou linda nas fotos."
+servico = "Atendimento a domicílio"
+
+[[perguntas]]
+pergunta = "Vocês atendem noivas e eventos fora do estúdio?"
+resposta = "Sim. Marque o atendimento a domicílio e informe o bairro. O deslocamento para noivas e grupos é combinado pelo WhatsApp."
+
+[[perguntas]]
+pergunta = "Como funciona a confirmação do horário?"
+resposta = "Você envia o pedido pelo WhatsApp e nós confirmamos o horário por lá."
+
+[[fotos]]
+arquivo = "capa.jpg"
+url = "https://images.unsplash.com/photo-1596205521983-9c372fb3d4f1"
+autor = "Amir Seilsepour"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r01.jpg"
+url = "https://images.unsplash.com/photo-1594465919760-441fe5908ab0"
+autor = "Amir Seilsepour"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r02.jpg"
+url = "https://images.unsplash.com/photo-1611826585949-b0ccabd2c1a4"
+autor = "Roxana Maria"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r03.jpg"
+url = "https://images.unsplash.com/photo-1594647210801-5124307f3d51"
+autor = "Amir Seilsepour"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r04.jpg"
+url = "https://images.unsplash.com/photo-1592574083647-6d7c37d81535"
+autor = "Amir Seilsepour"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r05.jpg"
+url = "https://images.unsplash.com/photo-1606158562001-5b5a8729a80b"
+autor = "Apostolos Vamvouras"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r06.jpg"
+url = "https://images.unsplash.com/photo-1585433405076-9626d637cc83"
+autor = "Apostolos Vamvouras"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r07.jpg"
+url = "https://images.unsplash.com/photo-1648249969490-44f3052a3721"
+autor = "Shane Devlin"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "r08.jpg"
+url = "https://images.unsplash.com/photo-1605813807548-0f9bd3cf043a"
+autor = "Sara Dabaghian"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "noiva1.jpg"
+url = "https://images.unsplash.com/photo-1773688189414-7637b9b138e1"
+autor = "Alexander Mass"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "noiva2.jpg"
+url = "https://images.unsplash.com/photo-1774814305111-8298b8cde459"
+autor = "Rodrigo Rodrigues | WOLF Λ R T"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "noiva3.jpg"
+url = "https://images.unsplash.com/photo-1774814304885-bb5cc796a6c3"
+autor = "Rodrigo Rodrigues | WOLF Λ R T"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sobre1.jpg"
+url = "https://images.unsplash.com/photo-1551723454-7565a1f5b161"
+autor = "Romina Farías"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "sobre2.jpg"
+url = "https://images.unsplash.com/photo-1774660810725-fb04e002003d"
+autor = "Alexander Mass"
+fonte = "Unsplash"

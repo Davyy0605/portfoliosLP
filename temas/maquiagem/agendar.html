@@ -1,0 +1,20 @@
+{% extends "_base/pagina.html" %}
+{% import "_base/macros.html" as m with context %}
+{% import "_base/servicos.html" as b with context %}
+{% block fontes %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500&family=Figtree:wght@400;600&display=swap">
+{% endblock %}
+{% block conteudo %}
+<header class="topo">
+  <a class="topo-marca" href="../">Rubra</a>
+  <a class="topo-cta" href="../">Voltar ao site</a>
+</header>
+<main class="ag-pagina">
+  <h1 class="ag-titulo">Agende sua make</h1>
+  <p class="ag-lead">Escolha o serviço, a profissional, o dia e a hora. O pedido segue pelo WhatsApp.</p>
+  {{ b.agendamento(site, agenda, wa_numero) }}
+</main>
+<div class="fecho">{{ m.rodape(site, config) }}</div>
+{% endblock %}
