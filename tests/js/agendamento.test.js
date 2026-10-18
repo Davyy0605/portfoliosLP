@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert";
-import { horariosDoDia, diasDaAgenda, profissionaisPara, totais, mensagemAgendamento } from "../../static/js/agendamento.js";
+import { horariosDoDia, diasDaAgenda, profissionaisPara, totais, mensagemAgendamento, funcionamentoSemPreferencia, agoraSaoPaulo } from "../../static/js/agendamento.js";
 
 test("horário só se o atendimento cabe no período", () => {
   assert.deepStrictEqual(horariosDoDia([[540, 720]], 60, 30, null),
@@ -45,7 +45,7 @@ test("mensagem exata", () => {
     obs: "",
   });
   assert.strictEqual(msg, [
-    "Olá! Quero agendar pela página da Navalha & Co.",
+    "Olá, Navalha & Co! Quero agendar:",
     "",
     "• Corte (R$ 45,00)",
     "• Barba (R$ 35,00)",
@@ -73,7 +73,7 @@ test("mensagem com pet, bairro, a partir de e obs", () => {
     obs: "  Chegar cedo  ",
   });
   assert.strictEqual(msg, [
-    "Olá! Quero agendar pela página da Navalha & Co.",
+    "Olá, Navalha & Co! Quero agendar:",
     "",
     "• Tosa (a partir de R$ 40,00, porte M)",
     "• Táxi dog (a combinar)",
@@ -86,4 +86,24 @@ test("mensagem com pet, bairro, a partir de e obs", () => {
     "Nome: Lucas",
     "Obs.: Chegar cedo",
   ].join("\n"));
+});
+
+test("totais: serviço sem preço no porte escolhido vai para a combinar", () => {
+  const s = [{ nome: "Tosa", minutos: 60, centavos: null, aPartirDe: false, porte: { P: 5000, M: null } }];
+  assert.deepStrictEqual(totais(s, [], "M"), { centavos: 0, minutos: 60, aPartirDe: false, aCombinar: ["Tosa"] });
+});
+test("sem preferência: união dos profissionais capazes, limitada à casa", () => {
+  const casa = { ter: [[540, 1080]], sab: [[540, 840]] };
+  const capazes = [
+    { funcionamento: { ter: [[540, 720]], sab: [[540, 960]] } },
+    { funcionamento: { ter: [[660, 780]] } },
+    { funcionamento: null },
+  ];
+  assert.deepStrictEqual(funcionamentoSemPreferencia(casa, capazes), { ter: [[540, 1080]], sab: [[540, 840]] });
+  assert.deepStrictEqual(funcionamentoSemPreferencia(casa, capazes.slice(0, 2)), { ter: [[540, 780]], sab: [[540, 840]] });
+  assert.deepStrictEqual(funcionamentoSemPreferencia(casa, []), casa);
+});
+test("agora em São Paulo, independente do fuso da máquina", () => {
+  const a = agoraSaoPaulo(new Date("2026-10-18T02:30:00Z")); // 23:30 de 17/10 em SP (UTC-3)
+  assert.deepStrictEqual([a.hoje.getFullYear(), a.hoje.getMonth(), a.hoje.getDate(), a.minutos], [2026, 9, 17, 1410]);
 });

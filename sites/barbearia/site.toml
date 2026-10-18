@@ -13,14 +13,14 @@ cor = "#B8893A"
 
 [contato]
 whatsapp = ""
-telefone = "(11) 4000-2121"
+telefone = "(11) 90000-0002"
 instagram = "ferroecobre.demo"
 endereco = "Rua dos Ferreiros, 212 — Pinheiros, São Paulo/SP"
 mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
 
 [[horarios]]
 dias = "Ter a Sex"
-horas = "9h às 20h"
+horas = "9h às 20h (pausa das 12h às 13h)"
 
 [[horarios]]
 dias = "Sáb"

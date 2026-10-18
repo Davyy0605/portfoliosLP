@@ -13,14 +13,14 @@ cor = "#2F5BD9"
 
 [contato]
 whatsapp = ""
-telefone = "(11) 4000-6060"
+telefone = "(11) 90000-0010"
 instagram = "jabuticabapetspa.demo"
-endereco = "Rua Domingos de Morais, 1480 — Vila Mariana, São Paulo/SP"
+endereco = "Rua das Jabuticabeiras, 148 — Vila Mariana, São Paulo/SP"
 mapa_url = "https://www.google.com/maps?q=Vila+Mariana,+S%C3%A3o+Paulo&output=embed"
 
 [[horarios]]
 dias = "Seg a Sex"
-horas = "8h às 18h"
+horas = "8h às 18h (pausa das 12h às 13h)"
 
 [[horarios]]
 dias = "Sáb"
@@ -143,6 +143,7 @@ preco = 20.0
 [[adicionais]]
 id = "taxi-dog"
 nome = "Táxi dog (buscamos e levamos)"
+pede_bairro = true
 
 [[adicionais]]
 id = "laco"
@@ -168,8 +169,12 @@ servicos = ["banho", "banho-hidratacao", "banho-medicamentoso", "banho-tosa", "u
 nome = "Bia"
 especialidade = "Filhotes e pets ansiosos"
 [[equipe.funcionamento]]
-dias = ["ter", "qua", "qui", "sex", "sab"]
+dias = ["ter", "qua", "qui", "sex"]
 periodos = ["08:00-12:00", "13:00-16:00"]
+
+[[equipe.funcionamento]]
+dias = ["sab"]
+periodos = ["08:00-14:00"]
 
 [[depoimentos]]
 nome = "Fernanda M."

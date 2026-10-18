@@ -13,14 +13,14 @@ cor = "#3F7060"
 
 [contato]
 whatsapp = ""
-telefone = "(11) 4000-8585"
+telefone = "(11) 90000-0005"
 instagram = "casalirio.demo"
-endereco = "Rua Itambé, 210, conjunto 32 — Higienópolis, São Paulo/SP"
+endereco = "Rua das Violetas, 210, conjunto 32 — Higienópolis, São Paulo/SP"
 mapa_url = "https://www.google.com/maps?q=Higien%C3%B3polis,+S%C3%A3o+Paulo&output=embed"
 
 [[horarios]]
 dias = "Seg a Sex"
-horas = "9h às 19h"
+horas = "9h às 19h (pausa das 12h30 às 13h30)"
 
 [[horarios]]
 dias = "Sáb"
@@ -57,7 +57,7 @@ periodos = ["09:00-14:00"]
 id = "avaliacao"
 nome = "Avaliação de pele"
 categoria = "Facial"
-descricao = "Conversa, análise da pele e plano de cuidados. O valor é abatido no primeiro tratamento."
+descricao = "Conversa, análise da pele e plano de cuidados."
 duracao = 30
 preco = 60.0
 
@@ -156,11 +156,15 @@ servicos = ["avaliacao", "limpeza", "hidratacao", "peeling", "pacote-limpeza", "
 [[equipe]]
 nome = "Marina Sales"
 especialidade = "Estética corporal"
-servicos = ["drenagem", "modeladora", "relaxante", "pacote-drenagem", "limpeza"]
+servicos = ["drenagem", "modeladora", "relaxante", "pacote-drenagem"]
 
 [[equipe.funcionamento]]
-dias = ["ter", "qua", "qui", "sex", "sab"]
-periodos = ["09:00-13:00", "14:00-18:00"]
+dias = ["ter", "qua", "qui", "sex"]
+periodos = ["09:00-12:30", "13:30-18:00"]
+
+[[equipe.funcionamento]]
+dias = ["sab"]
+periodos = ["09:00-14:00"]
 
 [[equipe]]
 nome = "Bruno Tavares"
@@ -184,7 +188,7 @@ servico = "Peeling superficial"
 
 [[perguntas]]
 pergunta = "Preciso fazer avaliação antes do primeiro tratamento?"
-resposta = "Para tratamentos faciais, sim. A avaliação dura 30 minutos e o valor é abatido no primeiro tratamento contratado."
+resposta = "Para tratamentos faciais, sim. A avaliação dura 30 minutos."
 
 [[perguntas]]
 pergunta = "Como funcionam os pacotes de sessões?"

@@ -1,6 +1,6 @@
 // Motor de agendamento: funções puras + iniciar(raiz) para a página. Nada toca o DOM ao importar em Node.
 import { formatarBRL, linkPedido } from "./carrinho.js";
-import { avisar, prepararAviso, desenharBarra, rotuloDuracao } from "./retorno.js";
+import { avisar, esconderAviso, prepararAviso, desenharBarra, rotuloDuracao } from "./retorno.js";
 
 export const DIAS = ["dom", "seg", "ter", "qua", "qui", "sex", "sab"];
 const DIAS_EXTENSO = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
@@ -39,6 +39,51 @@ export function profissionaisPara(equipe, ids) {
   return equipe.filter((p) => ids.every((id) => (p.servicos ?? []).includes(id)));
 }
 
+// Horários de funcionamento quando nenhum profissional foi escolhido: união do que cada profissional
+// capaz trabalha (padrão: a casa), limitada ao horário da casa. Sem profissionais, vale a casa.
+export function funcionamentoSemPreferencia(casa, capazes) {
+  if (!capazes.length) return casa;
+  const resultado = {};
+  for (const dia of DIAS) {
+    const doCasa = casa?.[dia] ?? [];
+    const pontos = [];
+    for (const p of capazes) {
+      for (const [a, b] of p.funcionamento?.[dia] ?? doCasa) {
+        for (const [c, d] of doCasa) {
+          const ini = Math.max(a, c);
+          const fim = Math.min(b, d);
+          if (ini < fim) pontos.push([ini, fim]);
+        }
+      }
+    }
+    pontos.sort((x, y) => x[0] - y[0]);
+    const unido = [];
+    for (const [a, b] of pontos) {
+      const ult = unido[unido.length - 1];
+      if (ult && a <= ult[1]) ult[1] = Math.max(ult[1], b);
+      else unido.push([a, b]);
+    }
+    if (unido.length) resultado[dia] = unido;
+  }
+  return resultado;
+}
+
+// "Agora" em São Paulo como { hoje: Date (meia-noite local com a data de lá), minutos }.
+export function agoraSaoPaulo(instante = new Date()) {
+  const partes = Object.fromEntries(
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Sao_Paulo", hourCycle: "h23",
+      year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit",
+    }).formatToParts(instante).map((p) => [p.type, p.value])
+  );
+  return {
+    hoje: new Date(Number(partes.year), Number(partes.month) - 1, Number(partes.day)),
+    minutos: Number(partes.hour) * 60 + Number(partes.minute),
+  };
+}
+
+export const ANTECEDENCIA_MIN = 30;
+
 // Preço de um serviço: pelo porte quando ele existe; senão, o preço fixo.
 function precoServico(servico, porte) {
   if (porte && Number.isInteger(servico.porte?.[porte])) {
@@ -54,12 +99,14 @@ export function totais(servicos, adicionais, porte) {
   let centavos = 0;
   let minutos = 0;
   let aPartirDe = false;
+  const aCombinar = [];
   for (const s of servicos) {
     minutos += s.minutos;
     aPartirDe ||= Boolean(s.aPartirDe);
-    centavos += precoServico(s, porte)?.centavos ?? 0;
+    const preco = precoServico(s, porte);
+    if (preco) centavos += preco.centavos;
+    else aCombinar.push(s.nome);
   }
-  const aCombinar = [];
   for (const a of adicionais) {
     if (Number.isInteger(a.centavos)) centavos += a.centavos;
     else aCombinar.push(a.nome);
@@ -68,7 +115,7 @@ export function totais(servicos, adicionais, porte) {
 }
 
 export function mensagemAgendamento({ loja, servicos, adicionais, porte, pet, profissional, data, hora, nome, bairro, obs }) {
-  const linhas = [`Olá! Quero agendar pela página da ${loja}.`, ""];
+  const linhas = [`Olá, ${loja}! Quero agendar:`, ""];
 
   for (const s of servicos) {
     const preco = precoServico(s, porte);
@@ -138,13 +185,16 @@ export function iniciar(raiz = document) {
   const porte = () => form.querySelector("input[name=porte]:checked")?.value ?? "";
   const profissional = () => agenda.equipe.find((p) => p.id === estado.profissional) ?? null;
   const pedeBairro = () => adicionais().some((a) => a.pedeBairro);
-  const hoje = new Date();
 
   function diasDisponiveis() {
     const t = totais(servicos(), adicionais(), porte());
-    const func = profissional()?.funcionamento ?? agenda.funcionamento;
-    return diasDaAgenda(func, hoje, agenda.dias).map((d, i) => {
-      const agoraMin = i === 0 ? hoje.getHours() * 60 + hoje.getMinutes() : null;
+    const prof = profissional();
+    const func = prof
+      ? prof.funcionamento ?? agenda.funcionamento
+      : funcionamentoSemPreferencia(agenda.funcionamento, profissionaisPara(agenda.equipe, servicos().map((s) => s.id)));
+    const agora = agoraSaoPaulo();
+    return diasDaAgenda(func, agora.hoje, agenda.dias).map((d, i) => {
+      const agoraMin = i === 0 ? agora.minutos + ANTECEDENCIA_MIN : null;
       const horarios = t.minutos > 0 ? horariosDoDia(d.periodos, t.minutos, agenda.intervalo, agoraMin) : [];
       return { ...d, horarios };
     });
@@ -205,11 +255,18 @@ export function iniciar(raiz = document) {
     });
   }
 
+  // Motivo pelo qual o envio está bloqueado ("" quando pode enviar).
+  function motivoEnvio() {
+    if (servicos().length === 0) return "Escolha ao menos um serviço.";
+    if (estado.dia === null || estado.hora === null) return "Escolha o dia e o horário.";
+    if (nome.value.trim() === "") return "Informe seu nome.";
+    if (pedeBairro() && bairro.value.trim() === "") return "Informe o bairro.";
+    return "";
+  }
+
   function desenharEnvio() {
     q("[data-campo-bairro]").hidden = !pedeBairro();
-    const pronto = servicos().length > 0 && estado.dia !== null && estado.hora !== null &&
-      nome.value.trim() !== "" && (!pedeBairro() || bairro.value.trim() !== "");
-    if (pronto) {
+    if (motivoEnvio() === "") {
       enviar.removeAttribute("aria-disabled");
       enviar.href = linkPedido(whatsapp, mensagem());
     } else {
@@ -257,6 +314,7 @@ export function iniciar(raiz = document) {
   function irPara(i, foco = true) {
     estado.passo = i;
     erro.textContent = "";
+    esconderAviso(raiz);
     passos.forEach((p, k) => {
       p.hidden = k !== i;
     });
@@ -281,7 +339,10 @@ export function iniciar(raiz = document) {
   });
   voltar.addEventListener("click", () => irPara(estado.passo - 1));
   enviar.addEventListener("click", (e) => {
-    if (enviar.getAttribute("aria-disabled") === "true") e.preventDefault();
+    if (enviar.getAttribute("aria-disabled") === "true") {
+      e.preventDefault();
+      erro.textContent = motivoEnvio();
+    }
   });
 
   // Redesenha só o que depende do campo alterado, para não destruir o foco do radio clicado.

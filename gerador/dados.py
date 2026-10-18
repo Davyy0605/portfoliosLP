@@ -238,6 +238,8 @@ def carregar_site(pasta: Path, temas_dir: Path | None = None) -> dict:
     cta = v.texto(k, "cta", "capa.cta", "cardapio")
     if cta not in CTAS:
         raise v.erro("capa.cta", f"{cta!r} inválido; use um de {sorted(CTAS)}")
+    if cta == "agendar" and ramo != "beleza":
+        raise v.erro("capa.cta", "'agendar' só existe no ramo beleza; use 'cardapio' ou outro botão")
     capa = {"titulo": v.texto(k, "titulo", "capa.titulo"), "subtitulo": v.texto(k, "subtitulo", "capa.subtitulo"),
             "imagem": v.imagem(k, "imagem", "capa.imagem"), "cta": cta}
 
@@ -443,6 +445,11 @@ def _beleza(v, bruto, exigir):
             if x not in ids:
                 raise v.erro(f"{p}.servicos[{j}]", f"serviço {x!r} não existe em [[servicos]]")
         func = _funcionamento(v, v.lista(e, "funcionamento", f"{p}.funcionamento"), f"{p}.funcionamento")
+        for dia, pers in func.items():
+            casa = agenda["funcionamento"].get(dia, [])
+            if not all(any(c[0] <= a and b <= c[1] for c in casa) for a, b in pers):
+                raise v.erro(f"{p}.funcionamento",
+                             f"horário de {dia!r} fora do funcionamento da casa (agenda.funcionamento)")
         equipe.append({"nome": v.texto(e, "nome", f"{p}.nome", obrigatorio=True),
                        "especialidade": v.texto(e, "especialidade", f"{p}.especialidade"),
                        "foto": v.imagem(e, "foto", f"{p}.foto"),

@@ -13,7 +13,7 @@ cor = "#9B4A62"
 
 [contato]
 whatsapp = ""
-telefone = "(11) 4000-5757"
+telefone = "(11) 90000-0008"
 instagram = "petalanude.demo"
 endereco = "Rua das Hortênsias, 215 — Pinheiros, São Paulo/SP"
 mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
@@ -132,8 +132,8 @@ preco = 8.0
 
 [[adicionais]]
 id = "pedraria"
-nome = "Pedraria (cada unha)"
-preco = 5.0
+nome = "Pedraria (até 10 unhas)"
+preco = 40.0
 
 [[equipe]]
 nome = "Clarice"

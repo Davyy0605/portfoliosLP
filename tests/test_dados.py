@@ -235,3 +235,17 @@ def test_slug_reservado_ramo(site_dir, temas_dir, editar):
     site_dir.rename(novo)
     with pytest.raises(ErroDeDados, match=r"site\.slug"):
         carregar_site(novo, temas_dir)
+
+
+def test_equipe_fora_do_horario_da_casa(site_beleza, temas_dir):
+    arq = site_beleza / "site.toml"
+    txt = arq.read_text(encoding="utf-8")
+    arq.write_text(txt.replace('periodos = ["09:00-12:00"]', 'periodos = ["09:00-20:00"]', 1), encoding="utf-8")
+    with pytest.raises(ErroDeDados, match=r"equipe\[1\]\.funcionamento"):
+        carregar_site(site_beleza, temas_dir)
+
+
+def test_cta_agendar_so_na_beleza(site_dir, temas_dir, editar):
+    editar('cta = "cardapio"', 'cta = "agendar"')
+    with pytest.raises(ErroDeDados, match="capa.cta"):
+        carregar_site(site_dir, temas_dir)

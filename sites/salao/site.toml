@@ -13,7 +13,7 @@ cor = "#9A5B4F"
 
 [contato]
 whatsapp = ""
-telefone = "(11) 4000-3232"
+telefone = "(11) 90000-0012"
 instagram = "ateliemarfim.demo"
 endereco = "Alameda das Camélias, 88 — Jardins, São Paulo/SP"
 mapa_url = "https://www.google.com/maps?q=Jardins,+S%C3%A3o+Paulo&output=embed"
@@ -148,8 +148,12 @@ especialidade = "Corte e penteados"
 servicos = ["corte-fem", "escova", "penteado"]
 
 [[equipe.funcionamento]]
-dias = ["qua", "qui", "sex", "sab"]
-periodos = ["09:00-12:30", "14:00-18:00"]
+dias = ["qua", "qui", "sex"]
+periodos = ["09:00-12:30", "14:00-19:00"]
+
+[[equipe.funcionamento]]
+dias = ["sab"]
+periodos = ["09:00-17:00"]
 
 [[equipe]]
 nome = "Larissa"

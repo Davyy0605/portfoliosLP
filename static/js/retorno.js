@@ -50,3 +50,9 @@ export function rotuloDuracao(minutos) {
   if (h === 0) return `${m} min`;
   return m === 0 ? `${h}h` : `${h}h${String(m).padStart(2, "0")}`;
 }
+
+export function esconderAviso(raiz = document) {
+  clearTimeout(temporizador);
+  const el = raiz.querySelector("[data-aviso]");
+  if (el) el.hidden = true;
+}
