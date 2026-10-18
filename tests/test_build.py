@@ -95,3 +95,10 @@ def test_build_usa_cache_de_imagens(raiz, tmp_path, monkeypatch):
 def test_site_com_slug_invalido_retorna_1(capsys):
     assert build.main(["--site", "../x"]) == 1
     assert "--site" in capsys.readouterr().err
+
+
+def test_cliente_beleza(raiz_beleza, tmp_path):
+    saida = tmp_path / "dist"
+    build.construir_cliente(raiz_beleza, "studio-teste", saida)
+    assert (saida / "index.html").is_file() and (saida / "agendar" / "index.html").is_file()
+    assert not (saida / "gastronomia").exists()

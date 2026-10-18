@@ -41,33 +41,52 @@ def dist(tmp_path_factory):
     return saida
 
 
+PAGINAS = {"gastronomia": "cardapio", "beleza": "agendar"}
+
+
+def _ramos_com_sites():
+    return [r for r in PAGINAS if any(s["site"]["ramo"] == r for s in SITES)]
+
+
 @pytest.mark.parametrize("s", SITES, ids=lambda s: s["site"]["slug"])
 def test_tema(dist, s):
     if not _tema_pronto(s):
         pytest.skip(f"temas/{s['site']['tema']}/landing.html ainda não existe")
-    slug, modulos = s["site"]["slug"], s["site"]["modulos"]
+    slug, modulos, ramo = s["site"]["slug"], s["site"]["modulos"], s["site"]["ramo"]
+    segunda = PAGINAS[ramo]
     landing = (dist / slug / "index.html").read_text(encoding="utf-8")
-    cardapio = (dist / slug / "cardapio" / "index.html").read_text(encoding="utf-8")
-    for html in (landing, cardapio):
+    interna = (dist / slug / segunda / "index.html").read_text(encoding="utf-8")
+    for html in (landing, interna):
         assert "{{" not in html and "{%" not in html
         for img in re.findall(r"<img\b[^>]*>", html):
             assert "alt=" in img and "width=" in img, img
     assert 'id="contato"' in landing
-    assert re.search(r'href="[^"]*cardapio/', landing)
-    assert "data-busca" in cardapio
-    assert len(re.findall(r"<section\b[^>]*data-categoria", cardapio)) >= 5
-    todo = landing + cardapio
-    assert ("data-evento" in todo) == ("eventos" in modulos)
-    assert ("data-carrinho" in todo) == ("pedido" in modulos)
+    assert re.search(rf'href="[^"]*{segunda}/', landing)
+    todo = landing + interna
+    if ramo == "gastronomia":
+        assert "data-busca" in interna
+        assert len(re.findall(r"<section\b[^>]*data-categoria", interna)) >= 5
+        assert ("data-evento" in todo) == ("eventos" in modulos)
+        assert ("data-carrinho" in todo) == ("pedido" in modulos)
+    else:
+        assert len(re.findall(r"data-servico", interna)) >= 4
+        assert "data-agendamento" in interna
 
 
 def test_hub(dist):
-    html = (dist / "index.html").read_text(encoding="utf-8")
-    cards = re.findall(r'<article class="card".*?</article>', html, re.S)
-    assert len(cards) == len(SITES)
-    for card, s in zip(cards, SITES):
-        assert s["site"]["nome"] in card
-        assert "<svg" in card
+    entrada = (dist / "index.html").read_text(encoding="utf-8")
+    ramos = _ramos_com_sites()
+    for ramo in PAGINAS:
+        assert (f'href="{ramo}/"' in entrada) == (ramo in ramos)
+        assert (dist / ramo / "index.html").is_file() == (ramo in ramos)
+    for ramo in ramos:
+        html = (dist / ramo / "index.html").read_text(encoding="utf-8")
+        cards = re.findall(r'<article class="card".*?</article>', html, re.S)
+        esperados = [s for s in SITES if s["site"]["ramo"] == ramo]
+        assert len(cards) == len(esperados)
+        for card, s in zip(cards, esperados):
+            assert s["site"]["nome"] in card
+            assert "<svg" in card
     assert (dist / "hub.css").is_file()
 
 
@@ -86,8 +105,13 @@ def test_sem_rolagem_lateral(dist, largura, altura):
         except Exception as e:  # chromium não instalado
             pytest.skip(f"chromium do Playwright indisponível: {e}")
         pagina = nav.new_page(viewport={"width": largura, "height": altura}, reduced_motion="reduce")
+        for hub in ["", *(f"{r}/" for r in _ramos_com_sites())]:
+            pagina.goto(base + hub, wait_until="load")
+            pagina.evaluate("document.fonts.ready")
+            if pagina.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"):
+                largas.append(hub or "/")
         for s in SITES:
-            for sub in ("", "cardapio/"):
+            for sub in ("", PAGINAS[s["site"]["ramo"]] + "/"):
                 pagina.goto(f"{base}{s['site']['slug']}/{sub}", wait_until="load")
                 pagina.evaluate("document.fonts.ready")
                 if pagina.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"):

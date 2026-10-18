@@ -39,7 +39,9 @@ def test_hub_e_estaticos(raiz, tmp_path):
     render_hub(env, [site], config, out)
     copiar_estaticos(raiz, out)
     html = (out / "index.html").read_text(encoding="utf-8")
-    assert "Casa Completa" in html and 'href="completo/"' in html and "<svg" in html
+    assert 'href="gastronomia/"' in html
+    html = (out / "gastronomia" / "index.html").read_text(encoding="utf-8")
+    assert "Casa Completa" in html and 'href="../completo/"' in html and "<svg" in html
     assert (out / "img" / "completo" / "capa-8.webp").is_file()
     assert (out / "static").is_dir()
 
@@ -159,3 +161,58 @@ def test_gastronomia_sem_agendar(raiz):
     _, _, _, out = _gerar(raiz)
     assert not (out / "agendar").exists()
     assert (out / "cardapio" / "index.html").is_file()
+
+
+TEXTOS_RAMOS = """
+[ramos.gastronomia]
+nome = "Bares e restaurantes"
+resumo = "Cardápio digital com QR na mesa"
+titulo = "Cardápios para bares."
+mensagem = "Olá, Davy! Quero um site."
+[ramos.beleza]
+nome = "Beleza e bem-estar"
+resumo = "Agendamento online pelo WhatsApp"
+titulo = "Agenda para o seu negócio."
+mensagem = "Olá, Davy! Quero um site com agendamento."
+"""
+
+
+def test_hub_por_ramo(raiz, site_beleza):
+    with open(raiz / "config.toml", "a", encoding="utf-8") as f:
+        f.write(TEXTOS_RAMOS)
+    env = criar_ambiente(raiz)
+    config = carregar_config(raiz / "config.toml")
+    sites = [carregar_site(raiz / "sites" / "completo", raiz / "temas"),
+             carregar_site(raiz / "sites" / "studio-teste", raiz / "temas")]
+    out = raiz / "hub"
+    render_hub(env, sites, config, out)
+    entrada = (out / "index.html").read_text(encoding="utf-8")
+    assert 'href="gastronomia/"' in entrada and 'href="beleza/"' in entrada
+    gastro = (out / "gastronomia" / "index.html").read_text(encoding="utf-8")
+    assert "Casa Completa" in gastro and 'href="../completo/"' in gastro and "viewBox" in gastro
+    assert 'href="../"' in gastro
+    assert "agendar/" not in gastro and "studio-teste" not in gastro
+    beleza = (out / "beleza" / "index.html").read_text(encoding="utf-8")
+    assert 'href="../studio-teste/agendar/"' in beleza and "viewBox" in beleza
+    assert "Casa Completa" not in beleza
+    assert (out / "img" / "completo").is_dir() and "../img/completo/" in gastro
+
+
+def test_hub_so_ramos_com_sites(raiz):
+    env = criar_ambiente(raiz)
+    config = carregar_config(raiz / "config.toml")
+    assert list(config["ramos"]) == ["gastronomia"]
+    site = carregar_site(raiz / "sites" / "completo", raiz / "temas")
+    render_hub(env, [site], config, raiz / "hub")
+    assert 'href="beleza/"' not in (raiz / "hub" / "index.html").read_text(encoding="utf-8")
+    assert not (raiz / "hub" / "beleza").exists()
+
+
+def test_hub_ramo_sem_texto(raiz, site_beleza):
+    import pytest
+    from gerador.dados import ErroDeDados
+    env = criar_ambiente(raiz)
+    config = carregar_config(raiz / "config.toml")
+    site = carregar_site(raiz / "sites" / "studio-teste", raiz / "temas")
+    with pytest.raises(ErroDeDados, match="ramos"):
+        render_hub(env, [site], config, raiz / "hub")

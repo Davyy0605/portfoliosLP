@@ -69,6 +69,19 @@ a { color: inherit; }
 /* No celular o lead já está no aparelho: o QR só ocupa espaço. */
 @media (max-width: 639px) { .card-qr { display: none; } }
 
+/* Entrada: um cartão por ramo */
+.ramos { padding: 0 var(--margem) clamp(4rem, 9vw, 7rem); }
+.grade-ramos { grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); }
+.ramo { display: flex; flex-direction: column; background: var(--cor-superficie); text-decoration: none; }
+.ramo-nome { font-size: 1.75rem; font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
+.ramo-ver {
+  margin-top: .75rem; min-height: 44px; display: inline-flex; align-items: center; align-self: flex-start;
+  font-weight: 500; color: var(--cor-destaque); border-bottom: 2px solid var(--cor-destaque);
+}
+.ramo:focus-visible { outline: 3px solid var(--cor-destaque); outline-offset: 3px; }
+.voltar { display: inline-flex; align-items: center; min-height: 44px; color: var(--cor-suave); justify-self: start; }
+.voltar:hover { color: var(--cor-destaque); }
+
 /* Botões */
 .botao {
   display: inline-flex; align-items: center; justify-content: center;

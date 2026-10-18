@@ -5,6 +5,7 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 from markupsafe import Markup
 
+from gerador.dados import ErroDeDados
 from gerador.agenda import dados_agendamento
 from gerador.formatos import brl, centavos, duracao, link_whatsapp
 from gerador.imagens import otimizar_imagens
@@ -58,19 +59,34 @@ def render_site(env, site: dict, config: dict, destino: Path, raiz_rel: str, url
 
 
 def render_hub(env, sites: list[dict], config: dict, destino: Path, cache: Path | None = None) -> None:
+    """Entrada em destino/index.html e uma página por ramo que tenha sites, em destino/<ramo>/."""
     destino = Path(destino)
-    cards = []
+    por_ramo: dict[str, list[dict]] = {}
     for s in sites:
-        slug = s["site"]["slug"]
-        imgs = _imagens(s, destino / "img" / slug, (800,), [s["capa"]["imagem"]],
-                        cache and Path(cache) / "hub" / _chave(s))
-        capa = imgs.get(s["capa"]["imagem"])
-        if capa:  # otimizar_imagens usa o nome da pasta ("<slug>/..."); o hub precisa de "img/<slug>/..."
-            capa = {**capa, "src": "img/" + capa["src"],
-                    "srcset": ", ".join("img/" + p for p in capa["srcset"].split(", "))}
-        cards.append({"site": s, "url": f"{slug}/", "url_cardapio": f"{slug}/cardapio/",
-                      "qr": Markup(qr_svg(f"{config['url_base']}{slug}/cardapio/")), "capa": capa})
-    _escrever(env, "hub/index.html", destino / "index.html", cards=cards, config=config)
+        ramo = s["site"]["ramo"]
+        if ramo not in config["ramos"]:
+            raise ErroDeDados(f"{s['site']['slug']}: ramo '{ramo}' sem textos em config.toml [ramos]")
+        por_ramo.setdefault(ramo, []).append(s)
+    ramos = [{"id": r, **config["ramos"][r], "cards": [], "capa": None}
+             for r in config["ramos"] if r in por_ramo]
+    for ramo in ramos:
+        segunda = PAGINAS[ramo["id"]]
+        for s in por_ramo[ramo["id"]]:
+            slug = s["site"]["slug"]
+            imgs = _imagens(s, destino / "img" / slug, (800,), [s["capa"]["imagem"]],
+                            cache and Path(cache) / "hub" / _chave(s))
+            capa = imgs.get(s["capa"]["imagem"])
+            if capa:  # otimizar_imagens usa o nome da pasta ("<slug>/..."); o hub precisa de "img/<slug>/..."
+                capa = {**capa, "src": "img/" + capa["src"],
+                        "srcset": ", ".join("img/" + p for p in capa["srcset"].split(", "))}
+            ramo["cards"].append({
+                "site": s, "capa": capa, "url": f"../{slug}/", "url_secundaria": f"../{slug}/{segunda}/",
+                "rotulo_secundaria": "Agendar" if segunda == "agendar" else "Ver cardápio",
+                "qr": Markup(qr_svg(f"{config['url_base']}{slug}/{segunda}/"))})
+        ramo["capa"] = next((c["capa"] for c in ramo["cards"] if c["capa"]), None)
+    _escrever(env, "hub/index.html", destino / "index.html", ramos=ramos, config=config)
+    for ramo in ramos:
+        _escrever(env, "hub/ramo.html", destino / ramo["id"] / "index.html", ramo=ramo, config=config)
     css = Path(env.loader.searchpath[0]) / "hub" / "hub.css"
     if css.is_file():
         shutil.copy(css, destino / "hub.css")

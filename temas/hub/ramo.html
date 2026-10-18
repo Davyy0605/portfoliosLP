@@ -1,0 +1,86 @@
+{% set marca = config.marca.nome %}
+{% set msg = ramo.mensagem %}
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ marca }} · {{ ramo.nome }}</title>
+<meta name="description" content="{{ ramo.titulo }} {{ ramo.resumo }}. Veja {{ ramo.cards|length }} modelos funcionando.">
+<meta name="theme-color" content="{{ config.marca.cor }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../static/css/base.css">
+<link rel="stylesheet" href="../hub.css">
+<style>:root { --cor-destaque: {{ config.marca.cor }}; }</style>
+</head>
+<body>
+<header class="topo">
+  <a class="marca" href="../">{{ marca }}</a>
+  <a class="topo-acao" href="{{ config.whatsapp|wa(msg) }}" target="_blank" rel="noopener">Falar no WhatsApp</a>
+</header>
+
+<main>
+  <section class="abertura">
+    <a class="voltar" href="../">Todos os segmentos</a>
+    <h1>{{ ramo.titulo }}</h1>
+    {% if ramo.id == "beleza" %}
+    <p>{{ "Abaixo está 1 modelo funcionando" if ramo.cards|length == 1 else "Abaixo estão " ~ ramo.cards|length ~ " modelos funcionando" }}, cada um com página do negócio e agendamento que termina numa mensagem pronta no WhatsApp. Escolha o que mais combina com o seu.</p>
+    {% else %}
+    <p>{{ "Abaixo está 1 modelo funcionando" if ramo.cards|length == 1 else "Abaixo estão " ~ ramo.cards|length ~ " modelos funcionando" }}, cada um com página do estabelecimento e cardápio que abre pelo QR da mesa. Escolha o que mais combina com a sua casa.</p>
+    {% endif %}
+  </section>
+
+  <section class="modelos" aria-labelledby="modelos-titulo">
+    <h2 id="modelos-titulo" class="sr-only">Modelos</h2>
+    <div class="grade">
+    {% for c in ramo.cards %}
+      <article class="card">
+        {% if c.capa %}<img class="card-capa" src="../{{ c.capa.src }}" srcset="{{ c.capa.srcset|replace('img/', '../img/') }}" sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" width="{{ c.capa.largura }}" height="{{ c.capa.altura }}" alt="" decoding="async"{% if loop.index > 3 %} loading="lazy"{% endif %}>{% endif %}
+        <div class="card-corpo">
+          <p class="card-segmento">{{ c.site.site.segmento }}</p>
+          <h3>{{ c.site.site.nome }}</h3>
+          {% if c.site.site.slogan %}<p class="card-slogan">{{ c.site.site.slogan }}</p>{% endif %}
+          <div class="card-acoes">
+            <a class="botao" href="{{ c.url }}">Ver site<span class="sr-only"> de {{ c.site.site.nome }}</span></a>
+            <a class="botao botao-leve" href="{{ c.url_secundaria }}">{{ c.rotulo_secundaria }}<span class="sr-only"> de {{ c.site.site.nome }}</span></a>
+          </div>
+          <figure class="card-qr">
+            {{ c.qr }}
+            <figcaption>Aponte a câmera para abrir no celular</figcaption>
+          </figure>
+        </div>
+      </article>
+    {% endfor %}
+    </div>
+  </section>
+
+  <section class="como" aria-labelledby="como-titulo">
+    <h2 id="como-titulo">Como funciona</h2>
+    <ol>
+    {% if ramo.id == "beleza" %}
+      <li><h3>Escolha o modelo</h3><p>Navegue pelos modelos acima e veja qual tem a cara do seu negócio.</p></li>
+      <li><h3>Personalize</h3><p>Trocamos nome, fotos, cores, serviços, preços, equipe e a agenda de horários.</p></li>
+      <li><h3>Publique</h3><p>O site entra no ar com endereço próprio. O cliente escolhe serviço e horário, e o pedido chega pronto no seu WhatsApp.</p></li>
+    {% else %}
+      <li><h3>Escolha o modelo</h3><p>Navegue pelos modelos acima e veja qual tem a cara do seu estabelecimento.</p></li>
+      <li><h3>Personalize</h3><p>Trocamos nome, fotos, cores, horários e o cardápio completo com os seus preços.</p></li>
+      <li><h3>Publique</h3><p>O site entra no ar com endereço próprio e QR code pronto para imprimir nas mesas.</p></li>
+    {% endif %}
+    </ol>
+  </section>
+
+  <section class="contato">
+    <h2>Quer um desses para {{ "o seu negócio" if ramo.id == "beleza" else "a sua casa" }}?</h2>
+    <p>Mande uma mensagem e conte qual modelo gostou. A resposta vem pelo próprio WhatsApp.</p>
+    <a class="botao botao-grande" href="{{ config.whatsapp|wa(msg) }}" target="_blank" rel="noopener">Chamar {{ marca }} no WhatsApp</a>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p class="marca">{{ marca }}</p>
+  <p>Os negócios dos modelos são fictícios; as fotos são demonstrativas, com créditos em cada site.</p>
+</footer>
+</body>
+</html>

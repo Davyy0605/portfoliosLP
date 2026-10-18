@@ -4,3 +4,15 @@ whatsapp = "55 87 99151-7679"
 [marca]
 nome = "Davy"
 cor = "#7C3AED"
+
+[ramos.gastronomia]
+nome = "Bares e restaurantes"
+resumo = "Cardápio digital com QR na mesa"
+titulo = "Cardápios digitais e sites para bares e restaurantes."
+mensagem = "Olá, Davy! Vi o portfólio e quero um site para o meu estabelecimento."
+
+[ramos.beleza]
+nome = "Beleza e bem-estar"
+resumo = "Agendamento online pelo WhatsApp"
+titulo = "Sites com agendamento online para salões, barbearias e clínicas."
+mensagem = "Olá, Davy! Vi o portfólio e quero um site com agendamento para o meu negócio."

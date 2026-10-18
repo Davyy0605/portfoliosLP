@@ -227,3 +227,11 @@ def test_beleza_sem_servicos(site_beleza, temas_dir):
     arq.write_text(txt[:ini] + txt[fim:], encoding="utf-8")
     with pytest.raises(ErroDeDados, match="servicos"):
         carregar_site(site_beleza, temas_dir)
+
+
+def test_slug_reservado_ramo(site_dir, temas_dir, editar):
+    editar('slug = "completo"', 'slug = "beleza"')
+    novo = site_dir.parent / "beleza"
+    site_dir.rename(novo)
+    with pytest.raises(ErroDeDados, match=r"site\.slug"):
+        carregar_site(novo, temas_dir)

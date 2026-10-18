@@ -32,15 +32,21 @@ def servir(pasta):
         srv.server_close()
 
 
+def _ler(url):
+    return urllib.request.urlopen(url).read().decode("utf-8", "replace")
+
+
 def paginas(base, nome="site"):
-    """Lista (slug, pagina, caminho) a partir do hub; sem links, trata a raiz como um site de cliente."""
-    html = urllib.request.urlopen(base).read().decode("utf-8", "replace")
-    slugs = sorted(set(re.findall(r'href="([\w-]+)/"', html)) - {"static", "img"})
-    if not slugs:
+    """Lista (slug, pagina, caminho) a partir da entrada e das páginas de ramo; sem links, trata a raiz como cliente."""
+    html = _ler(base)
+    ramos = sorted(set(re.findall(r'href="([\w-]+)/"', html)) - {"static", "img"})
+    if not ramos:
         return [(nome, "landing", ""), (nome, "cardapio", "cardapio/")]
     res = [("hub", "index", "")]
-    for s in slugs:
-        res += [(s, "landing", f"{s}/"), (s, "cardapio", f"{s}/cardapio/")]
+    for r in ramos:
+        res.append((r, "index", f"{r}/"))
+        for s, seg in re.findall(r'href="\.\./([\w-]+)/(cardapio|agendar)/"', _ler(f"{base}{r}/")):
+            res += [(s, "landing", f"{s}/"), (s, seg, f"{s}/{seg}/")]
     return res
 
 

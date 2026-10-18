@@ -18,7 +18,7 @@ RE_ID = re.compile(r"[a-z0-9-]+")
 RE_COR = re.compile(r"#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})")
 RE_INSTAGRAM = re.compile(r"(?:https?://)?(?:www\.)?(?:instagram\.com/)?@?([A-Za-z0-9._]+)/?(?:\?.*)?")
 URL_PROVISORIA = "https://davy.netlify.app/"
-SLUGS_RESERVADOS = {"static", "img", "hub"}
+SLUGS_RESERVADOS = {"static", "img", "hub", "gastronomia", "beleza"}
 EXT_IMAGEM = {".jpg", ".jpeg", ".png", ".webp"}
 
 
@@ -141,14 +141,35 @@ def carregar_config(caminho: Path) -> dict:
     zap = v.texto(bruto, "whatsapp", "whatsapp", obrigatorio=True)
     digitos = v.whatsapp(zap, "whatsapp")
     url = v.texto(bruto, "url_base", "url_base", obrigatorio=True)
+    nome_marca = v.texto(marca, "nome", "marca.nome", obrigatorio=True)
     return {
         "marca": {
-            "nome": v.texto(marca, "nome", "marca.nome", obrigatorio=True),
+            "nome": nome_marca,
             "cor": v.cor(v.texto(marca, "cor", "marca.cor", obrigatorio=True), "marca.cor"),
         },
         "whatsapp": digitos,
         "url_base": url if url.endswith("/") else url + "/",
+        "ramos": _ramos(v, bruto, nome_marca),
     }
+
+
+def _ramos(v: _V, bruto: dict, marca: str) -> dict:
+    """[ramos.*] na ordem do arquivo; sem a tabela, só gastronomia com os textos antigos do hub."""
+    if "ramos" not in bruto:
+        return {"gastronomia": {
+            "nome": "Bares e restaurantes",
+            "resumo": "Cardápio digital com QR na mesa",
+            "titulo": "Cardápios digitais e sites para bares e restaurantes.",
+            "mensagem": f"Olá, {marca}! Vi o portfólio e quero um site para o meu estabelecimento.",
+        }}
+    ramos = {}
+    for ramo, d in v.tabela(bruto, "ramos", "ramos").items():
+        if ramo not in RAMOS:
+            raise v.erro(f"ramos.{ramo}", f"ramo desconhecido; use um de {sorted(RAMOS)}")
+        d = v.item_tabela(d, f"ramos.{ramo}")
+        ramos[ramo] = {k: v.texto(d, k, f"ramos.{ramo}.{k}", obrigatorio=True)
+                       for k in ("nome", "resumo", "titulo", "mensagem")}
+    return ramos
 
 
 def avisos_config(config: dict) -> list[str]:

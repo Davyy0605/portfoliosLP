@@ -23,7 +23,7 @@ python build.py --serve 9000    # outra porta
 pytest && npm test              # testes
 ```
 
-Saída do portfólio: `dist/index.html` (hub), `dist/<slug>/index.html` (landing), `dist/<slug>/cardapio/index.html` (cardápio). As imagens otimizadas ficam em cache em `.cache/` (a primeira build é lenta; as seguintes, rápidas).
+Saída do portfólio: `dist/index.html` (entrada, com um cartão por ramo), `dist/<ramo>/index.html` (modelos do ramo: `gastronomia` ou `beleza`, só os que têm sites), `dist/<slug>/index.html` (landing), `dist/<slug>/cardapio/index.html` (cardápio, ramo gastronomia) ou `dist/<slug>/agendar/index.html` (agendamento, ramo beleza). `gastronomia` e `beleza` não podem ser usados como slug. As imagens otimizadas ficam em cache em `.cache/` (a primeira build é lenta; as seguintes, rápidas).
 
 ## Trocar um preço
 
@@ -51,6 +51,41 @@ python build.py --site meu-cliente --saida dist-meu-cliente
 ```
 
 A landing sai em `dist-meu-cliente/index.html` e o cardápio em `dist-meu-cliente/cardapio/index.html`, sem hub. Para ver: `python build.py --site meu-cliente --saida dist-meu-cliente --serve`.
+
+## Criar um cliente de beleza
+
+Mesmo roteiro, partindo de um modelo de beleza em `sites/` (copie para `clientes/meu-salao`). No `site.toml`:
+
+```toml
+[site]
+ramo = "beleza"          # o padrão é "gastronomia"
+
+[capa]
+cta = "agendar"
+
+[agenda]
+intervalo = 30           # minutos entre horários
+dias = 14                # quantos dias à frente aparecem
+
+[[agenda.funcionamento]]
+dias = ["ter", "qua", "qui", "sex", "sab"]
+periodos = ["09:00-12:00", "13:30-19:00"]
+
+[[servicos]]
+id = "corte"
+nome = "Corte masculino"
+categoria = "Cabelo"
+duracao = 40             # minutos
+preco = 45.0             # a_partir_de = true mostra "a partir de"
+
+[[equipe]]
+nome = "Rafael"
+especialidade = "Corte e barba"
+servicos = ["corte"]     # sem `servicos`, atende todos
+# [[equipe.funcionamento]] dá a folga/horário próprio do profissional
+```
+
+Gere com `python build.py --site meu-salao --saida dist-meu-salao`. A saída tem `dist-meu-salao/index.html` (landing) e `dist-meu-salao/agendar/index.html` (agendamento em passos que termina numa mensagem pronta no WhatsApp). No portfólio completo, os sites de beleza saem em `dist/<slug>/` e aparecem em `dist/beleza/`.
 
 Módulos opcionais, em `modulos = [...]`: `eventos` (agenda com datas fixas `data = AAAA-MM-DD` ou relativas `em_dias = N`) e `pedido` (carrinho que envia o pedido por WhatsApp).
 
@@ -87,7 +122,8 @@ cor = "#7C3AED"                          # roxo do hub
 ### Trocar a marca Davy
 
 - Nome e cor: `[marca]` no `config.toml`. O hub e o rodapé "Site de demonstração por …" usam esses valores.
-- Estilo do hub: `temas/hub/index.html` e `temas/hub/hub.css`.
+- Estilo do hub: `temas/hub/index.html` (entrada), `temas/hub/ramo.html` (página do ramo) e `temas/hub/hub.css`.
+- Textos de cada ramo na entrada e no contato: `[ramos.gastronomia]` e `[ramos.beleza]` no `config.toml`, cada um com `nome`, `resumo`, `titulo` e `mensagem`. Sem `[ramos]`, vale só `gastronomia` com os textos antigos.
 - WhatsApp por estabelecimento: `[contato] whatsapp` no `site.toml` (vazio usa o do `config.toml`).
 
 ## Fotos e créditos
