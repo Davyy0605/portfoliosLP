@@ -4,17 +4,33 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400..800;1,500..700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400..800;1,500..700&display=swap"></noscript>
 {% endblock %}
 {% block conteudo %}
+{% set marca = site.site.nome|replace(" Pet Spa", "") %}
 <header class="topo">
-  <a class="topo-marca" href="../"><span class="topo-bolinha" aria-hidden="true"></span>{{ site.site.nome }}</a>
-  <a class="topo-cta" href="../">Voltar ao site</a>
+  <a class="topo-marca" href="../">{{ marca }}<span>pet spa</span></a>
+  <a class="topo-voltar" href="../">Voltar ao site</a>
 </header>
 <main class="ag-pagina">
-  <h1 class="ag-titulo">Agende o banho</h1>
-  <p class="ag-lead">Conte quem é o pet, escolha os serviços, o dia e a hora. O pedido segue pelo WhatsApp.</p>
+  <div class="ag-intro">
+    <p class="rotulo">{{ site.site.nome }}</p>
+    <h1 class="ag-titulo">Agendar banho e tosa</h1>
+    <p class="ag-lead">Conte quem é o pet e o porte, escolha os serviços, o dia e a hora. A confirmação chega pelo WhatsApp.</p>
+    <dl class="ag-portes">
+      <div><dt>P</dt><dd>até 10 kg</dd></div>
+      <div><dt>M</dt><dd>10 a 25 kg</dd></div>
+      <div><dt>G</dt><dd>acima de 25 kg</dd></div>
+    </dl>
+  </div>
+  <h2 class="sr-only">Formulário de agendamento</h2>
   {{ b.agendamento(site, agenda, wa_numero) }}
+  <aside class="ag-info" aria-label="Horários e endereço">
+    {{ m.horarios(site) }}
+    {% if site.contato.endereco %}<p class="ag-endereco">{{ site.contato.endereco }}</p>{% endif %}
+    <p class="ag-endereco">Táxi dog: valor a combinar pelo WhatsApp, conforme a distância.</p>
+  </aside>
 </main>
 <div class="fecho">{{ m.rodape(site, config) }}</div>
 {% endblock %}

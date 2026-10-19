@@ -1,4 +1,4 @@
-galeria = ["p02.jpg", "p03.jpg", "p04.jpg", "p05.jpg", "p06.jpg", "p07.jpg"]
+galeria = ["p03.jpg", "p06.jpg", "p02.jpg", "p07.jpg", "p05.jpg"]
 
 [site]
 slug = "petshop"
@@ -31,8 +31,8 @@ dias = "Dom"
 horas = "Fechado"
 
 [capa]
-titulo = "Banho bom, pet feliz."
-subtitulo = "Banho, tosa e cuidados com hora marcada, produtos suaves e todo o tempo que o seu pet precisa para ficar tranquilo."
+titulo = "Banho sem pressa. Tosa no capricho."
+subtitulo = "Um pet por vez em cada mesa, produtos suaves e um relato no fim de como foi. Se ficar difícil vir, a gente busca."
 imagem = "capa.jpg"
 cta = "agendar"
 
@@ -40,6 +40,23 @@ cta = "agendar"
 titulo = "Cada pet tem o seu ritmo."
 texto = "Na Jabuticaba atendemos um pet de cada vez por profissional, sem gaiolas e sem pressa. Secagem com temperatura controlada, produtos hipoalergênicos e um relato no fim: como foi o banho, como ele se comportou e o que merece atenção em casa."
 imagens = ["p08.jpg", "p09.jpg"]
+
+# Serviços-assinatura da landing: o título deve ser igual ao nome do serviço (a página mostra duração e preço por porte).
+# A lista completa fica em /agendar/.
+[[destaques]]
+titulo = "Banho"
+texto = "Água morna testada no pulso, shampoo escolhido pelo tipo de pelo e secagem no ar morno, nunca quente. Quem tem medo do secador seca na toalha, com calma."
+imagem = "banho.jpg"
+
+[[destaques]]
+titulo = "Tosa na tesoura"
+texto = "Acabamento à mão para shih tzu, poodle, lhasa e companhia. Traga uma foto de referência: a Carol mostra o comprimento antes do primeiro corte."
+imagem = "tosa.jpg"
+
+[[destaques]]
+titulo = "Banho com hidratação"
+texto = "Máscara que fica dez minutos agindo enquanto o pet recebe massagem. Pelo opaco ou embolado sai solto, macio e com brilho de verdade."
+imagem = "p04.jpg"
 
 [agenda]
 intervalo = 30
@@ -211,6 +228,24 @@ resposta = "Em média, de uma a duas horas e meia, conforme o serviço e o porte
 arquivo = "capa.jpg"
 url = "https://images.unsplash.com/photo-1719464454959-9cf304ef4774"
 autor = "Buddy AN"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "banho.jpg"
+url = "https://images.unsplash.com/photo-1597595735781-6a57fb8e3e3d"
+autor = "Anthony Duran"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "tosa.jpg"
+url = "https://images.unsplash.com/photo-1625277743460-43716b93507a"
+autor = "Reba Spike"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "taxi.jpg"
+url = "https://images.unsplash.com/photo-1559190394-df5a28aab5c5"
+autor = "Ja San Miguel"
 fonte = "Unsplash"
 
 [[fotos]]
