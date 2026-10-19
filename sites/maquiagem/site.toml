@@ -1,22 +1,22 @@
-galeria = ["r01.jpg", "r02.jpg", "r03.jpg", "r04.jpg", "r05.jpg", "r06.jpg", "r07.jpg", "r08.jpg"]
+galeria = ["r01.jpg", "r03.jpg", "r06.jpg", "r05.jpg", "r04.jpg", "r07.jpg"]
 
 [site]
 slug = "maquiagem"
 tema = "maquiagem"
 ramo = "beleza"
-nome = "Rubra Estúdio de Make"
+nome = "Ribalta Estúdio de Make"
 segmento = "Maquiagem profissional"
 ordem = 4
-slogan = "Maquiagem de impacto para noivas, festas e ensaios, no estúdio ou na sua casa."
-descricao = "Rubra Estúdio de Make, em Moema, São Paulo. Veja os retratos, escolha o serviço e o horário e envie o agendamento pelo WhatsApp."
-cor = "#FF4066"
+slogan = "Make de noiva, festa e ensaio num camarim de verdade, em Pinheiros."
+descricao = "Ribalta Estúdio de Make, um camarim com luz de espelho em Pinheiros, São Paulo. Make de noiva, festa, formatura e ensaio, e curso de automaquiagem. Escolha o serviço e o horário e envie o agendamento pelo WhatsApp."
+cor = "#B8394F"
 
 [contato]
 whatsapp = ""
 telefone = "(11) 90000-0009"
-instagram = "rubramake.demo"
-endereco = "Alameda dos Jurupis, 640 — Moema, São Paulo/SP"
-mapa_url = "https://www.google.com/maps?q=Moema,+S%C3%A3o+Paulo&output=embed"
+instagram = "ribalta.make.demo"
+endereco = "Rua das Begônias Altas, 312 — Pinheiros, São Paulo/SP"
+mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
 
 [[horarios]]
 dias = "Ter a Sex"
@@ -31,15 +31,32 @@ dias = "Dom e Seg"
 horas = "Fechado (noivas sob agenda)"
 
 [capa]
-titulo = "Pele, olhar e boca em alto contraste."
-subtitulo = "Maquiagem profissional para noivas, festas e ensaios, com pele que dura da primeira foto à última dança."
+titulo = "Pele que aguenta a festa inteira."
+subtitulo = "Noivas, madrinhas, formaturas e ensaios. Você senta no camarim, a luz do espelho acende e a make é feita para durar da primeira foto à última música."
 imagem = "capa.jpg"
 cta = "agendar"
 
 [sobre]
-titulo = "Make é presença, não máscara."
-texto = "No Rubra a make começa pela conversa: ocasião, roupa, iluminação e o que você quer que as fotos mostrem. Produtos testados em pele real, camarim com luz de espelho e todo o tempo para ajustar o olhar antes de sair."
-imagens = ["sobre1.jpg", "sobre2.jpg"]
+titulo = "Doze lâmpadas, uma cadeira alta e tempo para conversar."
+texto = "O estúdio é um camarim de teatro adaptado: espelho com lâmpadas de luz quente, a mesma luz difícil das fotos de festa. Antes do primeiro pincel a gente pergunta a ocasião, o vestido, o horário e a iluminação do lugar. Pele preparada com calma, produtos testados em pele real e você só levanta quando gostar do que vê no espelho."
+imagens = ["sobre1.jpg"]
+
+# Destaques = serviços-assinatura da landing. O título deve ser igual ao nome do serviço para mostrar duração e preço;
+# a lista completa fica em /agendar/.
+[[destaques]]
+titulo = "Make glam de festa"
+texto = "Olho esfumado, cílios e pele luminosa que não vira brilho no flash. Pensada para a luz de salão, aquela que apaga make leve e pesa em make carregada."
+imagem = "r08.jpg"
+
+[[destaques]]
+titulo = "Make para ensaio fotográfico"
+texto = "Acabamento pensado para a lente: pele sem brilho falso, contorno que aparece na luz de estúdio e delineado que aguenta close. Entre uma troca de look e outra, a gente ajusta a boca e o olhar."
+imagem = "r02.jpg"
+
+[[destaques]]
+titulo = "Curso de automaquiagem"
+texto = "Aula individual com os produtos da sua nécessaire. Você faz um lado do rosto, a gente faz o outro, e sai com o passo a passo anotado para repetir em casa."
+imagem = "noiva1.jpg"
 
 [agenda]
 intervalo = 30
@@ -120,10 +137,10 @@ preco = 70.0
 
 [[servicos]]
 id = "aula"
-nome = "Aula de automaquiagem"
-categoria = "Olhar"
-descricao = "Passo a passo com os seus produtos, para você repetir em casa."
-duracao = 120
+nome = "Curso de automaquiagem"
+categoria = "Curso"
+descricao = "Aula individual de 2h30 com os seus produtos e o passo a passo anotado."
+duracao = 150
 preco = 350.0
 
 [[adicionais]]
@@ -179,6 +196,14 @@ servico = "Atendimento a domicílio"
 [[perguntas]]
 pergunta = "Vocês atendem noivas e eventos fora do estúdio?"
 resposta = "Sim. Marque o atendimento a domicílio e informe o bairro. O deslocamento para noivas e grupos é combinado pelo WhatsApp."
+
+[[perguntas]]
+pergunta = "Com quanto tempo de antecedência a noiva deve reservar?"
+resposta = "O ideal é de três a seis meses antes, principalmente para sábados de maio a outubro. O teste de make pode ser feito até três semanas antes do casamento."
+
+[[perguntas]]
+pergunta = "Tenho pele sensível. Posso usar os produtos de vocês?"
+resposta = "Pode. Avise na observação do agendamento: separamos produtos sem fragrância e fazemos um teste no pescoço antes de começar."
 
 [[perguntas]]
 pergunta = "Como funciona a confirmação do horário?"
@@ -260,10 +285,4 @@ fonte = "Unsplash"
 arquivo = "sobre1.jpg"
 url = "https://images.unsplash.com/photo-1551723454-7565a1f5b161"
 autor = "Romina Farías"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "sobre2.jpg"
-url = "https://images.unsplash.com/photo-1774660810725-fb04e002003d"
-autor = "Alexander Mass"
 fonte = "Unsplash"

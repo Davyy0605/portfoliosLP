@@ -4,17 +4,27 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500&family=Figtree:wght@400;600&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap"></noscript>
 {% endblock %}
 {% block conteudo %}
+{% set marca = site.site.nome.split(" Estúdio")[0].split(" Make")[0] %}
 <header class="topo">
-  <a class="topo-marca" href="../">Rubra</a>
-  <a class="topo-cta" href="../">Voltar ao site</a>
+  <a class="topo-marca" href="../">{{ marca }}</a>
+  <a class="topo-voltar" href="../">Voltar ao site</a>
 </header>
 <main class="ag-pagina">
-  <h1 class="ag-titulo">Agende sua make</h1>
-  <p class="ag-lead">Escolha o serviço, a profissional, o dia e a hora. O pedido segue pelo WhatsApp.</p>
+  <div class="ag-intro">
+    <p class="rotulo">{{ site.site.nome }}</p>
+    <h1 class="ag-titulo">Reserve a <em>sua cadeira.</em></h1>
+    <p class="ag-lead">Escolha a make, quem vai fazer, o dia e a hora. A confirmação chega pelo WhatsApp.</p>
+  </div>
+  <h2 class="sr-only">Formulário de agendamento</h2>
   {{ b.agendamento(site, agenda, wa_numero) }}
+  <aside class="ag-info" aria-label="Horários e endereço">
+    {{ m.horarios(site) }}
+    {% if site.contato.endereco %}<p class="ag-endereco">{{ site.contato.endereco }}</p>{% endif %}
+  </aside>
 </main>
 <div class="fecho">{{ m.rodape(site, config) }}</div>
 {% endblock %}

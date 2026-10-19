@@ -4,82 +4,283 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500&family=Figtree:wght@400;600&display=swap">
+{# fontes sem bloquear a 1ª pintura: a página aparece com a fonte do sistema e troca quando chegam #}
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap"></noscript>
 {% endblock %}
 {% block conteudo %}
 {% set nome = site.site.nome %}
-<a class="pular" href="#retratos-titulo">Pular para os retratos</a>
+{% set marca = nome.split(" Estúdio")[0].split(" Make")[0] %}
+{% set bairro = site.contato.endereco.split("—")[-1].split(",")[0]|trim if "—" in site.contato.endereco else "" %}
+{% set rotulo_dia = {"seg": "Seg", "ter": "Ter", "qua": "Qua", "qui": "Qui", "sex": "Sex", "sab": "Sáb", "dom": "Dom"} %}
+{% set dias_casa = site.agenda.funcionamento.keys()|list %}
+{% set por_id = {} %}{% for s in site.servicos %}{% set _ = por_id.update({s.id: s}) %}{% endfor %}
+{% set alts = {
+  "capa.jpg": "Retrato de mulher com sombra azul e lilás, pele iluminada e as mãos no cabelo",
+  "r01.jpg": "Close de rosto com pele dourada, sobrancelha penteada e boca nude rosada",
+  "r02.jpg": "Retrato com chapéu preto, delineado gráfico branco e batom marrom brilhante",
+  "r03.jpg": "Retrato com sombra coral e turquesa e iluminador nas maçãs do rosto",
+  "r04.jpg": "Close de olho com sombra coral e pele luminosa",
+  "r05.jpg": "Retrato com sombra lilás, batom pink e tiara de rebites",
+  "r06.jpg": "Retrato de perfil com sombra ameixa e glitter e brincos geométricos",
+  "r07.jpg": "Retrato com sombra rosa intensa sobre fundo rosado",
+  "r08.jpg": "Retrato com cílios volumosos, pele luminosa e brincos de paetês prateados",
+  "noiva1.jpg": "Mulher de roupão claro diante do espelho, com o pincel de blush no rosto",
+  "noiva2.jpg": "Noiva sorrindo enquanto recebe um toque de pincel no olho",
+  "noiva3.jpg": "Noiva de robe de renda sentada perto da janela enquanto a maquiadora finaliza a pele",
+  "sobre1.jpg": "Espelho de camarim com lâmpadas acesas e bancada cheia de pincéis e paletas",
+  "sobre2.jpg": "Profissional arrumando o cabelo de uma mulher sentada numa sala clara com espelho iluminado",
+} %}
+{% set looks = {
+  "r01.jpg": "Pele dourada, boca nude", "r02.jpg": "Delineado gráfico", "r03.jpg": "Coral e turquesa",
+  "r04.jpg": "Sombra coral, pele de vidro", "r05.jpg": "Lilás com boca pink", "r06.jpg": "Esfumado ameixa",
+  "r07.jpg": "Rosa para ensaio", "r08.jpg": "Glam com cílios",
+} %}
+{# 12 lâmpadas do espelho: 4 em cima, 4 em cada lado (posição em % da moldura) #}
+{% set lampadas = [(20,0),(40,0),(60,0),(80,0),(0,16),(0,40),(0,64),(0,88),(100,16),(100,40),(100,64),(100,88)] %}
+{% set assinatura = site.destaques|map(attribute="titulo")|list %}
+{% set noiva_ids = ["teste-noiva", "noiva", "madrinha"] %}
+{% set outros = site.servicos|rejectattr("nome", "in", assinatura)|rejectattr("id", "in", noiva_ids)|map(attribute="nome")|list %}
+<a class="pular" href="#book">Pular para o conteúdo</a>
+
 <header class="topo">
-  <a class="topo-marca" href="./">Rubra</a>
+  <a class="topo-marca" href="./">{{ marca }}</a>
+  <nav class="topo-links" aria-label="Seções">
+    <a href="#book">Book</a>
+    <a href="#noivas">Noivas</a>
+    <a href="#camarim">Camarim</a>
+    <a href="#contato">Visita</a>
+  </nav>
   <a class="topo-cta" href="agendar/">Agendar</a>
 </header>
+
 <main>
   <section class="capa" aria-labelledby="titulo">
-    {{ m.imagem(imagens, site.capa.imagem, "Retrato de mulher com sombras azul e roxa, pele iluminada e as mãos no cabelo, sobre fundo cinza", "(min-width: 900px) 55vw, 100vw", "capa-foto", prioridade=True) }}
+    <div class="espelho" aria-hidden="true">
+      <div class="espelho-luz"></div>
+      <div class="espelho-corpo">
+        <div class="espelho-moldura">
+          <div class="espelho-vidro">
+            {{ m.imagem(imagens, site.capa.imagem, "", "(min-width: 900px) 34vw, (orientation: landscape) 30vw, 70vw", prioridade=True) }}
+          </div>
+        </div>
+        {% for x, y in lampadas %}<i class="lampada" style="--x:{{ x }}%;--y:{{ y }}%;--n:{{ loop.index0 }}"></i>{% endfor %}
+      </div>
+    </div>
     <div class="capa-texto">
-      <p class="capa-selo">Maquiagem profissional &middot; Moema</p>
-      <h1 id="titulo"><span class="sr-only">{{ nome }}. </span>{{ site.capa.titulo }}</h1>
-      <p class="capa-sub">{{ site.capa.subtitulo }}</p>
-      {{ m.cta(site, wa_numero, raiz) }}
+      <p class="capa-selo" style="--i:0">{{ site.site.segmento }}{% if bairro %} em {{ bairro }}{% endif %}</p>
+      <h1 id="titulo" class="capa-nome" style="--i:1"><span class="sr-only">{{ nome }}. </span><span aria-hidden="true">{{ marca }}</span></h1>
+      <p class="capa-frase" style="--i:2">{{ site.capa.titulo }}</p>
+      <p class="capa-sub" style="--i:3">{{ site.capa.subtitulo }}</p>
+      <div class="capa-acoes" style="--i:4">
+        {{ m.cta(site, wa_numero, raiz) }}
+        <a class="link-seta" href="agendar/">Serviços e preços</a>
+      </div>
     </div>
   </section>
 
-  <section class="retratos" aria-labelledby="retratos-titulo">
-    <h2 id="retratos-titulo">Retratos</h2>
-    {% set alts = {"r01.jpg": "Retrato de mulher de olhos azuis, pele iluminada e batom nude rosado", "r02.jpg": "Retrato com chapéu preto, delineado gráfico branco e batom marrom brilhante", "r03.jpg": "Retrato com sombra rosa e turquesa e iluminador dourado nas maçãs do rosto", "r04.jpg": "Close de olho azul com sombra rosa vibrante e mão com unhas rosa", "r05.jpg": "Retrato com sombra lilás, batom pink e tiara de rebites", "r06.jpg": "Retrato de perfil com sombra roxa glitter e brincos geométricos grandes", "r07.jpg": "Retrato com sombra rosa intenso sobre fundo rosado", "r08.jpg": "Retrato com cílios volumosos, pele luminosa e brincos de paetês prateados"} %}
-    <div class="retratos-grade">
+  {% if site.galeria %}
+  <section class="book" id="book" aria-labelledby="book-titulo">
+    <div class="secao-cabeca revela">
+      <p class="rotulo">O book</p>
+      <h2 id="book-titulo">Retratos que saíram <em>desta cadeira.</em></h2>
+      <p class="book-nota">Arraste para o lado. Cada rosto pede uma pele, uma luz e um tempo diferente.</p>
+    </div>
+    <ul class="book-faixa">
       {% for f in site.galeria %}
-      {{ m.imagem(imagens, f, alts[f] or "Retrato com maquiagem feita no estúdio", "(min-width: 900px) 25vw, 50vw", "retrato") }}
+      <li class="book-item revela" style="--k:{{ loop.index0 }}">
+        <figure data-inclina>
+          {{ m.imagem(imagens, f, alts[f] or "Retrato com maquiagem feita no estúdio", "(min-width: 900px) 30vw, 72vw") }}
+          {% if looks[f] %}<figcaption><span>{{ "%02d"|format(loop.index) }}</span> {{ looks[f] }}</figcaption>{% endif %}
+        </figure>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% set teste = por_id["teste-noiva"] %}{% set dia = por_id["noiva"] %}{% set madrinha = por_id["madrinha"] %}
+  {% if dia %}
+  <section class="noivas" id="noivas" aria-labelledby="noivas-titulo">
+    <div class="noivas-fotos">
+      {{ m.imagem(imagens, "noiva3.jpg", alts["noiva3.jpg"], "(min-width: 900px) 34vw, 78vw", "noiva-a revela") }}
+      {{ m.imagem(imagens, "noiva2.jpg", alts["noiva2.jpg"], "(min-width: 900px) 20vw, 46vw", "noiva-b revela") }}
+    </div>
+    <div class="noivas-corpo">
+      <p class="rotulo revela">Noivas e madrinhas</p>
+      <h2 id="noivas-titulo" class="revela">O sim começa no <em>teste de make.</em></h2>
+      <p class="noivas-texto revela">A noiva não descobre a make no dia. A gente testa antes, fotografa na luz do lugar, anota cada produto e chega na cerimônia com o look decidido. Madrinhas, mãe e convidadas entram na mesma agenda.</p>
+      <ol class="linha-tempo">
+        <li class="revela"><span class="quando">3 a 6 meses antes</span><strong>Reserva da data</strong><span>Pelo WhatsApp, com o local e o horário da cerimônia.</span></li>
+        {% if teste %}<li class="revela"><span class="quando">Até 3 semanas antes</span><strong>{{ teste.nome }}</strong><span>{{ teste.duracao|duracao }} no camarim · {{ b.preco(teste) }}</span></li>{% endif %}
+        <li class="revela"><span class="quando">No dia</span><strong>{{ dia.nome }}</strong><span>No estúdio ou no local do evento · {{ b.preco(dia) }}</span></li>
+        {% if madrinha %}<li class="revela"><span class="quando">Na mesma manhã</span><strong>{{ madrinha.nome }}</strong><span>Combinando com a paleta da festa · {{ b.preco(madrinha) }}</span></li>{% endif %}
+      </ol>
+      <a class="cta cta-escuro revela" href="agendar/">Reservar o teste de make</a>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if site.destaques %}
+  <section class="assinatura" id="servicos" aria-labelledby="assinatura-titulo">
+    <div class="secao-cabeca revela">
+      <p class="rotulo">Além do altar</p>
+      <h2 id="assinatura-titulo">Festa, lente e <em>a sua própria mão.</em></h2>
+    </div>
+    <ol class="pecas">
+      {% for d in site.destaques %}
+      {% set s = site.servicos|selectattr("nome", "equalto", d.titulo)|first %}
+      <li class="peca">
+        <figure class="peca-foto revela" data-inclina>
+          {{ m.imagem(imagens, d.imagem, alts[d.imagem] or d.titulo, "(min-width: 900px) 40vw, 100vw") }}
+        </figure>
+        <div class="peca-texto revela">
+          <span class="peca-num" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>
+          <h3>{{ d.titulo }}</h3>
+          <p>{{ d.texto }}</p>
+          {% if s %}<p class="peca-meta"><span>{{ s.duracao|duracao }}</span><span>{{ b.preco(s) }}</span></p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+    {% if outros %}
+    <div class="tambem revela">
+      <p><span class="rotulo">Também na agenda</span> {{ outros|join(" · ") }}.</p>
+      <a class="botao-linha" href="agendar/">Ver os {{ site.servicos|length }} serviços e preços</a>
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <section class="camarim" id="camarim" aria-labelledby="camarim-titulo">
+    {% if site.sobre.imagens %}
+    <figure class="camarim-foto revela" data-inclina>
+      {{ m.imagem(imagens, site.sobre.imagens[0], alts[site.sobre.imagens[0]] or "Camarim do " ~ nome, "(min-width: 900px) 40vw, 100vw") }}
+    </figure>
+    {% endif %}
+    <div class="camarim-corpo">
+      <p class="rotulo revela">O camarim</p>
+      <h2 id="camarim-titulo" class="revela">{{ site.sobre.titulo }}</h2>
+      <p class="camarim-texto revela">{{ site.sobre.texto }}</p>
+      <dl class="fatos revela">
+        {% if site.equipe %}<div><dt>{{ site.equipe|length }} maquiadores</dt><dd>cada um com a sua especialidade</dd></div>{% endif %}
+        {% if dias_casa %}<div><dt>{{ rotulo_dia[dias_casa[0]] }} a {{ rotulo_dia[dias_casa[-1]] }}</dt><dd>só com hora marcada</dd></div>{% endif %}
+        {% for a in site.adicionais if a.pede_bairro %}<div><dt>{{ a.nome }}</dt><dd>{% if a.preco %}+ {{ a.preco|brl }}, informe o bairro{% else %}combinado pelo WhatsApp{% endif %}</dd></div>{% endfor %}
+        <div><dt>Ficha da make</dt><dd>cada produto anotado para o retoque</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  {% if site.equipe %}
+  <section class="equipe" id="equipe" aria-labelledby="equipe-titulo">
+    <div class="secao-cabeca revela">
+      <p class="rotulo">Quem maquia</p>
+      <h2 id="equipe-titulo">Escolha a mão <em>no agendamento.</em></h2>
+    </div>
+    <ul class="pessoas">
+      {% for p in site.equipe %}
+      {% set dias = (p.funcionamento or site.agenda.funcionamento).keys()|list %}
+      <li class="pessoa revela">
+        <span class="pessoa-num" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>
+        <strong class="pessoa-nome">{{ p.nome }}</strong>
+        <span class="pessoa-esp">{{ p.especialidade }}</span>
+        <span class="pessoa-dias">{{ rotulo_dia[dias[0]] }} a {{ rotulo_dia[dias[-1]] }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if site.depoimentos %}
+  {% set d0 = site.depoimentos[0] %}
+  <section class="vozes" aria-labelledby="vozes-titulo">
+    <h2 id="vozes-titulo" class="rotulo">Depois da festa</h2>
+    <figure class="vozes-grande revela">
+      <blockquote>{{ d0.texto }}</blockquote>
+      <figcaption>{{ d0.nome }}{% if d0.servico %} · {{ d0.servico }}{% endif %}</figcaption>
+    </figure>
+    <ul class="vozes-lista">
+      {% for d in site.depoimentos[1:] %}
+      <li class="revela">
+        <blockquote>{{ d.texto }}</blockquote>
+        <p>{{ d.nome }}{% if d.servico %} · {{ d.servico }}{% endif %}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if site.perguntas %}
+  <section class="duvidas" aria-labelledby="perguntas-titulo">
+    <div class="secao-cabeca revela">
+      <p class="rotulo">Antes de marcar</p>
+      <h2 id="perguntas-titulo">O que as noivas <em>sempre perguntam.</em></h2>
+    </div>
+    <div class="duvidas-lista">
+      {% for q in site.perguntas %}
+      <details class="pergunta">
+        <summary>{{ q.pergunta }}</summary>
+        <p>{{ q.resposta }}</p>
+      </details>
       {% endfor %}
     </div>
-    <a class="botao" href="agendar/">Agendar horário</a>
   </section>
+  {% endif %}
 
-  <div class="miolo">{{ b.servicos(site) }}</div>
-
-  <section class="noivas" aria-labelledby="noivas-titulo">
-    <div class="noivas-corpo">
-      <p class="capa-selo">Noivas e eventos</p>
-      <h2 id="noivas-titulo">O dia que ninguém repete merece teste.</h2>
-      <p>Cuidamos da noiva, das madrinhas, da mãe e das convidadas. Fazemos um teste de make antes, anotamos cada produto e levamos tudo até o local, com retoque durante a cerimônia.</p>
-      <ul class="noivas-lista">
-        <li>Teste de make e definição do look</li>
-        <li>Atendimento a domicílio ou no local do evento</li>
-        <li>Grupos de madrinhas, formandas e debutantes</li>
-        <li>Retoque ao longo da festa</li>
-      </ul>
-      <a class="botao botao-claro" href="agendar/">Agendar make de noiva</a>
+  <section class="visita" id="contato" aria-labelledby="contato-titulo">
+    <div class="visita-corpo">
+      <p class="rotulo">Visita{% if bairro %} · {{ bairro }}{% endif %}</p>
+      <h2 id="contato-titulo">{{ site.contato.endereco.split("—")[0]|trim }}</h2>
+      {{ m.horarios(site) }}
+      {{ m.contato(site, wa_numero) }}
     </div>
-    <div class="noivas-fotos">
-      {{ m.imagem(imagens, "noiva3.jpg", "Noiva de robe de renda sentada enquanto recebe a maquiagem, ao lado de uma janela", "(min-width: 900px) 24vw, 60vw", "noiva-a") }}
-      {{ m.imagem(imagens, "noiva1.jpg", "Mulher de roupão claro aplicando blush diante do espelho", "(min-width: 900px) 20vw, 38vw", "noiva-b") }}
-      {{ m.imagem(imagens, "noiva2.jpg", "Mulher sorrindo enquanto recebe um toque de pincel no olho", "(min-width: 900px) 20vw, 38vw", "noiva-c") }}
-    </div>
-  </section>
-
-  <section class="sobre" aria-labelledby="sobre-titulo">
-    <div class="sobre-fotos">
-      {{ m.imagem(imagens, site.sobre.imagens[0], "Espelho de camarim com lâmpadas acesas e bancada de produtos", "(min-width: 800px) 30vw, 50vw", "sobre-1") }}
-      {{ m.imagem(imagens, site.sobre.imagens[1], "Profissional penteando o cabelo de uma mulher sentada em uma sala clara com espelho iluminado", "(min-width: 800px) 30vw, 50vw", "sobre-2") }}
-    </div>
-    <div class="sobre-corpo">
-      <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
-      <p>{{ site.sobre.texto }}</p>
-    </div>
-  </section>
-
-  <div class="miolo miolo-equipe">{{ b.equipe(site, imagens) }}</div>
-  <div class="miolo-fala">{{ b.depoimentos(site) }}</div>
-  <div class="miolo">{{ b.perguntas(site) }}</div>
-
-  <section class="endereco" id="contato" aria-labelledby="contato-titulo">
-    <h2 id="contato-titulo">Venha ao estúdio</h2>
-    {{ m.horarios(site) }}
-    {{ m.contato(site, wa_numero) }}
   </section>
 </main>
-<div class="fecho">
-  <a class="cta" href="agendar/">Agendar horário</a>
+
+<div class="fecho" data-marca="{{ marca }}">
+  <div class="fecho-topo">
+    <p class="fecho-convite">A luz do espelho <em>já está acesa.</em></p>
+    {{ m.cta(site, wa_numero, raiz) }}
+  </div>
   {{ m.rodape(site, config) }}
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+/* Revelação na rolagem: IntersectionObserver marca .visto uma vez; sem suporte ou com "reduzir movimento", nada some. */
+(() => {
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const io = new IntersectionObserver((itens) => {
+    for (const it of itens) if (it.isIntersecting) { it.target.classList.add("visto"); io.unobserve(it.target); }
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.documentElement.classList.add("revela-on");
+  for (const el of document.querySelectorAll(".revela")) io.observe(el);
+})();
+/* 3D por ponteiro: o espelho da capa gira na direção do mouse e as fotos inclinam. Só com mouse/trackpad e sem
+   "reduzir movimento"; no toque fica parado (e continua 3D pelo CSS). Um rAF por quadro, só variáveis CSS de transform. */
+(() => {
+  if (!matchMedia("(hover: hover) and (pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.documentElement.classList.add("tem-3d");
+  const fila = new Map(); let agendado = false;
+  const quadro = () => { agendado = false; for (const [el, v] of fila) for (const k in v) el.style.setProperty(k, v[k]); fila.clear(); };
+  const por = (el, v) => { fila.set(el, v); if (!agendado) { agendado = true; requestAnimationFrame(quadro); } };
+  const capa = document.querySelector(".capa");
+  if (capa) {
+    capa.addEventListener("pointermove", (e) => {
+      const r = capa.getBoundingClientRect();
+      por(capa, { "--px": ((e.clientX - r.left) / r.width * 2 - 1).toFixed(3), "--py": ((e.clientY - r.top) / r.height * 2 - 1).toFixed(3) });
+    });
+    capa.addEventListener("pointerleave", () => por(capa, { "--px": "0", "--py": "0" }));
+  }
+  for (const el of document.querySelectorAll("[data-inclina]")) {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      por(el, { "--ry": (x * 9).toFixed(2) + "deg", "--rx": (-y * 7).toFixed(2) + "deg", "--ry-n": (x * 2).toFixed(3), "--rx-n": (y * 2).toFixed(3),
+                "--gx": ((x + .5) * 100).toFixed(1) + "%", "--gy": ((y + .5) * 100).toFixed(1) + "%" });
+    });
+    el.addEventListener("pointerleave", () => por(el, { "--ry": "0deg", "--rx": "0deg", "--ry-n": "0", "--rx-n": "0" }));
+  }
+})();
+</script>
 {% endblock %}
