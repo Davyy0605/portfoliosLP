@@ -1,20 +1,21 @@
-galeria = ["n02.jpg", "n03.jpg", "n07.jpg", "n09.jpg", "n11.jpg", "n12.jpg", "n14.jpg", "n15.jpg"]
+# Faixa "cartela" da landing: close-ups de unhas feitas, cada um com o nome do acabamento (alts no tema).
+galeria = ["n06.jpg", "n10.jpg", "n11.jpg", "n12.jpg", "n14.jpg"]
 
 [site]
 slug = "manicure"
 tema = "manicure"
 ramo = "beleza"
-nome = "Pétala Nude Studio"
+nome = "Lúnula Ateliê de Unhas"
 segmento = "Manicure e nail design"
 ordem = 3
-slogan = "Unhas delicadas, esmaltação em gel e nail art feita com calma."
-descricao = "Pétala Nude Studio, em Pinheiros, São Paulo. Veja a galeria, escolha o serviço e o horário e envie o agendamento pelo WhatsApp."
-cor = "#9B4A62"
+slogan = "Unha feita de perto: cutícula limpa, lateral fina e brilho que dura."
+descricao = "Lúnula Ateliê de Unhas, em Pinheiros, São Paulo. Alongamento em gel, esmaltação em gel, nail art e manutenção com hora marcada. Escolha o serviço, a profissional e o horário e envie o agendamento pelo WhatsApp."
+cor = "#9E1B32"
 
 [contato]
 whatsapp = ""
 telefone = "(11) 90000-0008"
-instagram = "petalanude.demo"
+instagram = "lunula.atelie.demo"
 endereco = "Rua das Hortênsias, 215 — Pinheiros, São Paulo/SP"
 mapa_url = "https://www.google.com/maps?q=Pinheiros,+S%C3%A3o+Paulo&output=embed"
 
@@ -31,15 +32,32 @@ dias = "Dom"
 horas = "Fechado"
 
 [capa]
-titulo = "Unhas que combinam com você."
-subtitulo = "Esmaltação em gel, alongamento e nail art em tons suaves, com hora marcada e todo o tempo que o detalhe pede."
-imagem = "n06.jpg"
+titulo = "Unha feita de perto."
+subtitulo = "Alongamento, esmaltação em gel e nail art numa bancada com luz de dia, lupa e o tempo que cada detalhe pede. Do formato ao último brilho, com hora marcada."
+imagem = "n02.jpg"
 cta = "agendar"
 
 [sobre]
-titulo = "Um estúdio pequeno, feito de detalhe."
-texto = "No Pétala Nude cada atendimento tem hora marcada e uma conversa antes do primeiro esmalte: formato, cor, rotina. Materiais esterilizados, cabine silenciosa e uma xícara de chá enquanto o gel cura."
-imagens = ["n01.jpg", "n08.jpg"]
+titulo = "Duas bancadas, luz de dia e nenhuma pressa."
+texto = "O Lúnula é um ateliê pequeno num primeiro andar de Pinheiros. São só duas bancadas, de frente para a janela, porque cor de esmalte se escolhe com luz natural. Antes do primeiro passo a gente conversa sobre formato, comprimento e rotina, e só depois abre o alicate, que sai da autoclave lacrado na sua frente."
+imagens = ["n01.jpg"]
+
+# Serviços-assinatura da landing: o título deve ser igual ao nome do serviço para mostrar duração e preço.
+# A lista completa fica em /agendar/.
+[[destaques]]
+titulo = "Alongamento em gel"
+texto = "Molde sob a unha natural e gel construído em camadas finas, com o ápice no ponto em que a unha mais flexiona. Fica fina na lateral, firme no centro e no formato que você escolher: amendoada, quadrada, bailarina ou stiletto."
+imagem = "n07.jpg"
+
+[[destaques]]
+titulo = "Esmaltação em gel"
+texto = "A cutícula é recuada com calma, não arrancada. A unha natural recebe só o polimento que o gel precisa, base niveladora e duas camadas de cor curadas na cabine. Sai com brilho de espelho e dura de três a quatro semanas."
+imagem = "n05.jpg"
+
+[[destaques]]
+titulo = "Nail art"
+texto = "Cromado, casco de tartaruga, francesinha fina, pontos de ouro. Traga uma referência: o desenho é redesenhado para o tamanho das suas unhas, e o valor é combinado antes do primeiro traço."
+imagem = "n15.jpg"
 
 [agenda]
 intervalo = 30
@@ -57,7 +75,7 @@ periodos = ["09:00-15:00"]
 id = "esmaltacao"
 nome = "Esmaltação em gel"
 categoria = "Esmaltação"
-descricao = "Preparação da cutícula, gel de longa duração e brilho de espelho."
+descricao = "Cutícula recuada, base niveladora, duas camadas de cor e brilho de espelho."
 duracao = 60
 preco = 75.0
 
@@ -113,6 +131,7 @@ preco = 160.0
 id = "remocao"
 nome = "Remoção de gel ou alongamento"
 categoria = "Alongamento"
+descricao = "Lixa e removedor, sem raspar a unha natural."
 duracao = 45
 preco = 60.0
 
@@ -151,7 +170,7 @@ periodos = ["09:00-15:00"]
 
 [[depoimentos]]
 nome = "Júlia P."
-texto = "O gel durou três semanas sem descascar e o tom nude ficou perfeito. O estúdio é silencioso, dá para relaxar de verdade."
+texto = "O gel durou três semanas sem descascar e o tom nude ficou perfeito. O ateliê é silencioso, dá para relaxar de verdade."
 servico = "Esmaltação em gel"
 
 [[depoimentos]]
@@ -166,7 +185,11 @@ servico = "Nail art"
 
 [[perguntas]]
 pergunta = "De quanto em quanto tempo faço a manutenção do alongamento?"
-resposta = "Entre 20 e 25 dias, conforme o crescimento da unha. Passando disso, o gel pode levantar."
+resposta = "Entre 20 e 25 dias, conforme o crescimento da unha. Passando disso, o gel perde apoio perto da cutícula e pode levantar."
+
+[[perguntas]]
+pergunta = "Posso levar uma foto de referência para a nail art?"
+resposta = "Pode e deve. A profissional adapta o desenho ao tamanho e ao formato das suas unhas e combina o valor antes de começar."
 
 [[perguntas]]
 pergunta = "Como funciona a confirmação do horário?"
@@ -206,18 +229,6 @@ fonte = "Unsplash"
 arquivo = "n07.jpg"
 url = "https://images.unsplash.com/photo-1777287216954-2b4b22bb6bf2"
 autor = "de Aura"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "n08.jpg"
-url = "https://images.unsplash.com/photo-1619607146034-5a05296c8f9a"
-autor = "H&CO"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "n09.jpg"
-url = "https://images.unsplash.com/photo-1770210257340-dc2b0f44642a"
-autor = "Caroline Badran"
 fonte = "Unsplash"
 
 [[fotos]]
