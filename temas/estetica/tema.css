@@ -230,7 +230,8 @@ img { display: block; border-radius: var(--raio); }
 @media (min-width: 900px) {
   .casa { grid-template-columns: 6fr 5fr; gap: clamp(3rem, 7vw, 8rem); align-items: center; }
   .casa-foto img { aspect-ratio: 4 / 5; }
-  .casa-detalhe { display: block; position: absolute; right: var(--m); bottom: calc(var(--secao) * -.5); width: clamp(10rem, 16vw, 15rem); }
+  /* ancorada pelo topo: só 0,7×secao entra na seção (menos que o padding), qualquer que seja a altura da foto */
+  .casa-detalhe { display: block; position: absolute; right: var(--m); top: calc(100% - var(--secao) * .7); width: clamp(10rem, 16vw, 15rem); }
   .casa-detalhe img { aspect-ratio: 3 / 4; object-fit: cover; box-shadow: 0 30px 60px -30px rgb(27 39 34 / .7); }
 }
 
