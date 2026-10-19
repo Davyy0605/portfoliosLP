@@ -1,4 +1,4 @@
-galeria = ["e01.jpg", "e02.jpg", "e03.jpg", "e04.jpg", "e05.jpg"]
+galeria = ["e04.jpg", "costas.jpg"]
 
 [site]
 slug = "estetica"
@@ -9,7 +9,7 @@ segmento = "Estética facial e corporal"
 ordem = 5
 slogan = "Cuidado de pele e corpo com avaliação individual, calma e resultado gradual."
 descricao = "Casa Lírio Estética, em Higienópolis, São Paulo. Conheça os tratamentos e pacotes, escolha o horário e envie o agendamento pelo WhatsApp."
-cor = "#3F7060"
+cor = "#2C6656"
 
 [contato]
 whatsapp = ""
@@ -32,14 +32,31 @@ horas = "Fechado"
 
 [capa]
 titulo = "Pele em ordem, sem pressa."
-subtitulo = "Tratamentos faciais e corporais planejados depois de uma avaliação, em um ambiente silencioso e muito claro."
-imagem = "capa.jpg"
+subtitulo = "Tratamentos faciais e corporais que começam por uma avaliação de 30 minutos e seguem um plano escrito, sessão a sessão."
+imagem = "e02.jpg"
 cta = "agendar"
 
 [sobre]
 titulo = "Menos produto, mais critério."
 texto = "Na Casa Lírio todo tratamento começa com uma conversa e uma avaliação da pele. Combinamos só o que faz sentido para você, explicamos cada etapa e acompanhamos a evolução sessão a sessão. Sem promessas de milagre, só cuidado bem feito."
-imagens = ["sobre1.jpg", "sobre2.jpg"]
+imagens = ["sobre1.jpg"]
+
+# Os destaques são os tratamentos-assinatura da landing: o título deve ser igual ao nome do serviço
+# para a página mostrar duração e preço. A lista completa fica em /agendar/.
+[[destaques]]
+titulo = "Limpeza de pele profunda"
+texto = "Noventa minutos: higienização, toalha morna para amolecer a pele, extração feita com calma e máscara calmante. A pele sai limpa e sem vermelhidão marcada, com protetor solar já aplicado."
+imagem = "toalha.jpg"
+
+[[destaques]]
+titulo = "Drenagem linfática"
+texto = "Pressão leve, ritmo lento e sempre na direção dos gânglios. Diminui a sensação de perna pesada e o inchaço do fim do dia; o efeito aparece de verdade a partir da terceira ou quarta sessão."
+imagem = "drenagem.jpg"
+
+[[destaques]]
+titulo = "Peeling superficial"
+texto = "Ácidos em baixa concentração, testados antes numa pequena área. Indicado para manchas leves e textura irregular, com protocolo de cuidados em casa e intervalo de 21 dias entre as sessões."
+imagem = "e05.jpg"
 
 [agenda]
 intervalo = 30
@@ -110,6 +127,14 @@ duracao = 60
 preco = 150.0
 
 [[servicos]]
+id = "esfoliacao"
+nome = "Esfoliação corporal com hidratação"
+categoria = "Corporal"
+descricao = "Esfoliação suave no corpo todo, banho morno e creme hidratante. Bom antes do verão ou de um evento."
+duracao = 60
+preco = 140.0
+
+[[servicos]]
 id = "pacote-drenagem"
 nome = "Drenagem — pacote 10 sessões"
 categoria = "Pacotes"
@@ -150,13 +175,13 @@ preco = 30.0
 
 [[equipe]]
 nome = "Dra. Helena Duarte"
-especialidade = "Biomédica esteta, facial"
+especialidade = "Biomédica esteta"
 servicos = ["avaliacao", "limpeza", "hidratacao", "peeling", "pacote-limpeza", "pacote-peeling"]
 
 [[equipe]]
 nome = "Marina Sales"
-especialidade = "Estética corporal"
-servicos = ["drenagem", "modeladora", "relaxante", "pacote-drenagem"]
+especialidade = "Esteticista corporal"
+servicos = ["drenagem", "modeladora", "esfoliacao", "pacote-drenagem"]
 
 [[equipe.funcionamento]]
 dias = ["ter", "qua", "qui", "sex"]
@@ -168,7 +193,7 @@ periodos = ["09:00-14:00"]
 
 [[equipe]]
 nome = "Bruno Tavares"
-especialidade = "Massagem e drenagem"
+especialidade = "Massoterapeuta"
 servicos = ["drenagem", "relaxante", "pacote-drenagem"]
 
 [[depoimentos]]
@@ -207,15 +232,9 @@ pergunta = "O que devo fazer antes da sessão?"
 resposta = "Venha sem maquiagem e evite exposição intensa ao sol nos três dias anteriores. Para massagens, faça uma refeição leve antes."
 
 [[fotos]]
-arquivo = "capa.jpg"
-url = "https://images.unsplash.com/photo-1552693673-1bf958298935"
-autor = "karelys Ruiz"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "e01.jpg"
-url = "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2"
-autor = "engin akyurt"
+arquivo = "toalha.jpg"
+url = "https://images.unsplash.com/photo-1757689373248-a6cd07328ba5"
+autor = "Stephen Olmo"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -225,9 +244,9 @@ autor = "Look Studio"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "e03.jpg"
-url = "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881"
-autor = "Rosa Rafael"
+arquivo = "drenagem.jpg"
+url = "https://images.unsplash.com/photo-1712638932314-e2b185ca0930"
+autor = "Mat Kilkeary"
 fonte = "Unsplash"
 
 [[fotos]]
@@ -243,13 +262,13 @@ autor = "kimia kazemi"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "sobre1.jpg"
-url = "https://images.unsplash.com/photo-1540555700478-4be289fbecef"
-autor = "Camille Brodard"
+arquivo = "costas.jpg"
+url = "https://images.unsplash.com/photo-1741522509438-a120c0bb5e88"
+autor = "Massage a Domicile"
 fonte = "Unsplash"
 
 [[fotos]]
-arquivo = "sobre2.jpg"
-url = "https://images.unsplash.com/photo-1630595271375-5073a6c0638b"
-autor = "Usen Parmanov"
+arquivo = "sobre1.jpg"
+url = "https://images.unsplash.com/photo-1540555700478-4be289fbecef"
+autor = "Camille Brodard"
 fonte = "Unsplash"
