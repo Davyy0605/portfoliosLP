@@ -1,20 +1,21 @@
-galeria = ["cortina.jpg", "corte.jpg", "ferramentas.jpg", "penteado.jpg", "espelhos.jpg", "interior.jpg"]
+# galeria: [0] foto da equipe, [1] foto dos depoimentos
+galeria = ["equipe.jpg", "ondas.jpg"]
 
 [site]
 slug = "salao"
 tema = "salao"
 ramo = "beleza"
-nome = "Ateliê Marfim Salão"
+nome = "Ondina Salão"
 segmento = "Salão de beleza"
 ordem = 2
-slogan = "Cor, corte e escova com assinatura, em um salão feito de luz."
-descricao = "Ateliê Marfim Salão, nos Jardins, São Paulo. Escolha o serviço, a profissional e o horário e envie o agendamento pelo WhatsApp."
-cor = "#9A5B4F"
+slogan = "Cor, corte e movimento: cabelo que sai daqui balançando."
+descricao = "Ondina Salão, nos Jardins, São Paulo. Escolha o serviço, a profissional e o horário e envie o agendamento pelo WhatsApp."
+cor = "#2A1D18"
 
 [contato]
 whatsapp = ""
 telefone = "(11) 90000-0012"
-instagram = "ateliemarfim.demo"
+instagram = "ondinasalao.demo"
 endereco = "Alameda das Camélias, 88 — Jardins, São Paulo/SP"
 mapa_url = "https://www.google.com/maps?q=Jardins,+S%C3%A3o+Paulo&output=embed"
 
@@ -31,15 +32,32 @@ dias = "Dom e Seg"
 horas = "Fechado"
 
 [capa]
-titulo = "Cabelo bonito começa com tempo."
-subtitulo = "Coloração, corte e escova com hora marcada, produtos de linha profissional e uma conversa antes de qualquer tesoura. Escolha seu horário em poucos toques."
+titulo = "Cor que acende com a luz. Corte que cai sozinho."
+subtitulo = "Loiros, mechas, cobre e corte com movimento, sempre com uma conversa antes da tesoura e a cartela de cores na mão. Escolha a profissional e o horário em poucos toques."
 imagem = "capa.jpg"
 cta = "agendar"
 
 [sobre]
-titulo = "Um ateliê para o seu cabelo."
-texto = "O Ateliê Marfim nasceu de uma ideia simples: cada cabelo pede um plano. Antes de começar, a profissional olha o fio, ouve o que você quer e combina o resultado. Sem pressa, com luz natural e um café à mão."
-imagens = ["interior.jpg", "ferramentas.jpg"]
+titulo = "Um salão pequeno, com luz de janela."
+texto = "O Ondina tem seis cadeiras, dois lavatórios e uma bancada de cor perto da janela, porque tom de loiro se confere na luz do dia. Antes de qualquer química, a profissional olha o fio, faz o teste de mecha se precisar e combina com você o resultado e o valor."
+imagens = ["interior.jpg", "tigela.jpg"]
+
+# Os destaques são os serviços-assinatura da landing: o título deve ser igual ao nome do serviço
+# para a página mostrar duração e preço. A lista completa fica em /agendar/.
+[[destaques]]
+titulo = "Mechas e iluminado"
+texto = "Papel alumínio fino, mecha por mecha, onde a luz bateria naturalmente. A Helena tonaliza no lavatório para tirar o amarelo e você sai com o loiro que combinou, não com o que sobrou."
+imagem = "mechas.jpg"
+
+[[destaques]]
+titulo = "Corte feminino"
+texto = "Cortado molhado para a forma e refinado seco para o movimento. A Beatriz corta pensando em como o cabelo cai no terceiro dia, não só na saída do salão."
+imagem = "corte.jpg"
+
+[[destaques]]
+titulo = "Escova progressiva"
+texto = "Alinhamento sem formol, aplicado mecha a mecha com prancha de titânio. O fio fica liso e com peso, sem aquele aspecto duro, e o comprimento é avaliado antes de começar."
+imagem = "progressiva.jpg"
 
 [agenda]
 intervalo = 30
@@ -180,47 +198,57 @@ pergunta = "Por que alguns serviços têm preço 'a partir de'?"
 resposta = "Cor e progressiva dependem do comprimento e da quantidade de cabelo. A profissional confirma o valor final antes de começar."
 
 [[perguntas]]
+pergunta = "Preciso fazer teste de mecha antes de clarear?"
+resposta = "Se o cabelo já tem química ou se a mudança for grande, sim. O teste leva 20 minutos, é gratuito e pode ser feito em qualquer horário livre da Helena."
+
+[[perguntas]]
 pergunta = "Como funciona a confirmação do horário?"
 resposta = "Você envia o pedido pelo WhatsApp e nós confirmamos o horário por lá."
 
 [[fotos]]
 arquivo = "capa.jpg"
-url = "https://images.unsplash.com/photo-1580618672591-eb180b1a973f"
-autor = "Adam Winger"
+url = "https://images.unsplash.com/photo-1785456283212-338f5bc44d50"
+autor = "Yovanka Loria Salon"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "mechas.jpg"
+url = "https://images.unsplash.com/photo-1605980625982-b128a7e7fde2"
+autor = "Lera Kogan"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "corte.jpg"
+url = "https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a"
+autor = "Farhad Ibrahimzade"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "progressiva.jpg"
+url = "https://images.unsplash.com/photo-1779350676620-fde279b1d023"
+autor = "Lu"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "equipe.jpg"
+url = "https://images.unsplash.com/photo-1785456411888-c2e842552820"
+autor = "Yovanka Loria Salon"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "ondas.jpg"
+url = "https://images.unsplash.com/photo-1605980625600-88b46abafa8d"
+autor = "Lera Kogan"
+fonte = "Unsplash"
+
+[[fotos]]
+arquivo = "tigela.jpg"
+url = "https://images.unsplash.com/photo-1613574620835-152a5e2de32d"
+autor = "laura adai"
 fonte = "Unsplash"
 
 [[fotos]]
 arquivo = "interior.jpg"
 url = "https://images.unsplash.com/photo-1781450090585-1a511b7066d9"
 autor = "Barney Goodman"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "ferramentas.jpg"
-url = "https://images.unsplash.com/photo-1595475884562-073c30d45670"
-autor = "Adam Winger"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "corte.jpg"
-url = "https://images.unsplash.com/photo-1634449571010-02389ed0f9b0"
-autor = "Lindsay Cash"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "penteado.jpg"
-url = "https://images.unsplash.com/photo-1774660810725-fb04e002003d"
-autor = "Alexander Mass"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "espelhos.jpg"
-url = "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6"
-autor = "Benyamin Bohlouli"
-fonte = "Unsplash"
-
-[[fotos]]
-arquivo = "cortina.jpg"
-url = "https://images.unsplash.com/photo-1560869713-7d0a29430803"
-autor = "Baylee Gramling"
 fonte = "Unsplash"

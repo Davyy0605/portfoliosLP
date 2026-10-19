@@ -4,17 +4,28 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Jost:wght@400;500;600&display=swap">
+{# fontes sem bloquear a 1ª pintura: a página aparece com a fonte do sistema e troca quando chegam #}
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,300..500&family=Outfit:wght@300..600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,300..500&family=Outfit:wght@300..600&display=swap"></noscript>
 {% endblock %}
 {% block conteudo %}
+{% set marca = site.site.nome|replace(" Salão", "")|replace("Salão ", "") %}
 <header class="topo">
-  <a class="topo-marca" href="../">{{ site.site.nome|replace(" Salão", "") }}</a>
-  <a class="topo-cta" href="../">Voltar ao site</a>
+  <a class="topo-marca" href="../">{{ marca }}</a>
+  <a class="topo-voltar" href="../">Voltar ao site</a>
 </header>
 <main class="ag-pagina">
-  <h1 class="ag-titulo">Agende seu horário</h1>
-  <p class="ag-lead">Serviços, profissional, dia e hora. O pedido segue pelo WhatsApp.</p>
+  <div class="ag-intro">
+    <p class="rotulo">{{ site.site.nome }}</p>
+    <h1 class="ag-titulo">Agendar <em>horário</em></h1>
+    <p class="ag-lead">Escolha os serviços, a profissional e o horário. A confirmação chega pelo WhatsApp, com o valor final combinado antes de qualquer química.</p>
+  </div>
+  <h2 class="sr-only">Formulário de agendamento</h2>
   {{ b.agendamento(site, agenda, wa_numero) }}
+  <aside class="ag-info" aria-label="Horários e endereço">
+    {{ m.horarios(site) }}
+    {% if site.contato.endereco %}<p class="ag-endereco">{{ site.contato.endereco }}</p>{% endif %}
+  </aside>
 </main>
 <div class="fecho">{{ m.rodape(site, config) }}</div>
 {% endblock %}

@@ -4,70 +4,291 @@
 {% block fontes %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,500&family=Jost:wght@400;500;600&display=swap">
+{# fontes sem bloquear a 1ª pintura: a página aparece com a fonte do sistema e troca quando chegam #}
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,300..500&family=Outfit:wght@300..600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,300..500&family=Outfit:wght@300..600&display=swap"></noscript>
 {% endblock %}
 {% block conteudo %}
 {% set nome = site.site.nome %}
-{% set marca = nome|replace(" Salão", "") %}
-<a class="pular" href="#servicos-titulo">Pular para os serviços</a>
+{% set marca = nome|replace(" Salão", "")|replace("Salão ", "") %}
+{% set rotulo_dia = {"seg": "Seg", "ter": "Ter", "qua": "Qua", "qui": "Qui", "sex": "Sex", "sab": "Sáb", "dom": "Dom"} %}
+{% set alts = {
+  "capa.jpg": "Duas mulheres de costas, uma loira e outra morena iluminada, com o cabelo longo em ondas soltas",
+  "mechas.jpg": "Cabelo castanho com mechas separadas em papel alumínio, no meio de uma sessão de iluminado",
+  "corte.jpg": "Mãos da cabeleireira cortando uma mecha de cabelo molhado com tesoura e pente",
+  "progressiva.jpg": "Cabelo castanho liso e brilhante em corte chanel, visto de costas",
+  "equipe.jpg": "Cabeleireira ajeitando o cabelo longo e ondulado em tons de mel",
+  "ondas.jpg": "Cabelo em ondas largas com mechas acinzentadas, visto de cima",
+  "tigela.jpg": "Tigela de mistura de tinta com pincel de coloração apoiado na borda",
+  "interior.jpg": "Salão com espelhos em arco, poltronas e trilho de luz, em preto e branco",
+} %}
+{% set foto_equipe = site.galeria[0] if site.galeria else None %}
+{% set foto_vozes = site.galeria[1] if site.galeria|length > 1 else None %}
+{% set assinatura = site.destaques|map(attribute="titulo")|list %}
+{% set outros = site.servicos|rejectattr("nome", "in", assinatura)|map(attribute="nome")|list %}
+{% set rotulo_cat = {"Cor": "Cor", "Corte e finalização": "Corte", "Tratamentos": "Tratamento"} %}
+{# Cartela de cores: numeração de coloração (altura.reflexo) e as duas cores de cada mecha #}
+{% set tons = [
+  ("10.1", "Platinado", "#ebe2d2", "#cdbfa6"),
+  ("9.31", "Louro bege", "#e0c79e", "#bf9f71"),
+  ("8.1", "Louro cinza", "#c4b49b", "#9c8a72"),
+  ("7.3", "Louro mel", "#be8c57", "#8f6236"),
+  ("7.44", "Cobre intenso", "#c2652f", "#8b3c18"),
+  ("6.46", "Acobreado", "#93432a", "#64281a"),
+  ("5.35", "Chocolate", "#714a36", "#4c2f21"),
+  ("4.0", "Castanho", "#4e3429", "#33221b"),
+  ("3.0", "Castanho escuro", "#33251f", "#1d1512"),
+] %}
+<a class="pular" href="#trabalho">Pular para o conteúdo</a>
+
 <header class="topo">
   <a class="topo-marca" href="./">{{ marca }}</a>
+  <nav class="topo-links" aria-label="Seções">
+    <a href="#trabalho">O trabalho</a>
+    <a href="#cor">Cor</a>
+    <a href="#casa">O salão</a>
+    <a href="#equipe">Equipe</a>
+    <a href="#contato">Visita</a>
+  </nav>
   <a class="topo-cta" href="agendar/">Agendar</a>
 </header>
+
 <main>
   <section class="capa" aria-labelledby="titulo">
     <div class="capa-texto">
-      <p class="capa-selo">Salão de beleza &middot; Jardins</p>
-      <h1 id="titulo"><span class="sr-only">{{ nome }}. </span><span aria-hidden="true" class="capa-nome">{{ marca }}</span></h1>
-      <p class="capa-frase">{{ site.capa.titulo }}</p>
-      <p class="capa-sub">{{ site.capa.subtitulo }}</p>
-      {{ m.cta(site, wa_numero, raiz) }}
+      <p class="capa-selo" style="--i:0">{{ site.site.segmento }} · {{ site.contato.endereco.split("—")[-1].split(",")[0]|trim }}</p>
+      <h1 id="titulo" class="capa-nome" style="--i:1"><span class="sr-only">{{ nome }}. </span><span aria-hidden="true">{{ marca }}</span></h1>
+      <p class="capa-frase" style="--i:2">{{ site.capa.titulo }}</p>
+      <p class="capa-sub" style="--i:3">{{ site.capa.subtitulo }}</p>
+      <div class="capa-acoes" style="--i:4">
+        {{ m.cta(site, wa_numero, raiz) }}
+        <a class="link-seta" href="agendar/">Serviços e preços</a>
+      </div>
+      {% if site.horarios %}
+      <p class="capa-fato" style="--i:5">{{ site.horarios[0].dias }} · {{ site.horarios[0].horas.split("(")[0]|trim }}{% if site.horarios|length > 1 %} · {{ site.horarios[1].dias }} · {{ site.horarios[1].horas.split("(")[0]|trim }}{% endif %}</p>
+      {% endif %}
     </div>
-    <div class="capa-arco">
-      {{ m.imagem(imagens, site.capa.imagem, "Cabeleireira secando o cabelo de uma cliente com escova", "(min-width: 900px) 40vw, 80vw", "capa-foto", prioridade=True) }}
+    <div class="capa-foto">
+      {{ m.imagem(imagens, site.capa.imagem, alts[site.capa.imagem] or "Cabelo em ondas", "(min-width: 900px) 56vw, (orientation: landscape) 46vw, 100vw", prioridade=True) }}
+    </div>
+    {# fios de cabelo em linha: desenham-se na entrada e balançam devagar #}
+    <svg class="fios" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      {% for k in range(9) %}
+      <path pathLength="1" style="--k:{{ k }}" d="M -40 {{ 330 + k * 9 }} C 260 {{ 170 + k * 15 }}, 520 {{ 560 - k * 12 }}, 820 {{ 330 + k * 6 }} S 1120 {{ 120 + k * 16 }}, 1260 {{ 200 + k * 11 }}"/>
+      {% endfor %}
+    </svg>
+  </section>
+
+  <section class="manifesto" aria-label="O salão em uma frase">
+    <p class="manifesto-frase revela">
+      Antes da tesoura, a gente olha o fio
+      {% if site.sobre.imagens|length > 1 %}<span class="pilula">{{ m.imagem(imagens, site.sobre.imagens[1], alts[site.sobre.imagens[1]] or "Material de coloração", "180px") }}</span>{% endif %}
+      e combina a cor na luz da janela. <em>Depois é só deixar balançar.</em>
+    </p>
+  </section>
+
+  {% if site.destaques %}
+  <section class="trabalho" id="trabalho" aria-labelledby="trabalho-titulo">
+    <div class="secao-cabeca revela">
+      <p class="rotulo">O trabalho</p>
+      <h2 id="trabalho-titulo">Três pedidos que saem daqui <em>toda semana</em>.</h2>
+    </div>
+    <ol class="obras">
+      {% for d in site.destaques %}
+      {% set s = site.servicos|selectattr("nome", "equalto", d.titulo)|first %}
+      <li class="obra obra-{{ loop.index }}">
+        <figure class="obra-foto revela" data-inclina>
+          {{ m.imagem(imagens, d.imagem, alts[d.imagem] or d.titulo, "(min-width: 900px) 46vw, 100vw") }}
+        </figure>
+        <div class="obra-texto revela">
+          <p class="obra-cat"><span aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>{% if s %} {{ rotulo_cat[s.categoria] or s.categoria }}{% endif %}</p>
+          <h3>{{ d.titulo }}</h3>
+          <p>{{ d.texto }}</p>
+          {% if s %}<p class="obra-meta"><span>{{ s.duracao|duracao }}</span><span>{{ b.preco(s) }}</span></p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+    {% if outros %}
+    <div class="tambem revela">
+      <p><span class="rotulo">Também na agenda</span> {{ outros|join(" · ") }}.</p>
+      <a class="botao-linha" href="agendar/">Ver os {{ site.servicos|length }} serviços e preços</a>
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <section class="cor" id="cor" aria-labelledby="cor-titulo">
+    <div class="cor-texto">
+      <p class="rotulo revela">A cor</p>
+      <h2 id="cor-titulo" class="revela">Todo tom começa <em>na cartela</em>.</h2>
+      <p class="cor-lead revela">A Helena abre a cartela ao lado do seu rosto, perto da janela, e escolhe com você a altura e o reflexo. Se o fio já tem química, faz um teste de mecha antes. Estes são os tons que mais saem da bancada:</p>
+      <ul class="tons revela">
+        {% for t in tons if t[0] in ("10.1", "9.31", "7.3", "7.44", "5.35", "3.0") %}
+        <li><span class="tom-amostra" style="--c1:{{ t[2] }};--c2:{{ t[3] }}" aria-hidden="true"></span><strong>{{ t[0] }}</strong> {{ t[1] }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="cartela revela" aria-hidden="true">
+      <div class="cartela-leque">
+        <span class="cartela-aro"></span>
+        {% for t in tons %}
+        <span class="mecha" style="--i:{{ loop.index0 }};--c1:{{ t[2] }};--c2:{{ t[3] }}"><b>{{ t[0] }}</b><i></i></span>
+        {% endfor %}
+      </div>
     </div>
   </section>
 
-  <section class="sobre" aria-labelledby="sobre-titulo">
-    <p class="numero" aria-hidden="true">01</p>
-    <div class="sobre-corpo">
-      <h2 id="sobre-titulo">{{ site.sobre.titulo }}</h2>
-      <p>{{ site.sobre.texto }}</p>
+  <section class="casa" id="casa" aria-labelledby="casa-titulo">
+    <div class="casa-corpo">
+      <p class="rotulo revela">O salão</p>
+      <h2 id="casa-titulo" class="revela">{{ site.sobre.titulo }}</h2>
+      <p class="casa-texto revela">{{ site.sobre.texto }}</p>
+      <dl class="fatos revela">
+        <div><dt>Teste de mecha</dt><dd>gratuito, antes de clarear</dd></div>
+        <div><dt>Preço confirmado</dt><dd>antes de começar a química</dd></div>
+        <div><dt>{{ site.equipe|length }} profissionais</dt><dd>cor, corte e tratamento</dd></div>
+        {% if site.adicionais %}<div><dt>{{ site.adicionais[0].nome }}</dt><dd>{% if site.adicionais[0].preco %}+ {{ site.adicionais[0].preco|brl }}{% else %}por conta da casa{% endif %}</dd></div>{% endif %}
+      </dl>
     </div>
-    <div class="sobre-fotos">
-      {{ m.imagem(imagens, site.sobre.imagens[0], "Salão com poltronas e espelhos em arco, em preto e branco", "(min-width: 800px) 30vw, 60vw", "sobre-1") }}
-      {{ m.imagem(imagens, site.sobre.imagens[1], "Escovas, tesoura e pincel de coloração erguidos contra um fundo branco", "(min-width: 800px) 30vw, 60vw", "sobre-2") }}
-    </div>
+    {% if site.sobre.imagens %}
+    <figure class="casa-foto revela" data-inclina>
+      {{ m.imagem(imagens, site.sobre.imagens[0], alts[site.sobre.imagens[0]] or "Interior do " ~ nome, "(min-width: 900px) 40vw, 100vw") }}
+    </figure>
+    {% endif %}
   </section>
 
-  <div class="miolo indice">
-    <p class="numero" aria-hidden="true">02</p>
-    {{ b.servicos(site) }}
-    <a class="botao" href="agendar/">Agendar horário</a>
-  </div>
-
-  <section class="galeria" aria-label="Galeria">
-    {% set alts = {"cortina.jpg": "Cabelo castanho com cachos feitos com babyliss", "corte.jpg": "Lavagem do cabelo no lavatório do salão", "penteado.jpg": "Cabeleireira finalizando um penteado preso", "espelhos.jpg": "Salão com espelhos redondos e cadeiras pretas"} %}
-    {% for f in site.galeria if f not in site.sobre.imagens %}
-    {{ m.imagem(imagens, f, alts[f] or "Detalhe do salão", "(min-width: 800px) 25vw, 50vw") }}
-    {% endfor %}
+  {% if site.equipe %}
+  {% set tom_pro = ["#c2652f", "#bf9f71", "#714a36", "#9c8a72"] %}
+  <section class="equipe" id="equipe" aria-labelledby="equipe-titulo">
+    {% if foto_equipe %}
+    <figure class="equipe-foto revela" data-inclina>
+      {{ m.imagem(imagens, foto_equipe, alts[foto_equipe] or "Cabeleireira trabalhando", "(min-width: 900px) 38vw, 100vw") }}
+    </figure>
+    {% endif %}
+    <div class="equipe-corpo">
+      <p class="rotulo revela">Equipe</p>
+      <h2 id="equipe-titulo" class="revela">Cada uma com a <em>sua mão</em>.</h2>
+      <ul class="pros">
+        {% for p in site.equipe %}
+        {% set dias = (p.funcionamento or site.agenda.funcionamento).keys()|list %}
+        <li class="pro revela" style="--tom:{{ tom_pro[loop.index0 % 4] }}">
+          <strong class="pro-nome">{{ p.nome }}</strong>
+          <span class="pro-esp">{{ p.especialidade }}</span>
+          <span class="pro-dias">{{ rotulo_dia[dias[0]] }} a {{ rotulo_dia[dias[-1]] }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <a class="link-seta revela" href="agendar/">Escolher a profissional no agendamento</a>
+    </div>
   </section>
+  {% endif %}
 
-  <div class="miolo miolo-equipe">
-    <p class="numero" aria-hidden="true">03</p>
-    {{ b.equipe(site, imagens) }}
-  </div>
-  <div class="miolo miolo-fala">{{ b.depoimentos(site) }}</div>
-  <div class="miolo">{{ b.perguntas(site) }}</div>
+  {% if site.depoimentos %}
+  {% set d0 = site.depoimentos[0] %}
+  <section class="vozes" aria-labelledby="vozes-titulo">
+    <div class="vozes-corpo">
+      <h2 id="vozes-titulo" class="rotulo">Quem saiu daqui</h2>
+      <figure class="vozes-grande revela">
+        <blockquote>{{ d0.texto }}</blockquote>
+        <figcaption>{{ d0.nome }}{% if d0.servico %} · {{ d0.servico }}{% endif %}</figcaption>
+      </figure>
+      <ul class="vozes-lista">
+        {% for d in site.depoimentos[1:] %}
+        <li class="revela">
+          <blockquote>{{ d.texto }}</blockquote>
+          <p>{{ d.nome }}{% if d.servico %} · {{ d.servico }}{% endif %}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% if foto_vozes %}
+    <figure class="vozes-foto revela" data-inclina>
+      {{ m.imagem(imagens, foto_vozes, alts[foto_vozes] or "Cabelo em ondas", "(min-width: 900px) 34vw, 100vw") }}
+    </figure>
+    {% endif %}
+  </section>
+  {% endif %}
 
-  <section class="endereco" id="contato" aria-labelledby="contato-titulo">
-    <h2 id="contato-titulo">Venha nos visitar</h2>
-    {{ m.horarios(site) }}
-    {{ m.contato(site, wa_numero) }}
+  {% if site.perguntas %}
+  <section class="duvidas" aria-labelledby="perguntas-titulo">
+    <div class="duvidas-cabeca revela">
+      <p class="rotulo">Antes de marcar</p>
+      <h2 id="perguntas-titulo">O que sempre <em>perguntam</em>.</h2>
+    </div>
+    <div class="duvidas-lista">
+      {% for q in site.perguntas %}
+      <details class="pergunta">
+        <summary>{{ q.pergunta }}</summary>
+        <p>{{ q.resposta }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="visita" id="contato" aria-labelledby="contato-titulo">
+    <div class="visita-corpo">
+      <p class="rotulo">Visita</p>
+      <h2 id="contato-titulo">{{ site.contato.endereco.split("—")[0]|trim }}</h2>
+      {{ m.horarios(site) }}
+      {{ m.contato(site, wa_numero) }}
+    </div>
   </section>
 </main>
+
 <div class="fecho">
-  <a class="cta" href="agendar/">Agendar horário</a>
+  <svg class="fios fios-fecho" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    {% for k in range(7) %}
+    <path pathLength="1" style="--k:{{ k }}" d="M -40 {{ 60 + k * 10 }} C 300 {{ 260 - k * 8 }}, 700 {{ -40 + k * 14 }}, 1260 {{ 150 + k * 9 }}"/>
+    {% endfor %}
+  </svg>
+  <div class="fecho-topo">
+    <p class="fecho-convite">Seu próximo cabelo começa <em>numa conversa</em>.</p>
+    {{ m.cta(site, wa_numero, raiz) }}
+  </div>
   {{ m.rodape(site, config) }}
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+/* Revelação na rolagem: IntersectionObserver marca .visto uma vez; sem suporte ou com "reduzir movimento", nada some. */
+(() => {
+  if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const io = new IntersectionObserver((itens) => {
+    for (const it of itens) if (it.isIntersecting) { it.target.classList.add("visto"); io.unobserve(it.target); }
+  }, { rootMargin: "0px 0px -8% 0px" });
+  document.documentElement.classList.add("revela-on");
+  for (const el of document.querySelectorAll(".revela")) io.observe(el);
+})();
+/* Ponteiro (só mouse/trackpad, sem "reduzir movimento"): fotos inclinam em 3D, os fios da capa seguem o mouse
+   e a cartela gira o leque na direção do ponteiro. Um rAF por quadro, só variáveis CSS de transform. */
+(() => {
+  if (!matchMedia("(hover: hover) and (pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.documentElement.classList.add("tem-3d");
+  const fila = new Map(); let agendado = false;
+  const quadro = () => { agendado = false; for (const [el, v] of fila) for (const k in v) el.style.setProperty(k, v[k]); fila.clear(); };
+  const por = (el, v) => { fila.set(el, v); if (!agendado) { agendado = true; requestAnimationFrame(quadro); } };
+  const segue = (area, alvo) => {
+    if (!area) return;
+    area.addEventListener("pointermove", (e) => {
+      const r = area.getBoundingClientRect();
+      por(alvo, { "--px": ((e.clientX - r.left) / r.width * 2 - 1).toFixed(3), "--py": ((e.clientY - r.top) / r.height * 2 - 1).toFixed(3) });
+    });
+    area.addEventListener("pointerleave", () => por(alvo, { "--px": "0", "--py": "0" }));
+  };
+  const capa = document.querySelector(".capa");
+  segue(capa, capa);
+  segue(document.querySelector(".cor"), document.querySelector(".cartela"));
+  for (const el of document.querySelectorAll("[data-inclina]")) {
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      por(el, { "--ry": (x * 9).toFixed(2) + "deg", "--rx": (-y * 7).toFixed(2) + "deg", "--ry-n": (x * 2).toFixed(3), "--rx-n": (y * 2).toFixed(3),
+                "--gx": ((x + .5) * 100).toFixed(1) + "%", "--gy": ((y + .5) * 100).toFixed(1) + "%" });
+    });
+    el.addEventListener("pointerleave", () => por(el, { "--ry": "0deg", "--rx": "0deg", "--ry-n": "0", "--rx-n": "0" }));
+  }
+})();
+</script>
 {% endblock %}
